@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://malionurlucan.me/</loc>
+        <lastmod>2025-01-01</lastmod>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/projects/</loc>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/seminars/</loc>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/files/cv.pdf</loc>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/projects/cs50p/</loc>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/projects/to-do-list-cli/</loc>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/projects/2048-game/</loc>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/seminars/higher-structures/</loc>
+    </url>
+</urlset>
