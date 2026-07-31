@@ -1,39 +1,34 @@
-// main.js - Dark/Light Mode Yönetimi
+// main.js - Flash-free Dark/Light Mode Management
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    // 1. Butonu Oluştur
+    // 1. Theme Toggle Butonunu Oluştur
     const toggleBtn = document.createElement("button");
     toggleBtn.id = "theme-toggle";
     toggleBtn.className = "theme-btn";
-    toggleBtn.innerHTML = "☀"; // Varsayılan ikon (Karanlık moddayken Güneş çıkar)
-toggleBtn.setAttribute("aria-label", "Toggle Dark/Light Mode");
-document.body.appendChild(toggleBtn);
+    
+    // İlk yüklemedeki ikon durumu
+    const isLight = document.documentElement.classList.contains("light-mode") || document.body.classList.contains("light-mode");
+    toggleBtn.innerHTML = isLight ? "☾" : "☀";
+    toggleBtn.setAttribute("aria-label", "Toggle Dark/Light Mode");
+    document.body.appendChild(toggleBtn);
 
-// 2. Hafızadaki Tercihi Kontrol Et
-const currentTheme = localStorage.getItem("theme");
-
-// Eğer hafızada "light" varsa uygula
-if (currentTheme === "light") {
-    document.body.classList.add("light-mode");
-    toggleBtn.innerHTML = "☾"; // Ay ikonu
-}
-
-// 3. Tıklama Olayı
-toggleBtn.addEventListener("click", function() {
-    document.body.classList.toggle("light-mode");
-
-    let theme = "dark";
-
-    // Eğer light-mode sınıfı eklendiyse
-    if (document.body.classList.contains("light-mode")) {
-        theme = "light";
-        toggleBtn.innerHTML = "☾"; // Geceye dönmek için Ay ikonu
-    } else {
-        toggleBtn.innerHTML = "☀"; // Gündüze dönmek için Güneş ikonu
+    // HTML veya Body sınıf senkronizasyonu
+    if (isLight) {
+        document.body.classList.add("light-mode");
     }
 
-    // Tercihi kaydet
-    localStorage.setItem("theme", theme);
-});
+    // 2. Tıklama Olayı
+    toggleBtn.addEventListener("click", function() {
+        const isCurrentlyLight = document.body.classList.toggle("light-mode");
+        document.documentElement.classList.toggle("light-mode", isCurrentlyLight);
+
+        if (isCurrentlyLight) {
+            toggleBtn.innerHTML = "☾";
+            localStorage.setItem("theme", "light");
+        } else {
+            toggleBtn.innerHTML = "☀";
+            localStorage.setItem("theme", "dark");
+        }
+    });
 });

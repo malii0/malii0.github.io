@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes - Muhammed Ali Onurlucan</title>
+    
+    <script>
+        if (localStorage.getItem("theme") === "light") {
+            document.documentElement.classList.add("light-mode");
+        }
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <div class="container" style="display: block;">
+        
+        <a href="/" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+        
+        <h1>Notes & Knowledge Base</h1>
+        <p class="about-text" style="margin-bottom: 30px;">
+            A personal collection of technical study notes, mathematical derivations, and analytical reference documents.
+        </p>
+
+        <!-- KATEGORİ 1: OPTICS -->
+        <h2>Optics & Wavefront Sensing</h2>
+        <div class="project-item">
+            <span class="project-name">
+                <i class="fa-regular fa-file-pdf" style="color: var(--accent-yellow); margin-right: 6px;"></i>
+                <a href="/files/zernike-polynomials-adaptive-optics.pdf" target="_blank">Zernike Polynomials in Adaptive Optics</a>
+            </span>
+            <span class="status-badge status-complete">v1.0</span>
+            <span class="project-desc">
+                Mathematical foundations of Zernike polynomials, orthogonality over circular pupils, and their application to optical aberration expansion and wavefront reconstruction.
+            </span>
+        </div>
+
+        <!-- KATEGORİ 2: ASTRODYNAMICS -->
+        <h2>Astrodynamics & Orbital Mechanics</h2>
+        <div class="project-item">
+            <span class="project-name">
+                <i class="fa-regular fa-file-lines" style="color: var(--dim-color); margin-right: 6px;"></i>
+                Fundamentals of Orbit Determination
+            </span>
+            <span class="status-badge status-progress">In Progress</span>
+            <span class="project-desc">
+                Comprehensive study notes covering the two-body problem, Keplerian elements, coordinate transformations, and numerical state propagation techniques.
+            </span>
+        </div>
+
+    </div>
+
+    <script src="/main.js"></script>
+    <script data-goatcounter="https://malionurlucan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
