@@ -37,26 +37,4 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.setItem("theme", "dark");
         }
     });
-
-    // 5. Dynamic Cache-Busting via GitHub API for Static Assets (PDFs)
-    const pdfLinks = document.querySelectorAll('a[href$=".pdf"]');
-
-    pdfLinks.forEach(async (link) => {
-        const rawHref = link.getAttribute('href').split('?')[0];
-        const filePath = rawHref.startsWith('/') ? rawHref.slice(1) : rawHref;
-
-        try {
-            const response = await fetch(`https://api.github.com/repos/malii0/malii0.github.io/commits?path=${filePath}&page=1&per_page=1`);
-            
-            if (response.ok) {
-                const data = await response.json();
-                if (data.length > 0) {
-                    const lastCommitDate = data[0].commit.committer.date.split('T')[0].replace(/-/g, '');
-                    link.setAttribute('href', `${rawHref}?v=${lastCommitDate}`);
-                }
-            }
-        } catch (error) {
-            console.error(`Commit date query failed for: ${filePath}`, error);
-        }
-    });
 });
