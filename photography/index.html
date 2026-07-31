@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photography - Muhammed Ali Onurlucan</title>
-    <meta name="description" content="Personal photography archive by Muhammed Ali Onurlucan.">
+    <meta name="description" content="Personal photo gallery by Muhammed Ali Onurlucan.">
 
     <link rel="canonical" href="https://malionurlucan.me/photography/">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -33,48 +33,64 @@
         <a href="/" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
         
         <h1>Photography</h1>
+        <p class="about-text notes-intro">
+            A minimalist visual log of places, optics, and everyday observations.
+        </p>
 
-        <!-- YALNIZCA GÖRSELLERDEN OLUŞAN OTOMATİK GRİD -->
-        <div class="photo-grid" id="photo-gallery">
-            <!-- Görseller JavaScript tarafındanOtomatik Yüklenecek -->
-        </div>
+        <!-- Dynamic Photo Grid Container -->
+        <div id="photo-gallery" class="photo-grid"></div>
 
     </div>
 
-    <!-- Otomatik Fotoğraf Yükleyici Script -->
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", async function() {
             const gallery = document.getElementById("photo-gallery");
-            
-            // img/photos/ altındaki 1.jpg'den başlayarak resimleri otomatik dener
-            // Maksimum denenecek fotoğraf sayısı limitini yüksek tutabilirsin
-            const maxPhotosToScan = 50; 
+            const apiUrl = "https://api.github.com/repos/malii0/malii0.github.io/contents/img/photos";
 
-            for (let i = 1; i <= maxPhotosToScan; i++) {
-                const imgPath = `/img/photos/${i}.jpg`;
-                const img = new Image();
-                
-                img.src = imgPath;
-                img.onload = function() {
+            try {
+                let files = [];
+                const cachedData = sessionStorage.getItem("gallery_photos");
+
+                if (cachedData) {
+                    files = JSON.parse(cachedData);
+                } else {
+                    const res = await fetch(apiUrl);
+                    if (!res.ok) throw new Error("GitHub API fetch failed");
+                    files = await res.json();
+                    sessionStorage.setItem("gallery_photos", JSON.stringify(files));
+                }
+
+                // Sadece resim formatlarını filtrele ve doğal sayısal sıraya göre diz
+                const photos = files
+                    .filter(f => /\.(jpe?g|png|webp)$/i.test(f.name))
+                    .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+
+                if (photos.length === 0) {
+                    gallery.innerHTML = '<p class="about-text" style="color: var(--dim-color);">No photos published yet.</p>';
+                    return;
+                }
+
+                photos.forEach((file, index) => {
                     const card = document.createElement("div");
                     card.className = "photo-card";
-                    
+
                     const link = document.createElement("a");
-                    link.href = imgPath;
+                    link.href = `/img/photos/${file.name}`;
                     link.target = "_blank";
                     link.rel = "noopener";
-                    
+
                     const imageElement = document.createElement("img");
-                    imageElement.src = imgPath;
-                    imageElement.alt = `Photo ${i}`;
+                    imageElement.src = `/img/photos/${file.name}`;
+                    imageElement.alt = `Photo ${index + 1}`;
                     imageElement.loading = "lazy";
-                    
+
                     link.appendChild(imageElement);
                     card.appendChild(link);
                     gallery.appendChild(card);
-                };
-                // Resim bulunamazsa (dosya yoksa) hatayı yutar, ekrana basmaz
-                img.onerror = function() {}; 
+                });
+            } catch (err) {
+                console.error("Gallery failed to load:", err);
+                gallery.innerHTML = '<p class="about-text" style="color: var(--dim-color);">Unable to load gallery at the moment.</p>';
             }
         });
     </script>
