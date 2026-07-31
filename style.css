@@ -1,4 +1,4 @@
-/* style.css - Final Versiyon (With Photography & Reading Log) */
+/* style.css - Final Versiyon */
 
 :root {
     /* --- KARANLIK MOD (VARSAYILAN) --- */
@@ -147,7 +147,7 @@ body.light-mode .social-row a:hover .fa-github { color: #cf222e; }
 .project-desc {
     display: block;
     color: var(--dim-color);
-    margin-left: 38px;
+    margin-left: 0;
     margin-top: 5px;
     font-size: 0.9rem;
 }
@@ -232,11 +232,11 @@ body.light-mode .social-row a:hover .fa-github { color: #cf222e; }
     border: 1px solid rgba(210, 153, 34, 0.4);
 }
 
-/* --- PHOTOGRAPHY GRID --- */
+/* --- PHOTOGRAPHY MINIMAL GRID --- */
 .photo-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
     margin-top: 25px;
 }
 
@@ -246,25 +246,25 @@ body.light-mode .social-row a:hover .fa-github { color: #cf222e; }
     overflow: hidden;
     background-color: var(--btn-bg);
     transition: transform 0.2s, border-color 0.2s;
+    aspect-ratio: 1 / 1;
 }
 
 .photo-card:hover {
-    transform: translateY(-4px);
+    transform: scale(1.02);
     border-color: var(--heading-color);
+}
+
+.photo-card a {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .photo-card img {
     width: 100%;
-    height: 180px;
+    height: 100%;
     object-fit: cover;
     display: block;
-}
-
-.photo-caption {
-    padding: 10px 12px;
-    font-size: 0.8rem;
-    color: var(--dim-color);
-    text-align: left;
 }
 
 @media (max-width: 768px) {
@@ -272,5 +272,5 @@ body.light-mode .social-row a:hover .fa-github { color: #cf222e; }
     .profile-pic { width: 140px; height: 140px; margin-bottom: 20px; }
     body { padding-top: 30px; }
     .theme-btn { top: 15px; right: 15px; }
-    .photo-grid { grid-template-columns: 1fr; }
+    .photo-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
 }
