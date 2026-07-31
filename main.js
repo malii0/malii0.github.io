@@ -1,27 +1,33 @@
-// main.js - Flash-free Dark/Light Mode Management
+// main.js - OS Preference & Storage Aware Dark/Light Mode
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    // 1. Theme Toggle Butonunu Oluştur
+    // 1. Durum Tespiti (localStorage > OS Tercihi > Dark Default)
+    const storedTheme = localStorage.getItem("theme");
+    const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+    const isLight = storedTheme ? storedTheme === "light" : prefersLight;
+
+    // 2. Class senkronizasyonu
+    if (isLight) {
+        document.body.classList.add("light-mode");
+        document.documentElement.classList.add("light-mode");
+    }
+
+    // 3. Theme Toggle Butonunu Oluştur
     const toggleBtn = document.createElement("button");
     toggleBtn.id = "theme-toggle";
     toggleBtn.className = "theme-btn";
-    
-    // İlk yüklemedeki ikon durumu
-    const isLight = document.documentElement.classList.contains("light-mode") || document.body.classList.contains("light-mode");
     toggleBtn.innerHTML = isLight ? "☾" : "☀";
     toggleBtn.setAttribute("aria-label", "Toggle Dark/Light Mode");
+    toggleBtn.setAttribute("aria-pressed", isLight ? "true" : "false");
     document.body.appendChild(toggleBtn);
 
-    // HTML veya Body sınıf senkronizasyonu
-    if (isLight) {
-        document.body.classList.add("light-mode");
-    }
-
-    // 2. Tıklama Olayı
+    // 4. Tıklama Olayı
     toggleBtn.addEventListener("click", function() {
         const isCurrentlyLight = document.body.classList.toggle("light-mode");
         document.documentElement.classList.toggle("light-mode", isCurrentlyLight);
+
+        toggleBtn.setAttribute("aria-pressed", isCurrentlyLight ? "true" : "false");
 
         if (isCurrentlyLight) {
             toggleBtn.innerHTML = "☾";

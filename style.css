@@ -1,6 +1,6 @@
 /* style.css - Final Versiyon */
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+/* Font tanımı HTML head içerisinde preconnect ile çekiliyor */
 
 :root {
     /* --- KARANLIK MOD (VARSAYILAN) --- */
@@ -55,6 +55,10 @@ body {
     gap: 50px;
 }
 
+.container-single {
+    display: block;
+}
+
 .content-side { flex: 1; }
 .image-side { flex-shrink: 0; }
 
@@ -77,6 +81,10 @@ h2 {
 ul { list-style: none; }
 li { margin-bottom: 10px; }
 
+.nav-links {
+    margin-bottom: 35px;
+}
+
 a {
     text-decoration: none;
     color: var(--link-color);
@@ -84,6 +92,11 @@ a {
     transition: color 0.2s;
 }
 a:hover { text-decoration: underline; color: var(--accent-blue); }
+
+.inline-link {
+    color: inherit;
+    text-decoration: underline;
+}
 
 /* --- İKON AYARLARI --- */
 .icon-fixed {
@@ -93,8 +106,9 @@ a:hover { text-decoration: underline; color: var(--accent-blue); }
     margin-right: 10px;
 }
 
-.fa-file-pdf { color: var(--accent-yellow); }
+.fa-file-pdf, .pdf-icon { color: var(--accent-yellow); }
 .icon-proj { color: var(--accent-blue); }
+.progress-icon { color: var(--dim-color); margin-right: 6px; }
 
 /* --- SOSYAL MEDYA --- */
 .social-row {
@@ -162,6 +176,18 @@ body.light-mode .social-row a:hover .fa-github { color: #cf222e; }
     margin-bottom: 15px;
     max-width: 550px;
     font-size: 0.95rem;
+}
+
+.about-text p {
+    margin-top: 10px;
+}
+
+.about-text p:first-child {
+    margin-top: 0;
+}
+
+.notes-intro {
+    margin-bottom: 30px;
 }
 
 /* TEMA BUTONU */

@@ -1,27 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Muhammed Ali Onurlucan</title>
     <meta name="description" content="Muhammed Ali Onurlucan - Mathematics Student at Middle East Technical University (METU). Personal Academic Knowledge Base & Notes on Flight Dynamics, Adaptive Optics, and Orbital Mechanics.">
     <meta name="keywords" content="Muhammed Ali Onurlucan, ODTÜ Matematik, METU Mathematics, Galaxy Rocket Team, Flight Dynamics, Adaptive Optics, Zernike Polynomials, SSA, Orbital Mechanics, Technical Notes">
     <meta name="author" content="Muhammed Ali Onurlucan">
 
+    <!-- Canonical URL & Favicon -->
+    <link rel="canonical" href="https://malionurlucan.me/">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- Open Graph (Facebook / LinkedIn) -->
     <meta property="og:title" content="M. Ali Onurlucan - Personal Site & Notes">
     <meta property="og:description" content="Undergraduate Mathematics Student @ METU. Academic knowledge base & study notes on Flight Dynamics, Adaptive Optics & Orbital Mechanics.">
     <meta property="og:image" content="https://malionurlucan.me/img/avatar.jpg">
-    <meta property="og:url" content="https://malionurlucan.me">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://malionurlucan.me/">
     <meta property="og:type" content="website">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muhammed Ali Onurlucan</title>
 
-    <!-- FOUC Önleyici (CSS Render Öncesi Tema Kontrolü) -->
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@onurlucan_mali">
+    <meta name="twitter:title" content="M. Ali Onurlucan - Personal Site & Notes">
+    <meta name="twitter:description" content="Undergraduate Mathematics Student @ METU. Academic knowledge base & study notes on Flight Dynamics, Adaptive Optics & Orbital Mechanics.">
+    <meta name="twitter:image" content="https://malionurlucan.me/img/avatar.jpg">
+
+    <!-- Person JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Muhammed Ali Onurlucan",
+      "url": "https://malionurlucan.me",
+      "image": "https://malionurlucan.me/img/avatar.jpg",
+      "jobTitle": "Undergraduate Student",
+      "affiliation": {
+        "@type": "CollegeOrUniversity",
+        "name": "Middle East Technical University"
+      },
+      "sameAs": [
+        "https://github.com/malii0",
+        "http://linkedin.com/in/mali0/",
+        "https://orcid.org/0009-0002-9240-9825",
+        "https://www.researchgate.net/profile/Muhammed-Onurlucan",
+        "https://x.com/onurlucan_mali"
+      ]
+    }
+    </script>
+
+    <!-- FOUC Önleyici (OS Tercihi + localStorage Kontrolü) -->
     <script>
-        if (localStorage.getItem("theme") === "light") {
+        const storedTheme = localStorage.getItem("theme");
+        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (storedTheme === "light" || (!storedTheme && prefersLight)) {
             document.documentElement.classList.add("light-mode");
         }
     </script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts Optimization (Preconnect + Rel Link) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+    <!-- Font Awesome (SRI Hash Eklendi) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -31,10 +78,10 @@
         <div class="content-side">
             <h1>Muhammed Ali Onurlucan</h1>
 
-            <ul style="margin-bottom: 35px;">
+            <ul class="nav-links">
                 <li>
                     <span class="icon-fixed"><i class="fa-regular fa-file-pdf"></i></span>
-                    <a href="/files/cv.pdf?v=20260708" target="_blank">Curriculum Vitae</a>
+                    <a href="/files/cv.pdf?v=20260708" target="_blank" rel="noopener">Curriculum Vitae</a>
                 </li>
                 <li>
                     <span class="icon-fixed icon-proj"><i class="fa-solid fa-book-bookmark"></i></span>
@@ -45,40 +92,40 @@
             <h2>About Me</h2>
             <div class="about-text">
                 <p>
-                    I'm Muhammed Ali, an undergraduate student at <strong><a href="https://www.metu.edu.tr/en" target="_blank" style="color: inherit; text-decoration: underline;">Middle East Technical University</a></strong>, Department of Mathematics.
+                    I'm Muhammed Ali, an undergraduate student at <strong><a href="https://www.metu.edu.tr/en" target="_blank" rel="noopener" class="inline-link">Middle East Technical University</a></strong>, Department of Mathematics.
                 </p>
-                <p style="margin-top: 10px;">
-                    I focus on computational mathematics, flight dynamics, and optical/astrodynamic modeling. Currently, I contribute to the <strong><a href="https://www.galaxyroket.com/" target="_blank" style="color: inherit; text-decoration: underline;">Galaxy Rocket Team</a></strong>, developing 6-DOF flight dynamics models using MATLAB/Simulink.
+                <p>
+                    I focus on computational mathematics, flight dynamics, and optical/astrodynamic modeling. Currently, I contribute to the <strong><a href="https://www.galaxyroket.com/" target="_blank" rel="noopener" class="inline-link">Galaxy Rocket Team</a></strong>, developing 6-DOF flight dynamics models using MATLAB/Simulink.
                 </p>
-                <p style="margin-top: 10px;">
-                    Recently, I completed a research internship at the <strong><a href="https://trgozlemevleri.gov.tr/" target="_blank" style="color: inherit; text-decoration: underline;">Türkiye National Observatory</a></strong> under the supervision of <strong><a href="https://avesis.atauni.edu.tr/cahity" target="_blank" style="color: inherit; text-decoration: underline;">Prof. Dr. Cahit Yeşilyaprak</a></strong>. My work centered on general telescope optics, <strong>Adaptive Optics (Zernike Polynomials)</strong>, and <strong>Space Situational Awareness (SSA)</strong>, encompassing <strong>orbital mechanics</strong> and <strong>orbit determination</strong>.
+                <p>
+                    Recently, I completed a research internship at the <strong><a href="https://trgozlemevleri.gov.tr/" target="_blank" rel="noopener" class="inline-link">Türkiye National Observatory</a></strong> under the supervision of <strong><a href="https://avesis.atauni.edu.tr/cahity" target="_blank" rel="noopener" class="inline-link">Prof. Dr. Cahit Yeşilyaprak</a></strong>. My work centered on general telescope optics, <strong>Adaptive Optics (Zernike Polynomials)</strong>, and <strong>Space Situational Awareness (SSA)</strong>, encompassing <strong>orbital mechanics</strong> and <strong>orbit determination</strong>.
                 </p>
             </div>
 
             <h2>Contact & Social</h2>
 
             <div class="social-row">
-                <a href="mailto:ali.onurlucan@metu.edu.tr" title="Email">
+                <a href="mailto:ali.onurlucan@metu.edu.tr" title="Email" aria-label="Email">
                     <i class="fa-solid fa-envelope"></i>
                 </a>
 
-                <a href="https://github.com/malii0" target="_blank" title="GitHub">
+                <a href="https://github.com/malii0" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
                     <i class="fa-brands fa-github"></i>
                 </a>
 
-                <a href="http://linkedin.com/in/mali0/" target="_blank" title="LinkedIn">
+                <a href="http://linkedin.com/in/mali0/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
                     <i class="fa-brands fa-linkedin"></i>
                 </a>
 
-                <a href="https://orcid.org/0009-0002-9240-9825" target="_blank" title="ORCID">
+                <a href="https://orcid.org/0009-0002-9240-9825" target="_blank" rel="noopener" title="ORCID" aria-label="ORCID">
                     <i class="fa-brands fa-orcid"></i>
                 </a>
 
-                <a href="https://www.researchgate.net/profile/Muhammed-Onurlucan" target="_blank" title="ResearchGate">
+                <a href="https://www.researchgate.net/profile/Muhammed-Onurlucan" target="_blank" rel="noopener" title="ResearchGate" aria-label="ResearchGate">
                     <i class="fa-brands fa-researchgate"></i>
                 </a>
 
-                <a href="https://x.com/onurlucan_mali" target="_blank" title="X (Twitter)">
+                <a href="https://x.com/onurlucan_mali" target="_blank" rel="noopener" title="X (Twitter)" aria-label="X (Twitter)">
                     <i class="fa-brands fa-x-twitter"></i>
                 </a>
             </div>
@@ -86,7 +133,7 @@
         </div>
 
         <div class="image-side">
-            <img src="/img/avatar.jpg" alt="Profile" class="profile-pic">
+            <img src="/img/avatar.jpg" alt="Muhammed Ali Onurlucan profil fotoğrafı" class="profile-pic">
         </div>
 
     </div>
