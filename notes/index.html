@@ -9,7 +9,6 @@
     <link rel="canonical" href="https://malionurlucan.me/notes/">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
-    <!-- FOUC Önleyici -->
     <script>
         const storedTheme = localStorage.getItem("theme");
         const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
@@ -22,33 +21,40 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap">
 
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
-    
+
     <link rel="stylesheet" href="/style.css" fetchpriority="high">
 </head>
 <body>
 
-    <main class="container container-single">
-        
-        <a href="/" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
-        
-        <h1>Notes</h1>
-        <p class="about-text notes-intro">
-            A collection of technical study notes, mathematical derivations, and reference documents.
-        </p>
+    <nav class="site-nav">
+        <a href="/" class="brand">m.a.o</a>
+        <div class="nav-items">
+            <a href="/">home</a>
+            <a href="/projects/">projects</a>
+            <a href="/notes/" class="active">notes</a>
+            <a href="/reading/">read / watch</a>
+            <a href="/photography/">photography</a>
+        </div>
+    </nav>
 
-        <div class="project-item">
-            <span class="project-name">
-                <i class="fa-regular fa-file-pdf pdf-icon"></i>
-                <a href="/files/Zernike Polynomials.pdf" target="_blank" rel="noopener">Zernike Polinomlarının Matematiksel Altyapısı ve Optik Uygulamaları</a>
-                <span class="status-badge status-complete">[TR]</span>
-            </span>
-            <span class="project-desc">
-                Mathematical foundations of Zernike polynomials, unit disk orthogonality, indexing schemes (Noll, OSA/ANSI, Fringe), Seidel aberrations, and wavefront reconstruction in adaptive optics.
-            </span>
+    <main class="container container-single">
+
+        <div class="page-label">notes</div>
+        <p class="page-intro">A collection of technical study notes, mathematical derivations, and reference documents.</p>
+
+        <div class="entry-list">
+            <div class="entry-item">
+                <a href="/files/Zernike Polynomials.pdf" target="_blank" rel="noopener" class="entry-title">
+                    Zernike Polinomlarının Matematiksel Altyapısı ve Optik Uygulamaları
+                    <span class="status-badge">TR · PDF</span>
+                </a>
+                <span class="entry-meta">adaptive optics</span>
+                <p class="entry-desc">Mathematical foundations of Zernike polynomials, unit disk orthogonality, indexing schemes (Noll, OSA/ANSI, Fringe), Seidel aberrations, and wavefront reconstruction in adaptive optics.</p>
+            </div>
         </div>
 
     </main>

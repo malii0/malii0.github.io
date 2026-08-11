@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reading Log - Muhammed Ali Onurlucan</title>
-    <meta name="description" content="Books, papers, and technical literature read by Muhammed Ali Onurlucan with short notes.">
+    <title>Read / Watch - Muhammed Ali Onurlucan</title>
+    <meta name="description" content="Papers, articles, videos, and other things worth noting, by Muhammed Ali Onurlucan.">
 
     <link rel="canonical" href="https://malionurlucan.me/reading/">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
-    <!-- FOUC Önleyici -->
     <script>
         const storedTheme = localStorage.getItem("theme");
         const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
@@ -22,76 +21,69 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap">
 
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
-    
+
     <link rel="stylesheet" href="/style.css" fetchpriority="high">
 </head>
 <body>
 
+    <nav class="site-nav">
+        <a href="/" class="brand">m.a.o</a>
+        <div class="nav-items">
+            <a href="/">home</a>
+            <a href="/projects/">projects</a>
+            <a href="/notes/">notes</a>
+            <a href="/reading/" class="active">read / watch</a>
+            <a href="/photography/">photography</a>
+        </div>
+    </nav>
+
     <main class="container container-single">
-        
-        <a href="/" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
-        
-        <h1>Reading Log</h1>
-        <p class="about-text notes-intro">
-            A chronological list of books, academic papers, and technical literature I've read, along with personal notes.
-        </p>
 
-        <div class="project-item">
-            <span class="project-name">
-                <a href="https://doi.org/10.1117/3.358220" target="_blank" rel="noopener" class="inline-link">Introduction to Adaptive Optics</a> — Robert K. Tyson (2000)
-            </span>
-            <span class="project-desc">
-                SPIE Press. Fundamental background on wavefront sensing, deformable mirrors, and atmospheric turbulence mitigation.
-            </span>
-        </div>
+        <div class="page-label">read / watch</div>
+        <p class="page-intro">Papers, articles, videos — anything worth a short note when I come across it. Newest first.</p>
 
-        <div class="project-item">
-            <span class="project-name">
-                <a href="https://doi.org/10.1088/2040-8986/ac9e08" target="_blank" rel="noopener" class="inline-link">Zernike Polynomials and Their Applications</a> — Kuo Niu & Chao Tian (2022)
-            </span>
-            <span class="project-desc">
-                Journal of Optics, Vol. 24, No. 12. Review on mathematical properties of Zernike polynomials and their applications in optical aberration analysis.
-            </span>
-        </div>
+        <div class="entry-list">
 
-        <div class="project-item">
-            <span class="project-name">
-                Deep Multi-Task and Representation Learning Method for Atmospheric Turbulence Prediction — V. K. P. Sathia et al.
-            </span>
-            <span class="project-desc">
-                Georgia State University. Application of deep learning models for atmospheric turbulence prediction and correction using focal plane speckle images.
-            </span>
-        </div>
+            <div class="entry-item">
+                <a href="https://doi.org/10.1117/3.358220" target="_blank" rel="noopener" class="entry-title">Introduction to Adaptive Optics</a>
+                <span class="entry-meta">book · Robert K. Tyson (2000)</span>
+                <p class="entry-desc">SPIE Press. Fundamental background on wavefront sensing, deformable mirrors, and atmospheric turbulence mitigation.</p>
+            </div>
 
-        <div class="project-item">
-            <span class="project-name">
-                <a href="https://doi.org/10.1117/12.2560528" target="_blank" rel="noopener" class="inline-link">TROIA Adaptive Optics System for DAG Telescope</a> — O. Keskin, L. Jolissaint, A. Bouxin, C. Yeşilyaprak (2020)
-            </span>
-            <span class="project-desc">
-                Proc. SPIE 11448, Adaptive Optics Systems VII. Architectural design and operational setup of the TROIA adaptive optics instrument for DAG.
-            </span>
-        </div>
+            <div class="entry-item">
+                <a href="https://doi.org/10.1088/2040-8986/ac9e08" target="_blank" rel="noopener" class="entry-title">Zernike Polynomials and Their Applications</a>
+                <span class="entry-meta">paper · Kuo Niu &amp; Chao Tian (2022)</span>
+                <p class="entry-desc">Journal of Optics, Vol. 24, No. 12. Review on mathematical properties of Zernike polynomials and their applications in optical aberration analysis.</p>
+            </div>
 
-        <div class="project-item">
-            <span class="project-name">
-                <a href="https://www.researchgate.net/publication/305686619_The_design_of_an_adaptive_optics_telescope_the_case_of_DAG" target="_blank" rel="noopener" class="inline-link">The Design of an Adaptive Optics Telescope: The Case of DAG</a> — L. Jolissaint et al.
-            </span>
-            <span class="project-desc">
-                System-level optical engineering considerations and structural integrated adaptive optics design for the 4m DAG telescope.
-            </span>
-        </div>
+            <div class="entry-item">
+                <span class="entry-title" style="color: var(--heading-color);">Deep Multi-Task and Representation Learning Method for Atmospheric Turbulence Prediction</span>
+                <span class="entry-meta">paper · V. K. P. Sathia et al.</span>
+                <p class="entry-desc">Georgia State University. Application of deep learning models for atmospheric turbulence prediction and correction using focal plane speckle images.</p>
+            </div>
 
-        <div class="project-item">
-            <span class="project-name">
-                <a href="https://www.sciencedirect.com/science/article/abs/pii/S0273117715000551" target="_blank" rel="noopener" class="inline-link">Ground-Based Optical Observation System for LEO Objects</a> — T. Yanagisawa, H. Kurosaki, H. Oda, M. Tagawa (2015)
-            </span>
-            <span class="project-desc">
-                Advances in Space Research / JAXA. Observational methodologies, tracking algorithms, and optical architectures for LEO space debris surveillance.
-            </span>
+            <div class="entry-item">
+                <a href="https://doi.org/10.1117/12.2560528" target="_blank" rel="noopener" class="entry-title">TROIA Adaptive Optics System for DAG Telescope</a>
+                <span class="entry-meta">paper · O. Keskin, L. Jolissaint, A. Bouxin, C. Yeşilyaprak (2020)</span>
+                <p class="entry-desc">Proc. SPIE 11448, Adaptive Optics Systems VII. Architectural design and operational setup of the TROIA adaptive optics instrument for DAG.</p>
+            </div>
+
+            <div class="entry-item">
+                <a href="https://www.researchgate.net/publication/305686619_The_design_of_an_adaptive_optics_telescope_the_case_of_DAG" target="_blank" rel="noopener" class="entry-title">The Design of an Adaptive Optics Telescope: The Case of DAG</a>
+                <span class="entry-meta">paper · L. Jolissaint et al.</span>
+                <p class="entry-desc">System-level optical engineering considerations and structural integrated adaptive optics design for the 4m DAG telescope.</p>
+            </div>
+
+            <div class="entry-item">
+                <a href="https://www.sciencedirect.com/science/article/abs/pii/S0273117715000551" target="_blank" rel="noopener" class="entry-title">Ground-Based Optical Observation System for LEO Objects</a>
+                <span class="entry-meta">paper · T. Yanagisawa, H. Kurosaki, H. Oda, M. Tagawa (2015)</span>
+                <p class="entry-desc">Advances in Space Research / JAXA. Observational methodologies, tracking algorithms, and optical architectures for LEO space debris surveillance.</p>
+            </div>
+
         </div>
 
     </main>

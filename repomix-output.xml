@@ -1,0 +1,950 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+files/
+  cv.pdf
+  Zernike Polynomials.pdf
+img/
+  avatar.jpg
+notes/
+  index.html
+photography/
+  index.html
+projects/
+  index.html
+reading/
+  index.html
+.gitignore
+CNAME
+index.html
+main.js
+README.md
+robots.txt
+sitemap.xml
+style.css
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path=".gitignore">
+.DS_Store
+Thumbs.db
+*.log
+</file>
+
+<file path="CNAME">
+malionurlucan.me
+</file>
+
+<file path="robots.txt">
+User-agent: *
+Allow: /
+
+Sitemap: https://malionurlucan.me/sitemap.xml
+</file>
+
+<file path="README.md">
+# Personal Portfolio
+
+My personal academic portfolio website hosted on GitHub Pages.
+Built with HTML, CSS, and vanilla JavaScript.
+
+🌐 **Live Site:** [malionurlucan.me](https://malionurlucan.me)
+</file>
+
+<file path="photography/index.html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography - Muhammed Ali Onurlucan</title>
+    <meta name="description" content="Personal photo gallery by Muhammed Ali Onurlucan.">
+
+    <link rel="canonical" href="https://malionurlucan.me/photography/">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- FOUC Önleyici -->
+    <script>
+        const storedTheme = localStorage.getItem("theme");
+        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (storedTheme === "light" || (!storedTheme && prefersLight)) {
+            document.documentElement.classList.add("light-mode");
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    
+    <link rel="stylesheet" href="/style.css" fetchpriority="high">
+</head>
+<body>
+
+    <main class="container container-single">
+        
+        <a href="/" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+        
+        <h1>Photography</h1>
+        <p class="about-text notes-intro">
+            A minimalist visual log of places, optics, and everyday observations.
+        </p>
+
+        <!-- Dynamic Photo Grid Container -->
+        <div id="photo-gallery" class="photo-grid"></div>
+
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function() {
+            const gallery = document.getElementById("photo-gallery");
+            const apiUrl = "https://api.github.com/repos/malii0/malii0.github.io/contents/img/photos";
+
+            try {
+                let files = [];
+                const cachedData = sessionStorage.getItem("gallery_photos");
+
+                if (cachedData) {
+                    files = JSON.parse(cachedData);
+                } else {
+                    const res = await fetch(apiUrl);
+                    if (!res.ok) throw new Error("GitHub API fetch failed");
+                    files = await res.json();
+                    sessionStorage.setItem("gallery_photos", JSON.stringify(files));
+                }
+
+                const photos = files
+                    .filter(f => /\.(jpe?g|png|webp)$/i.test(f.name))
+                    .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+
+                if (photos.length === 0) {
+                    gallery.innerHTML = '<p class="about-text" style="color: var(--dim-color);">No photos published yet.</p>';
+                    return;
+                }
+
+                photos.forEach((file, index) => {
+                    const card = document.createElement("div");
+                    card.className = "photo-card";
+
+                    const link = document.createElement("a");
+                    link.href = `/img/photos/${file.name}`;
+                    link.target = "_blank";
+                    link.rel = "noopener";
+
+                    const imageElement = document.createElement("img");
+                    imageElement.src = `/img/photos/${file.name}`;
+                    imageElement.alt = `Photo ${index + 1}`;
+                    imageElement.loading = "lazy";
+
+                    link.appendChild(imageElement);
+                    card.appendChild(link);
+                    gallery.appendChild(card);
+                });
+            } catch (err) {
+                console.error("Gallery failed to load:", err);
+                gallery.innerHTML = '<p class="about-text" style="color: var(--dim-color);">Unable to load gallery at the moment.</p>';
+            }
+        });
+    </script>
+
+    <script src="/main.js"></script>
+    <script data-goatcounter="https://malionurlucan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+</file>
+
+<file path="sitemap.xml">
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://malionurlucan.me/</loc>
+        <lastmod>2026-08-03</lastmod>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/projects/</loc>
+        <lastmod>2026-08-03</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/notes/</loc>
+        <lastmod>2026-08-03</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/reading/</loc>
+        <lastmod>2026-08-03</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/photography/</loc>
+        <lastmod>2026-08-03</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/files/cv.pdf</loc>
+        <priority>0.8</priority>
+    </url>
+</urlset>
+</file>
+
+<file path="notes/index.html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes - Muhammed Ali Onurlucan</title>
+    <meta name="description" content="Technical study notes, mathematical derivations, and reference documents by Muhammed Ali Onurlucan.">
+
+    <link rel="canonical" href="https://malionurlucan.me/notes/">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- FOUC Önleyici -->
+    <script>
+        const storedTheme = localStorage.getItem("theme");
+        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (storedTheme === "light" || (!storedTheme && prefersLight)) {
+            document.documentElement.classList.add("light-mode");
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    
+    <link rel="stylesheet" href="/style.css" fetchpriority="high">
+</head>
+<body>
+
+    <main class="container container-single">
+        
+        <a href="/" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+        
+        <h1>Notes</h1>
+        <p class="about-text notes-intro">
+            A collection of technical study notes, mathematical derivations, and reference documents.
+        </p>
+
+        <div class="project-item">
+            <span class="project-name">
+                <i class="fa-regular fa-file-pdf pdf-icon"></i>
+                <a href="/files/Zernike Polynomials.pdf" target="_blank" rel="noopener">Zernike Polinomlarının Matematiksel Altyapısı ve Optik Uygulamaları</a>
+                <span class="status-badge status-complete">[TR]</span>
+            </span>
+            <span class="project-desc">
+                Mathematical foundations of Zernike polynomials, unit disk orthogonality, indexing schemes (Noll, OSA/ANSI, Fringe), Seidel aberrations, and wavefront reconstruction in adaptive optics.
+            </span>
+        </div>
+
+    </main>
+
+    <script src="/main.js"></script>
+    <script data-goatcounter="https://malionurlucan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+</file>
+
+<file path="main.js">
+// main.js - OS Preference & Storage Aware Dark/Light Mode
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    // 1. Durum Tespiti (localStorage > OS Tercihi > Dark Default)
+    const storedTheme = localStorage.getItem("theme");
+    const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+    const isLight = storedTheme ? storedTheme === "light" : prefersLight;
+
+    // 2. Class senkronizasyonu
+    if (isLight) {
+        document.body.classList.add("light-mode");
+        document.documentElement.classList.add("light-mode");
+    }
+
+    // 3. Theme Toggle Butonunu Oluştur
+    const toggleBtn = document.createElement("button");
+    toggleBtn.id = "theme-toggle";
+    toggleBtn.className = "theme-btn";
+    toggleBtn.innerHTML = isLight ? "☾" : "☀";
+    toggleBtn.setAttribute("aria-label", "Toggle Dark/Light Mode");
+    toggleBtn.setAttribute("aria-pressed", isLight ? "true" : "false");
+    document.body.appendChild(toggleBtn);
+
+    // 4. Tıklama Olayı
+    toggleBtn.addEventListener("click", function() {
+        const isCurrentlyLight = document.body.classList.toggle("light-mode");
+        document.documentElement.classList.toggle("light-mode", isCurrentlyLight);
+
+        toggleBtn.setAttribute("aria-pressed", isCurrentlyLight ? "true" : "false");
+
+        if (isCurrentlyLight) {
+            toggleBtn.innerHTML = "☾";
+            localStorage.setItem("theme", "light");
+        } else {
+            toggleBtn.innerHTML = "☀";
+            localStorage.setItem("theme", "dark");
+        }
+    });
+});
+</file>
+
+<file path="style.css">
+/* style.css - Final Versiyon */
+
+:root {
+    /* --- KARANLIK MOD (VARSAYILAN) --- */
+    --bg-color: #0b0d12;
+    --text-color: #e6edf3;
+    --heading-color: #58a6ff;
+    --link-color: #e6edf3;
+    --accent-yellow: #d29922;
+    --accent-blue: #79c0ff;
+    --dim-color: #8b949e;
+    --border-color: #30363d;
+    --btn-bg: #21262d;
+    --btn-hover: #30363d;
+}
+
+/* --- AYDINLIK MOD --- */
+body.light-mode, html.light-mode {
+    --bg-color: #ffffff;
+    --text-color: #1f2328;
+    --heading-color: #0969da;
+    --link-color: #1f2328;
+    --accent-yellow: #d4a72c;
+    --accent-blue: #0969da;
+    --dim-color: #656d76;
+    --border-color: #d0d7de;
+    --btn-bg: #f6f8fa;
+    --btn-hover: #eef1f4;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    padding-top: 60px;
+    padding-bottom: 50px;
+    transition: background-color 0.3s, color 0.3s;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    width: 100%;
+    max-width: 850px;
+    padding: 0 20px;
+    display: flex;
+    gap: 50px;
+}
+
+.container-single {
+    display: block;
+}
+
+.content-side { flex: 1; }
+.image-side { flex-shrink: 0; }
+
+h1 {
+    font-size: 1.6rem;
+    color: var(--heading-color);
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 1.2rem;
+    color: var(--heading-color);
+    margin-top: 40px;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+ul { list-style: none; }
+li { margin-bottom: 10px; }
+
+.nav-links {
+    margin-bottom: 35px;
+}
+
+a {
+    text-decoration: none;
+    color: var(--link-color);
+    font-weight: 500;
+    transition: color 0.2s;
+}
+a:hover { text-decoration: underline; color: var(--accent-blue); }
+
+.inline-link {
+    color: inherit;
+    text-decoration: underline;
+}
+
+/* --- İKON AYARLARI --- */
+.icon-fixed {
+    display: inline-block;
+    width: 25px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.fa-file-pdf, .pdf-icon { color: var(--accent-yellow); }
+.icon-proj { color: var(--accent-blue); }
+.progress-icon { color: var(--dim-color); margin-right: 6px; }
+
+/* --- SOSYAL MEDYA --- */
+.social-row {
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.social-row a {
+    font-size: 1.6rem;
+    color: var(--dim-color);
+    transition: transform 0.2s, color 0.2s;
+    text-decoration: none;
+}
+
+.social-row a:hover { transform: translateY(-3px); }
+
+/* Hover Renkleri */
+.social-row a:hover .fa-envelope { color: var(--text-color); }
+.social-row a:hover .fa-github { color: #ff7b72; }
+body.light-mode .social-row a:hover .fa-github { color: #cf222e; }
+.social-row a:hover .fa-linkedin { color: #0a66c2; }
+.social-row a:hover .fa-orcid { color: #a6ce39; }
+.social-row a:hover .fa-researchgate { color: #00ccbb; }
+.social-row a:hover .fa-x-twitter { color: var(--text-color); }
+
+/* Proje / Not Listesi */
+.project-item { margin-bottom: 25px; }
+
+.project-name {
+    color: var(--accent-blue);
+    font-weight: 700;
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.project-desc {
+    display: block;
+    color: var(--dim-color);
+    margin-left: 0;
+    margin-top: 5px;
+    font-size: 0.9rem;
+}
+
+.profile-pic {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 2px solid var(--border-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: var(--dim-color);
+    font-size: 0.85rem;
+}
+.back-link:hover { color: var(--text-color); text-decoration: none; }
+
+.about-text {
+    color: var(--text-color);
+    margin-bottom: 15px;
+    max-width: 550px;
+    font-size: 0.95rem;
+}
+
+.about-text p {
+    margin-top: 10px;
+}
+
+.about-text p:first-child {
+    margin-top: 0;
+}
+
+.notes-intro {
+    margin-bottom: 30px;
+}
+
+/* TEMA BUTONU */
+.theme-btn {
+    position: fixed;
+    top: 20px;
+    right: 30px;
+    background-color: var(--btn-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.theme-btn:hover { background-color: var(--btn-hover); transform: scale(1.1); }
+
+/* --- NOTES PAGE BADGES --- */
+.status-badge {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    font-weight: 500;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.status-complete {
+    background-color: rgba(56, 139, 253, 0.15);
+    color: var(--accent-blue);
+    border: 1px solid rgba(56, 139, 253, 0.4);
+}
+
+.status-progress {
+    background-color: rgba(210, 153, 34, 0.15);
+    color: var(--accent-yellow);
+    border: 1px solid rgba(210, 153, 34, 0.4);
+}
+
+/* --- PHOTOGRAPHY MINIMAL GRID --- */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.photo-card {
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: var(--btn-bg);
+    transition: transform 0.2s, border-color 0.2s;
+    aspect-ratio: 1 / 1;
+}
+
+.photo-card:hover {
+    transform: scale(1.02);
+    border-color: var(--heading-color);
+}
+
+.photo-card a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.photo-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .container { flex-direction: column-reverse; align-items: flex-start; }
+    .profile-pic { width: 140px; height: 140px; margin-bottom: 20px; }
+    body { padding-top: 30px; }
+    .theme-btn { top: 15px; right: 15px; }
+    .photo-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+}
+</file>
+
+<file path="reading/index.html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Log - Muhammed Ali Onurlucan</title>
+    <meta name="description" content="Books, papers, and technical literature read by Muhammed Ali Onurlucan with short notes.">
+
+    <link rel="canonical" href="https://malionurlucan.me/reading/">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- FOUC Önleyici -->
+    <script>
+        const storedTheme = localStorage.getItem("theme");
+        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (storedTheme === "light" || (!storedTheme && prefersLight)) {
+            document.documentElement.classList.add("light-mode");
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    
+    <link rel="stylesheet" href="/style.css" fetchpriority="high">
+</head>
+<body>
+
+    <main class="container container-single">
+        
+        <a href="/" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+        
+        <h1>Reading Log</h1>
+        <p class="about-text notes-intro">
+            A chronological list of books, academic papers, and technical literature I've read, along with personal notes.
+        </p>
+
+        <div class="project-item">
+            <span class="project-name">
+                <a href="https://doi.org/10.1117/3.358220" target="_blank" rel="noopener" class="inline-link">Introduction to Adaptive Optics</a> — Robert K. Tyson (2000)
+            </span>
+            <span class="project-desc">
+                SPIE Press. Fundamental background on wavefront sensing, deformable mirrors, and atmospheric turbulence mitigation.
+            </span>
+        </div>
+
+        <div class="project-item">
+            <span class="project-name">
+                <a href="https://doi.org/10.1088/2040-8986/ac9e08" target="_blank" rel="noopener" class="inline-link">Zernike Polynomials and Their Applications</a> — Kuo Niu & Chao Tian (2022)
+            </span>
+            <span class="project-desc">
+                Journal of Optics, Vol. 24, No. 12. Review on mathematical properties of Zernike polynomials and their applications in optical aberration analysis.
+            </span>
+        </div>
+
+        <div class="project-item">
+            <span class="project-name">
+                Deep Multi-Task and Representation Learning Method for Atmospheric Turbulence Prediction — V. K. P. Sathia et al.
+            </span>
+            <span class="project-desc">
+                Georgia State University. Application of deep learning models for atmospheric turbulence prediction and correction using focal plane speckle images.
+            </span>
+        </div>
+
+        <div class="project-item">
+            <span class="project-name">
+                <a href="https://doi.org/10.1117/12.2560528" target="_blank" rel="noopener" class="inline-link">TROIA Adaptive Optics System for DAG Telescope</a> — O. Keskin, L. Jolissaint, A. Bouxin, C. Yeşilyaprak (2020)
+            </span>
+            <span class="project-desc">
+                Proc. SPIE 11448, Adaptive Optics Systems VII. Architectural design and operational setup of the TROIA adaptive optics instrument for DAG.
+            </span>
+        </div>
+
+        <div class="project-item">
+            <span class="project-name">
+                <a href="https://www.researchgate.net/publication/305686619_The_design_of_an_adaptive_optics_telescope_the_case_of_DAG" target="_blank" rel="noopener" class="inline-link">The Design of an Adaptive Optics Telescope: The Case of DAG</a> — L. Jolissaint et al.
+            </span>
+            <span class="project-desc">
+                System-level optical engineering considerations and structural integrated adaptive optics design for the 4m DAG telescope.
+            </span>
+        </div>
+
+        <div class="project-item">
+            <span class="project-name">
+                <a href="https://www.sciencedirect.com/science/article/abs/pii/S0273117715000551" target="_blank" rel="noopener" class="inline-link">Ground-Based Optical Observation System for LEO Objects</a> — T. Yanagisawa, H. Kurosaki, H. Oda, M. Tagawa (2015)
+            </span>
+            <span class="project-desc">
+                Advances in Space Research / JAXA. Observational methodologies, tracking algorithms, and optical architectures for LEO space debris surveillance.
+            </span>
+        </div>
+
+    </main>
+
+    <script src="/main.js"></script>
+    <script data-goatcounter="https://malionurlucan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+</file>
+
+<file path="projects/index.html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Muhammed Ali Onurlucan</title>
+    <meta name="description" content="Independent software projects, applications, and tools by Muhammed Ali Onurlucan.">
+
+    <link rel="canonical" href="https://malionurlucan.me/projects/">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- FOUC Önleyici -->
+    <script>
+        const storedTheme = localStorage.getItem("theme");
+        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (storedTheme === "light" || (!storedTheme && prefersLight)) {
+            document.documentElement.classList.add("light-mode");
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    
+    <link rel="stylesheet" href="/style.css" fetchpriority="high">
+</head>
+<body>
+
+    <main class="container container-single">
+        
+        <a href="/" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+        
+        <h1>Projects</h1>
+        <p class="about-text notes-intro">
+            A selection of software and independent development work.
+        </p>
+
+        <div class="project-item">
+            <span class="project-name">
+                <i class="fa-solid fa-code icon-proj"></i>
+                <a href="https://github.com/malii0/Backstory" target="_blank" rel="noopener">Backstory</a>
+            </span>
+            <span class="project-desc">
+                Personal media tracking application designed to log movies and television series. Built with modern web technologies and deployed via Vercel. Access requires account activation; feel free to get in touch if you'd like to use it.
+            </span>
+        </div>
+
+    </main>
+
+    <script src="/main.js"></script>
+    <script data-goatcounter="https://malionurlucan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+</file>
+
+<file path="index.html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Muhammed Ali Onurlucan</title>
+    <meta name="description" content="Muhammed Ali Onurlucan - Mathematics Student at Middle East Technical University (METU). Personal Academic Knowledge Base & Notes on Flight Dynamics, Adaptive Optics, and Orbital Mechanics.">
+    <meta name="keywords" content="Muhammed Ali Onurlucan, ODTÜ Matematik, METU Mathematics, Galaxy Rocket Team, Flight Dynamics, Adaptive Optics, Zernike Polynomials, SSA, Orbital Mechanics, Technical Notes">
+    <meta name="author" content="Muhammed Ali Onurlucan">
+
+    <!-- Canonical URL & Favicon -->
+    <link rel="canonical" href="https://malionurlucan.me/">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- Open Graph (Facebook / LinkedIn) -->
+    <meta property="og:title" content="M. Ali Onurlucan - Personal Site & Notes">
+    <meta property="og:description" content="Undergraduate Mathematics Student @ METU. Academic knowledge base & study notes on Flight Dynamics, Adaptive Optics & Orbital Mechanics.">
+    <meta property="og:image" content="https://malionurlucan.me/img/avatar.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://malionurlucan.me/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@onurlucan_mali">
+    <meta name="twitter:title" content="M. Ali Onurlucan - Personal Site & Notes">
+    <meta name="twitter:description" content="Undergraduate Mathematics Student @ METU. Academic knowledge base & study notes on Flight Dynamics, Adaptive Optics & Orbital Mechanics.">
+    <meta name="twitter:image" content="https://malionurlucan.me/img/avatar.jpg">
+
+    <!-- Person JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Muhammed Ali Onurlucan",
+      "url": "https://malionurlucan.me",
+      "image": "https://malionurlucan.me/img/avatar.jpg",
+      "jobTitle": "Undergraduate Student",
+      "affiliation": {
+        "@type": "CollegeOrUniversity",
+        "name": "Middle East Technical University"
+      },
+      "sameAs": [
+        "https://github.com/malii0",
+        "http://linkedin.com/in/mali0/",
+        "https://orcid.org/0009-0002-9240-9825",
+        "https://www.researchgate.net/profile/Muhammed-Onurlucan",
+        "https://x.com/onurlucan_mali"
+      ]
+    }
+    </script>
+
+    <!-- FOUC Önleyici -->
+    <script>
+        const storedTheme = localStorage.getItem("theme");
+        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (storedTheme === "light" || (!storedTheme && prefersLight)) {
+            document.documentElement.classList.add("light-mode");
+        }
+    </script>
+
+    <!-- Preconnects -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+    <!-- Non-blocking Font Awesome Loading -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+
+    <!-- Local Stylesheet -->
+    <link rel="stylesheet" href="/style.css" fetchpriority="high">
+</head>
+<body>
+
+    <main class="container">
+
+        <div class="content-side">
+            <h1>Muhammed Ali Onurlucan</h1>
+
+            <ul class="nav-links">
+                <li>
+                    <span class="icon-fixed"><i class="fa-regular fa-file-pdf"></i></span>
+                    <a href="/files/cv.pdf?v=20260731" target="_blank" rel="noopener">Curriculum Vitae</a>
+                </li>
+                <li>
+                    <span class="icon-fixed icon-proj"><i class="fa-solid fa-code"></i></span>
+                    <a href="/projects/">Projects</a>
+                </li>
+                <li>
+                    <span class="icon-fixed icon-proj"><i class="fa-solid fa-book-bookmark"></i></span>
+                    <a href="/notes/">Notes</a>
+                </li>
+                <li>
+                    <span class="icon-fixed icon-proj"><i class="fa-solid fa-book-open"></i></span>
+                    <a href="/reading/">Reading Log</a>
+                </li>
+                <li>
+                    <span class="icon-fixed icon-proj"><i class="fa-solid fa-camera"></i></span>
+                    <a href="/photography/">Photography</a>
+                </li>
+            </ul>
+
+            <h2>About Me</h2>
+            <div class="about-text">
+                <p>
+                    I'm Muhammed Ali, an undergraduate student at <strong><a href="https://www.metu.edu.tr/en" target="_blank" rel="noopener" class="inline-link">Middle East Technical University</a></strong>, Department of Mathematics.
+                </p>
+                <p>
+                    I focus on computational mathematics, flight dynamics, and optical/astrodynamic modeling. Currently, I contribute to the <strong><a href="https://www.galaxyroket.com/" target="_blank" rel="noopener" class="inline-link">Galaxy Rocket Team</a></strong>, developing 6-DOF flight dynamics models using MATLAB/Simulink.
+                </p>
+                <p>
+                    Recently, I completed a research internship at the <strong><a href="https://trgozlemevleri.gov.tr/" target="_blank" rel="noopener" class="inline-link">Türkiye National Observatory</a></strong> under the supervision of <strong><a href="https://avesis.atauni.edu.tr/cahity" target="_blank" rel="noopener" class="inline-link">Prof. Dr. Cahit Yeşilyaprak</a></strong>. My work centered on general telescope optics, <strong>Adaptive Optics (Zernike Polynomials)</strong>, and <strong>Space Situational Awareness (SSA)</strong>, encompassing <strong>orbital mechanics</strong> and <strong>orbit determination</strong>.
+                </p>
+            </div>
+
+            <h2>Contact & Social</h2>
+
+            <div class="social-row">
+                <a href="mailto:ali.onurlucan@metu.edu.tr" title="Email" aria-label="Email">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+
+                <a href="https://github.com/malii0" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+
+                <a href="http://linkedin.com/in/mali0/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+
+                <a href="https://orcid.org/0009-0002-9240-9825" target="_blank" rel="noopener" title="ORCID" aria-label="ORCID">
+                    <i class="fa-brands fa-orcid"></i>
+                </a>
+
+                <a href="https://www.researchgate.net/profile/Muhammed-Onurlucan" target="_blank" rel="noopener" title="ResearchGate" aria-label="ResearchGate">
+                    <i class="fa-brands fa-researchgate"></i>
+                </a>
+
+                <a href="https://x.com/onurlucan_mali" target="_blank" rel="noopener" title="X (Twitter)" aria-label="X (Twitter)">
+                    <i class="fa-brands fa-x-twitter"></i>
+                </a>
+            </div>
+
+        </div>
+
+        <div class="image-side">
+            <img src="/img/avatar.jpg" alt="Muhammed Ali Onurlucan profil fotoğrafı" class="profile-pic" fetchpriority="high" decoding="async">
+        </div>
+
+    </main>
+
+    <script src="/main.js"></script>
+    <script data-goatcounter="https://malionurlucan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+</file>
+
+</files>

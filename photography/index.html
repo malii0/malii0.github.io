@@ -9,7 +9,6 @@
     <link rel="canonical" href="https://malionurlucan.me/photography/">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
-    <!-- FOUC Önleyici -->
     <script>
         const storedTheme = localStorage.getItem("theme");
         const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
@@ -22,23 +21,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap">
 
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
-    
+
     <link rel="stylesheet" href="/style.css" fetchpriority="high">
 </head>
 <body>
 
+    <nav class="site-nav">
+        <a href="/" class="brand">m.a.o</a>
+        <div class="nav-items">
+            <a href="/">home</a>
+            <a href="/projects/">projects</a>
+            <a href="/notes/">notes</a>
+            <a href="/reading/">read / watch</a>
+            <a href="/photography/" class="active">photography</a>
+        </div>
+    </nav>
+
     <main class="container container-single">
-        
-        <a href="/" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
-        
-        <h1>Photography</h1>
-        <p class="about-text notes-intro">
-            A minimalist visual log of places, optics, and everyday observations.
-        </p>
+
+        <div class="page-label">photography</div>
+        <p class="page-intro">A minimalist visual log of places, optics, and everyday observations.</p>
 
         <!-- Dynamic Photo Grid Container -->
         <div id="photo-gallery" class="photo-grid"></div>
@@ -68,7 +74,7 @@
                     .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
 
                 if (photos.length === 0) {
-                    gallery.innerHTML = '<p class="about-text" style="color: var(--dim-color);">No photos published yet.</p>';
+                    gallery.innerHTML = '<p class="empty-note">No photos published yet — check back soon.</p>';
                     return;
                 }
 
@@ -92,7 +98,7 @@
                 });
             } catch (err) {
                 console.error("Gallery failed to load:", err);
-                gallery.innerHTML = '<p class="about-text" style="color: var(--dim-color);">Unable to load gallery at the moment.</p>';
+                gallery.innerHTML = '<p class="empty-note">Unable to load gallery at the moment.</p>';
             }
         });
     </script>
