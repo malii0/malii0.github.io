@@ -87,8 +87,8 @@ body {
 /* --- MAIN CONTAINER --- */
 .container {
     width: 100%;
-    max-width: 560px;
-    padding: 48px 24px 60px;
+    max-width: 660px;
+    padding: 56px 24px 70px;
     margin: 0 auto;
 }
 
@@ -137,7 +137,7 @@ h2 {
 
 .about-text p { margin-top: 12px; color: var(--text-color); }
 .about-text p:first-child { margin-top: 0; }
-.about-text { max-width: 500px; }
+.about-text { max-width: 560px; }
 
 .inline-link { color: var(--accent); text-decoration: underline; text-decoration-color: var(--border-color); text-underline-offset: 2px; }
 .inline-link:hover { text-decoration-color: var(--accent); }
@@ -176,7 +176,7 @@ a:hover { text-decoration: underline; }
 .social-row a:hover { color: var(--accent); transform: translateY(-2px); text-decoration: none; }
 
 /* --- LIST PAGES (Notes / Projects / Read-Watch) --- */
-.container-single { max-width: 620px; }
+.container-single { max-width: 720px; }
 
 .back-link {
     display: inline-block;
@@ -210,11 +210,11 @@ a:hover { text-decoration: underline; }
 .page-intro {
     color: var(--text-secondary);
     margin-bottom: 32px;
-    max-width: 480px;
+    max-width: 560px;
     font-size: 0.95rem;
 }
 
-.entry-list { max-width: 520px; }
+.entry-list { max-width: 620px; }
 
 .entry-item {
     padding: 18px 0;
