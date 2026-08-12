@@ -145,6 +145,19 @@ h2 {
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
+/* --- CV LINK --- */
+.cv-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.78rem;
+    color: var(--accent);
+    text-decoration: none;
+    margin-top: -8px;
+    margin-bottom: 4px;
+}
+.cv-link:hover { text-decoration: underline; }
+
 /* --- SOCIAL / QUICK LINKS ROW --- */
 .social-row {
     display: flex;
@@ -176,8 +189,19 @@ a:hover { text-decoration: underline; }
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--text-muted);
+    color: var(--accent);
     margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+.page-label::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
 }
 
 .page-intro {
@@ -207,14 +231,15 @@ a:hover { text-decoration: underline; }
 .entry-meta {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem;
-    color: var(--text-muted);
+    color: var(--accent);
     display: block;
     margin-bottom: 6px;
 }
 
 .entry-desc {
-    color: var(--text-secondary);
+    color: var(--text-color);
     font-size: 0.92rem;
+    opacity: 0.85;
 }
 
 .status-badge {

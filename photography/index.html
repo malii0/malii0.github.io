@@ -74,7 +74,7 @@
                     .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
 
                 if (photos.length === 0) {
-                    gallery.innerHTML = '<p class="empty-note">No photos published yet — check back soon.</p>';
+                    gallery.innerHTML = '<p class="empty-note">No photos published yet, check back soon.</p>';
                     return;
                 }
 
@@ -91,6 +91,7 @@
                     imageElement.src = `/img/photos/${file.name}`;
                     imageElement.alt = `Photo ${index + 1}`;
                     imageElement.loading = "lazy";
+                    imageElement.decoding = "async";
 
                     link.appendChild(imageElement);
                     card.appendChild(link);
