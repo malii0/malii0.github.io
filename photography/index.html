@@ -81,14 +81,19 @@
                 photos.forEach((file, index) => {
                     const card = document.createElement("div");
                     card.className = "photo-card";
+                    const fullResUrl = `/img/photos/${file.name}`;
+                    // Serve a resized, compressed WebP preview via weserv.nl so the grid
+                    // loads faster; natural aspect ratio is preserved (no cropping),
+                    // and the full-resolution original still opens on click.
+                    const thumbUrl = `https://wsrv.nl/?url=malionurlucan.me/img/photos/${encodeURIComponent(file.name)}&w=640&q=80&output=webp`;
 
                     const link = document.createElement("a");
-                    link.href = `/img/photos/${file.name}`;
+                    link.href = fullResUrl;
                     link.target = "_blank";
                     link.rel = "noopener";
 
                     const imageElement = document.createElement("img");
-                    imageElement.src = `/img/photos/${file.name}`;
+                    imageElement.src = thumbUrl;
                     imageElement.alt = `Photo ${index + 1}`;
                     imageElement.loading = "lazy";
                     imageElement.decoding = "async";
