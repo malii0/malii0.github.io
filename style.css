@@ -30,6 +30,20 @@ body.light-mode, html.light-mode {
 
 html { scroll-behavior: smooth; }
 
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .theme-btn:hover { transform: scale(1.08); }
+    .social-row a:hover { transform: translateY(-2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+    * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -107,7 +121,10 @@ body {
     border-radius: 8px;
     border: 1px solid var(--border-color);
     flex-shrink: 0;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
+
+body.light-mode .profile-pic { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08); }
 
 h1 {
     font-family: 'JetBrains Mono', monospace;
@@ -116,6 +133,7 @@ h1 {
     font-weight: 700;
     letter-spacing: -0.2px;
     margin-bottom: 4px;
+    text-wrap: balance;
 }
 
 .tagline {
@@ -135,7 +153,7 @@ h2 {
     font-weight: 500;
 }
 
-.about-text p { margin-top: 12px; color: var(--text-color); }
+.about-text p { margin-top: 12px; color: var(--text-color); text-wrap: pretty; }
 .about-text p:first-child { margin-top: 0; }
 .about-text { max-width: 560px; }
 
@@ -171,9 +189,14 @@ a:hover { text-decoration: underline; }
 .social-row a {
     font-size: 1.3rem;
     color: var(--text-muted);
-    transition: color 0.15s, transform 0.15s;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: -8px;
 }
-.social-row a:hover { color: var(--accent); transform: translateY(-2px); text-decoration: none; }
+.social-row a:hover { color: var(--accent); text-decoration: none; }
 
 /* --- LIST PAGES (Notes / Projects / Read-Watch) --- */
 .container-single { max-width: 720px; }
@@ -228,6 +251,7 @@ a:hover { text-decoration: underline; }
     color: var(--heading-color);
     display: block;
     margin-bottom: 6px;
+    text-wrap: balance;
 }
 .entry-title:hover { text-decoration: underline; }
 
@@ -243,6 +267,7 @@ a:hover { text-decoration: underline; }
     color: var(--text-color);
     font-size: 0.92rem;
     opacity: 0.85;
+    text-wrap: pretty;
 }
 
 .status-badge {
@@ -281,7 +306,9 @@ a:hover { text-decoration: underline; }
     width: 100%;
     height: auto;
     display: block;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
+body.light-mode .photo-card img { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08); }
 .photo-card a { display: block; }
 .photo-card:hover { border-color: var(--accent); }
 
@@ -298,13 +325,13 @@ a:hover { text-decoration: underline; }
     height: 38px;
     font-size: 1rem;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: background-color 0.2s, transform 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
 }
-.theme-btn:hover { background-color: var(--btn-hover); transform: scale(1.08); }
+.theme-btn:hover { background-color: var(--btn-hover); }
 
 @media (max-width: 640px) {
     .site-nav { flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px 20px; }
