@@ -1,0 +1,9 @@
+[
+  {
+    "id": "backstory",
+    "title": "Backstory",
+    "url": "https://github.com/malii0/Backstory",
+    "meta": "web app · Next.js, Supabase",
+    "desc": "A personal app for logging the movies and shows I've watched, and keeping a list of what I want to watch next. Deployed via Vercel. Invite-only for now, reach out if you'd like access."
+  }
+]

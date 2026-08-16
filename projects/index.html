@@ -46,16 +46,14 @@
         <div class="page-label">projects</div>
         <p class="page-intro">A selection of software and independent development work.</p>
 
-        <div class="entry-list">
-            <div class="entry-item">
-                <a href="https://github.com/malii0/Backstory" target="_blank" rel="noopener" class="entry-title">Backstory</a>
-                <span class="entry-meta">web app · Next.js, Supabase</span>
-                <p class="entry-desc">A personal app for logging the movies and shows I've watched, and keeping a list of what I want to watch next. Deployed via Vercel. Invite-only for now, reach out if you'd like access.</p>
-            </div>
-        </div>
+        <div id="entry-list" class="entry-list"></div>
 
     </main>
 
+    <script src="/list.js"></script>
+    <script>
+        renderEntryList("entry-list", "/data/projects.json", { emptyMessage: "No projects published yet." });
+    </script>
     <script src="/main.js"></script>
     <script data-goatcounter="https://malionurlucan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

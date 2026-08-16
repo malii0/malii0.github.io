@@ -1,0 +1,44 @@
+[
+  {
+    "id": "intro-adaptive-optics",
+    "title": "Introduction to Adaptive Optics",
+    "url": "https://doi.org/10.1117/3.358220",
+    "meta": "book · Robert K. Tyson (2000)",
+    "desc": "SPIE Press. Fundamental background on wavefront sensing, deformable mirrors, and atmospheric turbulence mitigation."
+  },
+  {
+    "id": "zernike-applications-paper",
+    "title": "Zernike Polynomials and Their Applications",
+    "url": "https://doi.org/10.1088/2040-8986/ac9e08",
+    "meta": "paper · Kuo Niu & Chao Tian (2022)",
+    "desc": "Journal of Optics, Vol. 24, No. 12. Review on mathematical properties of Zernike polynomials and their applications in optical aberration analysis."
+  },
+  {
+    "id": "deep-multitask-turbulence",
+    "title": "Deep Multi-Task and Representation Learning Method for Atmospheric Turbulence Prediction",
+    "url": null,
+    "meta": "paper · V. K. P. Sathia et al.",
+    "desc": "Georgia State University. Application of deep learning models for atmospheric turbulence prediction and correction using focal plane speckle images."
+  },
+  {
+    "id": "troia-ao-dag",
+    "title": "TROIA Adaptive Optics System for DAG Telescope",
+    "url": "https://doi.org/10.1117/12.2560528",
+    "meta": "paper · O. Keskin, L. Jolissaint, A. Bouxin, C. Yeşilyaprak (2020)",
+    "desc": "Proc. SPIE 11448, Adaptive Optics Systems VII. Architectural design and operational setup of the TROIA adaptive optics instrument for DAG."
+  },
+  {
+    "id": "design-ao-telescope-dag",
+    "title": "The Design of an Adaptive Optics Telescope: The Case of DAG",
+    "url": "https://www.researchgate.net/publication/305686619_The_design_of_an_adaptive_optics_telescope_the_case_of_DAG",
+    "meta": "paper · L. Jolissaint et al.",
+    "desc": "System-level optical engineering considerations and structural integrated adaptive optics design for the 4m DAG telescope."
+  },
+  {
+    "id": "ground-based-leo-observation",
+    "title": "Ground-Based Optical Observation System for LEO Objects",
+    "url": "https://www.sciencedirect.com/science/article/abs/pii/S0273117715000551",
+    "meta": "paper · T. Yanagisawa, H. Kurosaki, H. Oda, M. Tagawa (2015)",
+    "desc": "Advances in Space Research / JAXA. Observational methodologies, tracking algorithms, and optical architectures for LEO space debris surveillance."
+  }
+]

@@ -46,19 +46,14 @@
         <div class="page-label">notes</div>
         <p class="page-intro">A collection of technical study notes, mathematical derivations, and reference documents.</p>
 
-        <div class="entry-list">
-            <div class="entry-item">
-                <a href="/files/Zernike Polynomials.pdf" target="_blank" rel="noopener" class="entry-title">
-                    Zernike Polinomlarının Matematiksel Altyapısı ve Optik Uygulamaları
-                    <span class="status-badge">TR · PDF</span>
-                </a>
-                <span class="entry-meta">adaptive optics</span>
-                <p class="entry-desc">A self-contained derivation of Zernike polynomials, covering orthogonality on the unit disk, Noll/OSA/Fringe indexing conventions, Seidel aberrations, and their role in wavefront reconstruction for adaptive optics.</p>
-            </div>
-        </div>
+        <div id="entry-list" class="entry-list"></div>
 
     </main>
 
+    <script src="/list.js"></script>
+    <script>
+        renderEntryList("entry-list", "/data/notes.json", { emptyMessage: "No notes published yet." });
+    </script>
     <script src="/main.js"></script>
     <script data-goatcounter="https://malionurlucan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

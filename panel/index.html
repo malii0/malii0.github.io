@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <script>
+        const storedTheme = localStorage.getItem("theme");
+        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (storedTheme === "light" || (!storedTheme && prefersLight)) {
+            document.documentElement.classList.add("light-mode");
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap">
+    <link rel="stylesheet" href="/style.css" fetchpriority="high">
+
+    <style>
+        /* Panel-only styles, kept separate from the public site's CSS */
+        .panel-container { max-width: 480px; margin: 0 auto; padding: 40px 20px 80px; }
+        .type-switch { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+        .type-switch button {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 8px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: var(--btn-bg);
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        .type-switch button.active { border-color: var(--accent); color: var(--accent); }
+
+        label {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            margin: 18px 0 6px;
+        }
+        input[type="text"], input[type="url"], input[type="password"], textarea {
+            width: 100%;
+            font-family: 'Newsreader', serif;
+            font-size: 1rem;
+            color: var(--text-color);
+            background: var(--bg-alt);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px 12px;
+        }
+        textarea { min-height: 90px; resize: vertical; }
+        input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+        #badge-field { display: none; }
+
+        .submit-btn {
+            margin-top: 28px;
+            width: 100%;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--accent);
+            background: var(--accent);
+            color: var(--bg-color);
+            cursor: pointer;
+        }
+        .submit-btn:disabled { opacity: 0.6; cursor: default; }
+
+        .status-msg {
+            margin-top: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            padding: 10px 12px;
+            border-radius: 6px;
+            display: none;
+        }
+        .status-msg.ok { display: block; background: rgba(120, 160, 90, 0.15); color: #5a8a3a; }
+        body.light-mode .status-msg.ok { color: #8fce5a; }
+        .status-msg.err { display: block; background: rgba(200, 60, 40, 0.12); color: var(--accent); }
+    </style>
+</head>
+<body>
+
+    <main class="panel-container">
+        <div class="page-label">panel</div>
+        <p class="page-intro">Quick add for notes, projects, and read/watch entries. New items go on top.</p>
+
+        <div class="type-switch" role="tablist">
+            <button type="button" data-type="reading" class="active">read / watch</button>
+            <button type="button" data-type="notes">note</button>
+            <button type="button" data-type="projects">project</button>
+        </div>
+
+        <form id="entry-form">
+            <label for="f-title">Title</label>
+            <input type="text" id="f-title" required autocomplete="off">
+
+            <label for="f-url">Link (optional)</label>
+            <input type="url" id="f-url" placeholder="https://..." autocomplete="off">
+
+            <label for="f-meta" id="meta-label">Meta line</label>
+            <input type="text" id="f-meta" placeholder="e.g. paper · Author (2026)" autocomplete="off">
+
+            <div id="badge-field">
+                <label for="f-badge">Badge (optional)</label>
+                <input type="text" id="f-badge" placeholder="e.g. TR · PDF" autocomplete="off">
+            </div>
+
+            <label for="f-desc">Short note</label>
+            <textarea id="f-desc" placeholder="A sentence or two."></textarea>
+
+            <label for="f-secret">Panel password</label>
+            <input type="password" id="f-secret" autocomplete="off">
+
+            <button type="submit" class="submit-btn" id="submit-btn">Add entry</button>
+            <div class="status-msg" id="status-msg"></div>
+        </form>
+    </main>
+
+    <script>
+        // Replace this with your deployed Cloudflare Worker URL.
+        const WORKER_URL = "https://photo-uploader.m-alionurlucan.workers.dev";
+
+        const typeButtons = document.querySelectorAll(".type-switch button");
+        const metaLabel = document.getElementById("meta-label");
+        const badgeField = document.getElementById("badge-field");
+        const metaPlaceholders = {
+            reading: "e.g. paper · Author (2026)",
+            notes: "e.g. adaptive optics",
+            projects: "e.g. web app · Next.js, Supabase",
+        };
+        let currentType = "reading";
+
+        typeButtons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                typeButtons.forEach((b) => b.classList.remove("active"));
+                btn.classList.add("active");
+                currentType = btn.dataset.type;
+                document.getElementById("f-meta").placeholder = metaPlaceholders[currentType];
+                badgeField.style.display = currentType === "notes" ? "block" : "none";
+            });
+        });
+
+        // Remember the panel password on this device only.
+        const savedSecret = localStorage.getItem("panel_secret");
+        if (savedSecret) document.getElementById("f-secret").value = savedSecret;
+
+        const form = document.getElementById("entry-form");
+        const submitBtn = document.getElementById("submit-btn");
+        const statusMsg = document.getElementById("status-msg");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            statusMsg.className = "status-msg";
+            statusMsg.textContent = "";
+
+            const secret = document.getElementById("f-secret").value;
+            const payload = {
+                secret,
+                type: currentType,
+                title: document.getElementById("f-title").value,
+                url: document.getElementById("f-url").value,
+                meta: document.getElementById("f-meta").value,
+                desc: document.getElementById("f-desc").value,
+                badge: currentType === "notes" ? document.getElementById("f-badge").value : "",
+            };
+
+            if (!payload.title.trim()) {
+                statusMsg.className = "status-msg err";
+                statusMsg.textContent = "Title can't be empty.";
+                return;
+            }
+            if (WORKER_URL.includes("YOUR-SUBDOMAIN")) {
+                statusMsg.className = "status-msg err";
+                statusMsg.textContent = "Worker URL not set yet, edit WORKER_URL in this file.";
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Adding...";
+
+            try {
+                const res = await fetch(WORKER_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload),
+                });
+                const data = await res.json();
+
+                if (!res.ok) throw new Error(data.error || "Request failed");
+
+                localStorage.setItem("panel_secret", secret);
+                statusMsg.className = "status-msg ok";
+                statusMsg.textContent = "Added: " + data.entry.title;
+                form.reset();
+                document.getElementById("f-secret").value = secret;
+            } catch (err) {
+                statusMsg.className = "status-msg err";
+                statusMsg.textContent = "Failed: " + err.message;
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Add entry";
+            }
+        });
+    </script>
+
+    <script src="/main.js"></script>
+</body>
+</html>

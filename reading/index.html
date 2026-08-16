@@ -46,48 +46,14 @@
         <div class="page-label">read / watch</div>
         <p class="page-intro">Papers, articles, videos: anything worth a short note when I come across it. Newest first.</p>
 
-        <div class="entry-list">
-
-            <div class="entry-item">
-                <a href="https://doi.org/10.1117/3.358220" target="_blank" rel="noopener" class="entry-title">Introduction to Adaptive Optics</a>
-                <span class="entry-meta">book · Robert K. Tyson (2000)</span>
-                <p class="entry-desc">SPIE Press. Fundamental background on wavefront sensing, deformable mirrors, and atmospheric turbulence mitigation.</p>
-            </div>
-
-            <div class="entry-item">
-                <a href="https://doi.org/10.1088/2040-8986/ac9e08" target="_blank" rel="noopener" class="entry-title">Zernike Polynomials and Their Applications</a>
-                <span class="entry-meta">paper · Kuo Niu &amp; Chao Tian (2022)</span>
-                <p class="entry-desc">Journal of Optics, Vol. 24, No. 12. Review on mathematical properties of Zernike polynomials and their applications in optical aberration analysis.</p>
-            </div>
-
-            <div class="entry-item">
-                <span class="entry-title" style="color: var(--heading-color);">Deep Multi-Task and Representation Learning Method for Atmospheric Turbulence Prediction</span>
-                <span class="entry-meta">paper · V. K. P. Sathia et al.</span>
-                <p class="entry-desc">Georgia State University. Application of deep learning models for atmospheric turbulence prediction and correction using focal plane speckle images.</p>
-            </div>
-
-            <div class="entry-item">
-                <a href="https://doi.org/10.1117/12.2560528" target="_blank" rel="noopener" class="entry-title">TROIA Adaptive Optics System for DAG Telescope</a>
-                <span class="entry-meta">paper · O. Keskin, L. Jolissaint, A. Bouxin, C. Yeşilyaprak (2020)</span>
-                <p class="entry-desc">Proc. SPIE 11448, Adaptive Optics Systems VII. Architectural design and operational setup of the TROIA adaptive optics instrument for DAG.</p>
-            </div>
-
-            <div class="entry-item">
-                <a href="https://www.researchgate.net/publication/305686619_The_design_of_an_adaptive_optics_telescope_the_case_of_DAG" target="_blank" rel="noopener" class="entry-title">The Design of an Adaptive Optics Telescope: The Case of DAG</a>
-                <span class="entry-meta">paper · L. Jolissaint et al.</span>
-                <p class="entry-desc">System-level optical engineering considerations and structural integrated adaptive optics design for the 4m DAG telescope.</p>
-            </div>
-
-            <div class="entry-item">
-                <a href="https://www.sciencedirect.com/science/article/abs/pii/S0273117715000551" target="_blank" rel="noopener" class="entry-title">Ground-Based Optical Observation System for LEO Objects</a>
-                <span class="entry-meta">paper · T. Yanagisawa, H. Kurosaki, H. Oda, M. Tagawa (2015)</span>
-                <p class="entry-desc">Advances in Space Research / JAXA. Observational methodologies, tracking algorithms, and optical architectures for LEO space debris surveillance.</p>
-            </div>
-
-        </div>
+        <div id="entry-list" class="entry-list"></div>
 
     </main>
 
+    <script src="/list.js"></script>
+    <script>
+        renderEntryList("entry-list", "/data/reading.json", { emptyMessage: "Nothing logged yet." });
+    </script>
     <script src="/main.js"></script>
     <script data-goatcounter="https://malionurlucan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
