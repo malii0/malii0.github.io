@@ -3,7 +3,7 @@
     "id": "zernike-polynomials",
     "title": "Zernike Polinomlarının Matematiksel Altyapısı ve Optik Uygulamaları",
     "url": "/files/Zernike Polynomials.pdf",
-    "badge": "TR · PDFss",
+    "badge": "TR · PDF",
     "meta": "adaptive optics",
     "desc": "A self-contained derivation of Zernike polynomials, covering orthogonality on the unit disk, Noll/OSA/Fringe indexing conventions, Seidel aberrations, and their role in wavefront reconstruction for adaptive optics."
   }
