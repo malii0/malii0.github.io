@@ -1,0 +1,12 @@
+{
+  "tagline": "undergraduate · mathematics",
+  "about": "I'm an undergraduate at [Middle East Technical University](https://www.metu.edu.tr/en), studying mathematics. I currently contribute to the [Galaxy Rocket Team](https://www.galaxyroket.com/), and this past summer completed a research internship at the [Türkiye National Observatory](https://trgozlemevleri.gov.tr/) under [Prof. Dr. Cahit Yeşilyaprak](https://avesis.atauni.edu.tr/cahity), working on adaptive optics and space situational awareness.",
+  "socials": [
+    { "icon": "fa-solid fa-envelope", "label": "Email", "url": "mailto:ali.onurlucan@metu.edu.tr" },
+    { "icon": "fa-brands fa-github", "label": "GitHub", "url": "https://github.com/malii0" },
+    { "icon": "fa-brands fa-linkedin", "label": "LinkedIn", "url": "http://linkedin.com/in/mali0/" },
+    { "icon": "fa-brands fa-orcid", "label": "ORCID", "url": "https://orcid.org/0009-0002-9240-9825" },
+    { "icon": "fa-brands fa-researchgate", "label": "ResearchGate", "url": "https://www.researchgate.net/profile/Muhammed-Onurlucan" },
+    { "icon": "fa-brands fa-x-twitter", "label": "X (Twitter)", "url": "https://x.com/onurlucan_mali" }
+  ]
+}

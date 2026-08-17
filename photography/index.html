@@ -54,38 +54,28 @@
     <script>
         document.addEventListener("DOMContentLoaded", async function() {
             const gallery = document.getElementById("photo-gallery");
-            const apiUrl = "https://api.github.com/repos/malii0/malii0.github.io/contents/img/photos";
 
             try {
-                let files = [];
-                const cachedData = sessionStorage.getItem("gallery_photos");
+                // Ordered by data/photos.json (managed via the panel) instead of
+                // a live GitHub directory listing, so photo order is controllable.
+                const res = await fetch("/data/photos.json", { cache: "no-store" });
+                if (!res.ok) throw new Error("fetch failed: " + res.status);
+                const filenames = await res.json();
 
-                if (cachedData) {
-                    files = JSON.parse(cachedData);
-                } else {
-                    const res = await fetch(apiUrl);
-                    if (!res.ok) throw new Error("GitHub API fetch failed");
-                    files = await res.json();
-                    sessionStorage.setItem("gallery_photos", JSON.stringify(files));
-                }
-
-                const photos = files
-                    .filter(f => /\.(jpe?g|png|webp)$/i.test(f.name))
-                    .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
-
-                if (photos.length === 0) {
+                if (!Array.isArray(filenames) || filenames.length === 0) {
                     gallery.innerHTML = '<p class="empty-note">No photos published yet, check back soon.</p>';
                     return;
                 }
 
-                photos.forEach((file, index) => {
+                gallery.innerHTML = "";
+                filenames.forEach((name, index) => {
                     const card = document.createElement("div");
                     card.className = "photo-card";
-                    const fullResUrl = `/img/photos/${file.name}`;
+                    const fullResUrl = `/img/photos/${name}`;
                     // Serve a resized, compressed WebP preview via weserv.nl so the grid
                     // loads faster; natural aspect ratio is preserved (no cropping),
                     // and the full-resolution original still opens on click.
-                    const thumbUrl = `https://wsrv.nl/?url=malionurlucan.me/img/photos/${encodeURIComponent(file.name)}&w=640&q=80&output=webp`;
+                    const thumbUrl = `https://wsrv.nl/?url=malionurlucan.me/img/photos/${encodeURIComponent(name)}&w=640&q=80&output=webp`;
 
                     const link = document.createElement("a");
                     link.href = fullResUrl;

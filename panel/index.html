@@ -22,194 +22,565 @@
     <link rel="stylesheet" href="/style.css" fetchpriority="high">
 
     <style>
-        /* Panel-only styles, kept separate from the public site's CSS */
-        .panel-container { max-width: 480px; margin: 0 auto; padding: 40px 20px 80px; }
-        .type-switch { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
-        .type-switch button {
+        .panel-container { max-width: 640px; margin: 0 auto; padding: 32px 18px 90px; }
+
+        .secret-row { display: flex; gap: 8px; margin-bottom: 24px; }
+        .secret-row input { flex: 1; }
+
+        .tab-switch { display: flex; gap: 6px; margin-bottom: 24px; flex-wrap: wrap; }
+        .tab-switch button {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            padding: 8px 14px;
+            font-size: 0.72rem;
+            padding: 7px 12px;
             border-radius: 20px;
             border: 1px solid var(--border-color);
             background: var(--btn-bg);
             color: var(--text-secondary);
             cursor: pointer;
         }
-        .type-switch button.active { border-color: var(--accent); color: var(--accent); }
+        .tab-switch button.active { border-color: var(--accent); color: var(--accent); }
+
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
 
         label {
             display: block;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             text-transform: uppercase;
             letter-spacing: 0.06em;
             color: var(--text-muted);
-            margin: 18px 0 6px;
+            margin: 14px 0 5px;
         }
-        input[type="text"], input[type="url"], input[type="password"], textarea {
+        input[type="text"], input[type="url"], input[type="password"], textarea, select {
             width: 100%;
             font-family: 'Newsreader', serif;
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--text-color);
             background: var(--bg-alt);
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            padding: 10px 12px;
+            padding: 9px 11px;
         }
-        textarea { min-height: 90px; resize: vertical; }
-        input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+        textarea { min-height: 70px; resize: vertical; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; }
+        input:focus, textarea:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
 
-        #badge-field { display: none; }
-
-        .submit-btn {
-            margin-top: 28px;
-            width: 100%;
+        .card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 12px;
+            background: var(--bg-alt);
+        }
+        .card-toolbar { display: flex; justify-content: flex-end; gap: 6px; margin-top: 10px; }
+        .icon-btn {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            padding: 12px;
+            font-size: 0.72rem;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            background: var(--btn-bg);
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        .icon-btn:hover { color: var(--text-color); }
+        .icon-btn.danger:hover { color: var(--accent); border-color: var(--accent); }
+
+        .btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            padding: 11px;
             border-radius: 6px;
             border: 1px solid var(--accent);
             background: var(--accent);
             color: var(--bg-color);
             cursor: pointer;
+            width: 100%;
         }
-        .submit-btn:disabled { opacity: 0.6; cursor: default; }
+        .btn:disabled { opacity: 0.6; cursor: default; }
+        .btn.secondary { background: transparent; color: var(--accent); margin-bottom: 10px; }
 
         .status-msg {
-            margin-top: 16px;
+            margin-top: 14px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            padding: 10px 12px;
+            font-size: 0.78rem;
+            padding: 9px 11px;
             border-radius: 6px;
             display: none;
         }
         .status-msg.ok { display: block; background: rgba(120, 160, 90, 0.15); color: #5a8a3a; }
         body.light-mode .status-msg.ok { color: #8fce5a; }
         .status-msg.err { display: block; background: rgba(200, 60, 40, 0.12); color: var(--accent); }
+
+        .photo-row { display: flex; align-items: center; gap: 10px; }
+        .photo-row img { width: 56px; height: 56px; object-fit: cover; border-radius: 5px; border: 1px solid var(--border-color); flex-shrink: 0; }
+        .photo-row .fname { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text-muted); word-break: break-all; flex: 1; }
+
+        .custom-icon-field { display: none; }
+        .section-note { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px; }
     </style>
 </head>
 <body>
 
     <main class="panel-container">
         <div class="page-label">panel</div>
-        <p class="page-intro">Quick add for notes, projects, and read/watch entries. New items go on top.</p>
+        <p class="page-intro">Full control: add, edit, delete, and reorder everything on the site.</p>
 
-        <div class="type-switch" role="tablist">
-            <button type="button" data-type="reading" class="active">read / watch</button>
-            <button type="button" data-type="notes">note</button>
-            <button type="button" data-type="projects">project</button>
+        <div class="secret-row">
+            <input type="password" id="f-secret" placeholder="Panel password">
         </div>
 
-        <form id="entry-form">
-            <label for="f-title">Title</label>
-            <input type="text" id="f-title" required autocomplete="off">
+        <div class="tab-switch">
+            <button type="button" data-tab="home" class="active">home</button>
+            <button type="button" data-tab="notes">notes</button>
+            <button type="button" data-tab="projects">projects</button>
+            <button type="button" data-tab="reading">read/watch</button>
+            <button type="button" data-tab="photos">photos</button>
+        </div>
 
-            <label for="f-url">Link (optional)</label>
-            <input type="url" id="f-url" placeholder="https://..." autocomplete="off">
+        <!-- HOME TAB -->
+        <section class="tab-panel active" id="tab-home">
+            <button type="button" class="btn secondary" id="home-load">Load current content</button>
 
-            <label for="f-meta" id="meta-label">Meta line</label>
-            <input type="text" id="f-meta" placeholder="e.g. paper · Author (2026)" autocomplete="off">
+            <label for="home-tagline">Tagline</label>
+            <input type="text" id="home-tagline" placeholder="undergraduate · mathematics">
 
-            <div id="badge-field">
-                <label for="f-badge">Badge (optional)</label>
-                <input type="text" id="f-badge" placeholder="e.g. TR · PDF" autocomplete="off">
-            </div>
+            <label for="home-about">About (plain text, use [link text](https://...) for links)</label>
+            <textarea id="home-about" style="min-height: 140px;"></textarea>
 
-            <label for="f-desc">Short note</label>
-            <textarea id="f-desc" placeholder="A sentence or two."></textarea>
+            <label>Social links</label>
+            <div id="socials-list"></div>
+            <button type="button" class="icon-btn" id="add-social">+ add social link</button>
 
-            <label for="f-secret">Panel password</label>
-            <input type="password" id="f-secret" autocomplete="off">
+            <button type="button" class="btn" id="home-save" style="margin-top: 20px;">Save home page</button>
+            <div class="status-msg" id="home-status"></div>
+        </section>
 
-            <button type="submit" class="submit-btn" id="submit-btn">Add entry</button>
-            <div class="status-msg" id="status-msg"></div>
-        </form>
+        <!-- NOTES / PROJECTS / READING TABS (generic) -->
+        <section class="tab-panel" id="tab-notes" data-type="notes"></section>
+        <section class="tab-panel" id="tab-projects" data-type="projects"></section>
+        <section class="tab-panel" id="tab-reading" data-type="reading"></section>
+
+        <!-- PHOTOS TAB -->
+        <section class="tab-panel" id="tab-photos">
+            <button type="button" class="btn secondary" id="photos-load">Load current photos</button>
+            <p class="section-note">Add new photos, reorder with the arrows, delete with x, then save.</p>
+
+            <label for="photos-input">Add photos</label>
+            <input type="file" id="photos-input" accept="image/jpeg,image/png,image/webp" multiple>
+            <div class="status-msg" id="upload-status"></div>
+
+            <div id="photos-list" style="margin-top: 16px;"></div>
+
+            <button type="button" class="btn" id="photos-save" style="margin-top: 16px;">Save order</button>
+            <div class="status-msg" id="photos-status"></div>
+        </section>
     </main>
 
     <script>
-        // Replace this with your deployed Cloudflare Worker URL.
-        const WORKER_URL = "https://photo-uploader.m-alionurlucan.workers.dev";
+        // ====== CONFIG ======
+        // Base URL of your Cloudflare Worker (same one the photo Shortcut
+        // posts to). Don't include a trailing slash or /panel.
+        const WORKER_BASE = "https://YOUR-WORKER-URL.workers.dev";
 
-        const typeButtons = document.querySelectorAll(".type-switch button");
-        const metaLabel = document.getElementById("meta-label");
-        const badgeField = document.getElementById("badge-field");
-        const metaPlaceholders = {
-            reading: "e.g. paper · Author (2026)",
-            notes: "e.g. adaptive optics",
-            projects: "e.g. web app · Next.js, Supabase",
-        };
-        let currentType = "reading";
+        // ====== HELPERS ======
+        function getSecret() { return document.getElementById("f-secret").value; }
 
-        typeButtons.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                typeButtons.forEach((b) => b.classList.remove("active"));
+        function escapeHtml(str) {
+            if (str === null || str === undefined) return "";
+            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+        }
+
+        async function api(path, payload) {
+            const res = await fetch(WORKER_BASE + path, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(Object.assign({}, payload, { secret: getSecret() })),
+            });
+            const data = await res.json();
+            if (!res.ok || data.error) throw new Error(data.error || "Request failed");
+            return data;
+        }
+
+        function showStatus(elId, msg, ok) {
+            const el = document.getElementById(elId);
+            el.className = "status-msg " + (ok ? "ok" : "err");
+            el.textContent = msg;
+        }
+
+        function randomKey() { return Math.random().toString(36).slice(2, 10); }
+
+        // Restore saved password
+        const savedSecret = localStorage.getItem("panel_secret");
+        if (savedSecret) document.getElementById("f-secret").value = savedSecret;
+        document.getElementById("f-secret").addEventListener("change", function (e) {
+            localStorage.setItem("panel_secret", e.target.value);
+        });
+
+        // ====== TABS ======
+        const tabButtons = document.querySelectorAll(".tab-switch button");
+        tabButtons.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                tabButtons.forEach(function (b) { b.classList.remove("active"); });
                 btn.classList.add("active");
-                currentType = btn.dataset.type;
-                document.getElementById("f-meta").placeholder = metaPlaceholders[currentType];
-                badgeField.style.display = currentType === "notes" ? "block" : "none";
+                document.querySelectorAll(".tab-panel").forEach(function (p) { p.classList.remove("active"); });
+                document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
             });
         });
 
-        // Remember the panel password on this device only.
-        const savedSecret = localStorage.getItem("panel_secret");
-        if (savedSecret) document.getElementById("f-secret").value = savedSecret;
+        // ====== HOME TAB ======
+        const iconPresets = {
+            "Email": "fa-solid fa-envelope",
+            "GitHub": "fa-brands fa-github",
+            "LinkedIn": "fa-brands fa-linkedin",
+            "ORCID": "fa-brands fa-orcid",
+            "ResearchGate": "fa-brands fa-researchgate",
+            "X (Twitter)": "fa-brands fa-x-twitter",
+        };
 
-        const form = document.getElementById("entry-form");
-        const submitBtn = document.getElementById("submit-btn");
-        const statusMsg = document.getElementById("status-msg");
+        let socialsState = [];
 
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            statusMsg.className = "status-msg";
-            statusMsg.textContent = "";
+        function renderSocials() {
+            const container = document.getElementById("socials-list");
+            container.innerHTML = socialsState.map(function (s) {
+                const presetMatch = Object.keys(iconPresets).find(function (k) { return iconPresets[k] === s.icon; });
+                const options = Object.keys(iconPresets).map(function (k) {
+                    return '<option value="' + k + '" ' + (presetMatch === k ? "selected" : "") + '>' + k + '</option>';
+                }).join("");
+                const isCustom = !presetMatch;
+                return '' +
+                '<div class="card" data-key="' + s._key + '">' +
+                    '<select class="preset-select" data-field="preset">' +
+                        options +
+                        '<option value="__custom__" ' + (isCustom ? "selected" : "") + '>Custom</option>' +
+                    '</select>' +
+                    '<div class="custom-icon-field" style="display:' + (isCustom ? "block" : "none") + '">' +
+                        '<label>Font Awesome class</label>' +
+                        '<input type="text" data-field="icon" value="' + escapeHtml(s.icon) + '" placeholder="fa-brands fa-mastodon">' +
+                    '</div>' +
+                    '<label>Label</label>' +
+                    '<input type="text" data-field="label" value="' + escapeHtml(s.label) + '">' +
+                    '<label>URL</label>' +
+                    '<input type="text" data-field="url" value="' + escapeHtml(s.url) + '" placeholder="https://... or mailto:...">' +
+                    '<div class="card-toolbar">' +
+                        '<button type="button" class="icon-btn danger" data-action="remove-social">remove</button>' +
+                    '</div>' +
+                '</div>';
+            }).join("");
 
-            const secret = document.getElementById("f-secret").value;
-            const payload = {
-                secret,
-                type: currentType,
-                title: document.getElementById("f-title").value,
-                url: document.getElementById("f-url").value,
-                meta: document.getElementById("f-meta").value,
-                desc: document.getElementById("f-desc").value,
-                badge: currentType === "notes" ? document.getElementById("f-badge").value : "",
+            container.querySelectorAll(".card").forEach(function (card) {
+                const key = card.dataset.key;
+                const entry = socialsState.find(function (s) { return s._key === key; });
+
+                card.querySelector('[data-field="preset"]').addEventListener("change", function (e) {
+                    const val = e.target.value;
+                    const customField = card.querySelector(".custom-icon-field");
+                    if (val === "__custom__") {
+                        customField.style.display = "block";
+                    } else {
+                        customField.style.display = "none";
+                        entry.icon = iconPresets[val];
+                    }
+                });
+                const customInput = card.querySelector('[data-field="icon"]');
+                if (customInput) customInput.addEventListener("input", function (e) { entry.icon = e.target.value; });
+
+                card.querySelector('[data-field="label"]').addEventListener("input", function (e) { entry.label = e.target.value; });
+                card.querySelector('[data-field="url"]').addEventListener("input", function (e) { entry.url = e.target.value; });
+
+                card.querySelector('[data-action="remove-social"]').addEventListener("click", function () {
+                    socialsState = socialsState.filter(function (s) { return s._key !== key; });
+                    renderSocials();
+                });
+            });
+        }
+
+        document.getElementById("add-social").addEventListener("click", function () {
+            socialsState.push({ _key: randomKey(), icon: "fa-solid fa-link", label: "", url: "" });
+            renderSocials();
+        });
+
+        document.getElementById("home-load").addEventListener("click", async function () {
+            try {
+                const res = await api("/panel/get", { type: "home" });
+                document.getElementById("home-tagline").value = res.data.tagline || "";
+                document.getElementById("home-about").value = res.data.about || "";
+                socialsState = (res.data.socials || []).map(function (s) {
+                    return Object.assign({}, s, { _key: randomKey() });
+                });
+                renderSocials();
+                showStatus("home-status", "Loaded.", true);
+            } catch (err) {
+                showStatus("home-status", "Failed to load: " + err.message, false);
+            }
+        });
+
+        document.getElementById("home-save").addEventListener("click", async function () {
+            const data = {
+                tagline: document.getElementById("home-tagline").value,
+                about: document.getElementById("home-about").value,
+                socials: socialsState.map(function (s) {
+                    const copy = Object.assign({}, s);
+                    delete copy._key;
+                    return copy;
+                }),
             };
-
-            if (!payload.title.trim()) {
-                statusMsg.className = "status-msg err";
-                statusMsg.textContent = "Title can't be empty.";
-                return;
+            try {
+                await api("/panel/save", { type: "home", data: data });
+                showStatus("home-status", "Saved.", true);
+            } catch (err) {
+                showStatus("home-status", "Failed to save: " + err.message, false);
             }
-            if (WORKER_URL.includes("YOUR-SUBDOMAIN")) {
-                statusMsg.className = "status-msg err";
-                statusMsg.textContent = "Worker URL not set yet, edit WORKER_URL in this file.";
-                return;
-            }
+        });
 
-            submitBtn.disabled = true;
-            submitBtn.textContent = "Adding...";
+        // ====== NOTES / PROJECTS / READING TABS ======
+        const entryTypeConfig = {
+            notes: { label: "note", hasBadge: true, metaPlaceholder: "e.g. adaptive optics" },
+            projects: { label: "project", hasBadge: false, metaPlaceholder: "e.g. web app, Next.js/Supabase" },
+            reading: { label: "entry", hasBadge: false, metaPlaceholder: "e.g. paper, Author (2026)" },
+        };
+        const entryState = { notes: null, projects: null, reading: null };
+
+        function buildEntryTabHtml() {
+            return '' +
+                '<button type="button" class="btn secondary" data-action="load">Load current entries</button>' +
+                '<button type="button" class="icon-btn" data-action="add" style="margin-bottom: 12px;">+ add new</button>' +
+                '<div class="entry-cards"></div>' +
+                '<button type="button" class="btn" data-action="save" style="margin-top: 10px;">Save changes</button>' +
+                '<div class="status-msg" data-status></div>';
+        }
+
+        function renderEntries(type) {
+            const cfg = entryTypeConfig[type];
+            const section = document.getElementById("tab-" + type);
+            const container = section.querySelector(".entry-cards");
+            const entries = entryState[type] || [];
+
+            container.innerHTML = entries.map(function (e, i) {
+                let badgeHtml = "";
+                if (cfg.hasBadge) {
+                    badgeHtml = '' +
+                        '<label>Badge (optional)</label>' +
+                        '<input type="text" data-field="badge" value="' + escapeHtml(e.badge) + '" placeholder="e.g. TR, PDF">';
+                }
+                return '' +
+                '<div class="card" data-key="' + e._key + '">' +
+                    '<label>Title</label>' +
+                    '<input type="text" data-field="title" value="' + escapeHtml(e.title) + '">' +
+                    '<label>Link (optional)</label>' +
+                    '<input type="text" data-field="url" value="' + escapeHtml(e.url) + '" placeholder="https://...">' +
+                    '<label>Meta line</label>' +
+                    '<input type="text" data-field="meta" value="' + escapeHtml(e.meta) + '" placeholder="' + cfg.metaPlaceholder + '">' +
+                    badgeHtml +
+                    '<label>Description</label>' +
+                    '<textarea data-field="desc">' + escapeHtml(e.desc) + '</textarea>' +
+                    '<div class="card-toolbar">' +
+                        '<button type="button" class="icon-btn" data-action="up" ' + (i === 0 ? "disabled" : "") + '>up</button>' +
+                        '<button type="button" class="icon-btn" data-action="down" ' + (i === entries.length - 1 ? "disabled" : "") + '>down</button>' +
+                        '<button type="button" class="icon-btn danger" data-action="delete">delete</button>' +
+                    '</div>' +
+                '</div>';
+            }).join("") || '<p class="section-note">Nothing loaded yet, click "Load current entries".</p>';
+
+            container.querySelectorAll(".card").forEach(function (card) {
+                const key = card.dataset.key;
+                card.querySelectorAll("[data-field]").forEach(function (input) {
+                    input.addEventListener("input", function () {
+                        const entry = entryState[type].find(function (e) { return e._key === key; });
+                        entry[input.dataset.field] = input.value;
+                    });
+                });
+                const upBtn = card.querySelector('[data-action="up"]');
+                if (upBtn) upBtn.addEventListener("click", function () {
+                    const idx = entryState[type].findIndex(function (e) { return e._key === key; });
+                    if (idx > 0) {
+                        const tmp = entryState[type][idx - 1];
+                        entryState[type][idx - 1] = entryState[type][idx];
+                        entryState[type][idx] = tmp;
+                        renderEntries(type);
+                    }
+                });
+                const downBtn = card.querySelector('[data-action="down"]');
+                if (downBtn) downBtn.addEventListener("click", function () {
+                    const idx = entryState[type].findIndex(function (e) { return e._key === key; });
+                    if (idx < entryState[type].length - 1) {
+                        const tmp = entryState[type][idx + 1];
+                        entryState[type][idx + 1] = entryState[type][idx];
+                        entryState[type][idx] = tmp;
+                        renderEntries(type);
+                    }
+                });
+                card.querySelector('[data-action="delete"]').addEventListener("click", function () {
+                    if (!confirm("Delete this entry?")) return;
+                    entryState[type] = entryState[type].filter(function (e) { return e._key !== key; });
+                    renderEntries(type);
+                });
+            });
+        }
+
+        Object.keys(entryTypeConfig).forEach(function (type) {
+            const section = document.getElementById("tab-" + type);
+            section.innerHTML = buildEntryTabHtml();
+            const statusEl = section.querySelector("[data-status]");
+            statusEl.id = type + "-status";
+
+            section.querySelector('[data-action="load"]').addEventListener("click", async function () {
+                try {
+                    const res = await api("/panel/get", { type: type });
+                    entryState[type] = (res.data || []).map(function (e) {
+                        return Object.assign({}, e, { _key: randomKey() });
+                    });
+                    renderEntries(type);
+                    showStatus(type + "-status", "Loaded.", true);
+                } catch (err) {
+                    showStatus(type + "-status", "Failed to load: " + err.message, false);
+                }
+            });
+
+            section.querySelector('[data-action="add"]').addEventListener("click", function () {
+                if (!entryState[type]) entryState[type] = [];
+                entryState[type].unshift({ _key: randomKey(), title: "", url: "", meta: "", desc: "", badge: "" });
+                renderEntries(type);
+            });
+
+            section.querySelector('[data-action="save"]').addEventListener("click", async function () {
+                const entries = (entryState[type] || [])
+                    .filter(function (e) { return e.title && e.title.trim(); })
+                    .map(function (e) {
+                        const copy = Object.assign({}, e);
+                        delete copy._key;
+                        return copy;
+                    });
+                try {
+                    await api("/panel/save", { type: type, data: entries });
+                    showStatus(type + "-status", "Saved.", true);
+                } catch (err) {
+                    showStatus(type + "-status", "Failed to save: " + err.message, false);
+                }
+            });
+        });
+
+        // ====== PHOTOS TAB ======
+        let photosState = [];
+
+        function renderPhotos() {
+            const container = document.getElementById("photos-list");
+            container.innerHTML = photosState.map(function (name, i) {
+                const thumb = "https://wsrv.nl/?url=malionurlucan.me/img/photos/" + encodeURIComponent(name) + "&w=120&q=70&output=webp";
+                return '' +
+                '<div class="card photo-row" data-name="' + escapeHtml(name) + '">' +
+                    '<img src="' + thumb + '" alt="">' +
+                    '<span class="fname">' + escapeHtml(name) + '</span>' +
+                    '<button type="button" class="icon-btn" data-action="up" ' + (i === 0 ? "disabled" : "") + '>up</button>' +
+                    '<button type="button" class="icon-btn" data-action="down" ' + (i === photosState.length - 1 ? "disabled" : "") + '>down</button>' +
+                    '<button type="button" class="icon-btn danger" data-action="delete">x</button>' +
+                '</div>';
+            }).join("") || '<p class="section-note">No photos loaded, click "Load current photos".</p>';
+
+            container.querySelectorAll(".card").forEach(function (card) {
+                const name = card.dataset.name;
+                card.querySelector('[data-action="up"]').addEventListener("click", function () {
+                    const idx = photosState.indexOf(name);
+                    if (idx > 0) {
+                        const tmp = photosState[idx - 1];
+                        photosState[idx - 1] = photosState[idx];
+                        photosState[idx] = tmp;
+                        renderPhotos();
+                    }
+                });
+                card.querySelector('[data-action="down"]').addEventListener("click", function () {
+                    const idx = photosState.indexOf(name);
+                    if (idx < photosState.length - 1) {
+                        const tmp = photosState[idx + 1];
+                        photosState[idx + 1] = photosState[idx];
+                        photosState[idx] = tmp;
+                        renderPhotos();
+                    }
+                });
+                card.querySelector('[data-action="delete"]').addEventListener("click", async function () {
+                    if (!confirm("Delete this photo from the site entirely?")) return;
+                    try {
+                        await api("/panel/delete-photo", { filename: name });
+                        photosState = photosState.filter(function (n) { return n !== name; });
+                        await api("/panel/save", { type: "photos", data: photosState });
+                        renderPhotos();
+                        showStatus("photos-status", "Deleted.", true);
+                    } catch (err) {
+                        showStatus("photos-status", "Failed to delete: " + err.message, false);
+                    }
+                });
+            });
+        }
+
+        document.getElementById("photos-load").addEventListener("click", async function () {
+            try {
+                const res = await api("/panel/get", { type: "photos" });
+                photosState = res.data || [];
+                renderPhotos();
+                showStatus("photos-status", "Loaded.", true);
+            } catch (err) {
+                showStatus("photos-status", "Failed to load: " + err.message, false);
+            }
+        });
+
+        document.getElementById("photos-save").addEventListener("click", async function () {
+            try {
+                await api("/panel/save", { type: "photos", data: photosState });
+                showStatus("photos-status", "Order saved.", true);
+            } catch (err) {
+                showStatus("photos-status", "Failed to save: " + err.message, false);
+            }
+        });
+
+        function fileToBase64(file) {
+            return new Promise(function (resolve, reject) {
+                const reader = new FileReader();
+                reader.onload = function () { resolve(reader.result.split(",")[1]); };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        document.getElementById("photos-input").addEventListener("change", async function (e) {
+            const files = Array.from(e.target.files);
+            if (files.length === 0) return;
+
+            const uploadStatus = document.getElementById("upload-status");
+            uploadStatus.className = "status-msg ok";
+            uploadStatus.style.display = "block";
+
+            let uploaded = 0;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                let ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+                if (ext === "jpeg") ext = "jpg";
+                const safeExt = ["jpg", "png", "webp"].indexOf(ext) !== -1 ? ext : "jpg";
+                const filename = "photo_" + Date.now() + "_" + i + "." + safeExt;
+
+                uploadStatus.textContent = "Uploading " + (i + 1) + "/" + files.length + "...";
+                try {
+                    const base64 = await fileToBase64(file);
+                    await api("/panel/upload-photo", { filename: filename, base64: base64 });
+                    photosState.push(filename);
+                    uploaded++;
+                } catch (err) {
+                    uploadStatus.className = "status-msg err";
+                    uploadStatus.textContent = "Failed on " + file.name + ": " + err.message;
+                    renderPhotos();
+                    return;
+                }
+            }
 
             try {
-                const res = await fetch(WORKER_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload),
-                });
-                const data = await res.json();
-
-                if (!res.ok) throw new Error(data.error || "Request failed");
-
-                localStorage.setItem("panel_secret", secret);
-                statusMsg.className = "status-msg ok";
-                statusMsg.textContent = "Added: " + data.entry.title;
-                form.reset();
-                document.getElementById("f-secret").value = secret;
+                await api("/panel/save", { type: "photos", data: photosState });
+                uploadStatus.className = "status-msg ok";
+                uploadStatus.textContent = "Uploaded " + uploaded + " photo(s) and saved order.";
             } catch (err) {
-                statusMsg.className = "status-msg err";
-                statusMsg.textContent = "Failed: " + err.message;
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Add entry";
+                uploadStatus.className = "status-msg err";
+                uploadStatus.textContent = "Uploaded but failed to save order: " + err.message;
             }
+            e.target.value = "";
+            renderPhotos();
         });
     </script>
 
