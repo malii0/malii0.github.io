@@ -259,7 +259,14 @@ export default {
     const url = new URL(request.url);
 
     if (request.method === "OPTIONS" && url.pathname.startsWith("/panel/")) {
-      return jsonResponse({}, 204);
+      return new Response(null, {
+        status: 204,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },
+      });
     }
 
     switch (url.pathname) {
