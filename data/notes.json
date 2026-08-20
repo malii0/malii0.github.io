@@ -1,5 +1,13 @@
 [
   {
+    "title": "Uydu Yörünge Rejimleri, Takımuydular ve LEO Optik Gözlem Sistemleri",
+    "url": "/files/Satellite Orbits.pdf",
+    "meta": "orbital mechanics",
+    "desc": "A technical overview of orbital regimes (LEO, MEO, GEO, SSO, Molniya, Lagrange points), mega-constellation architectures (Walker geometries, optical ISLs), and ground-based optical tracking pipelines for LEO objects based on JAXA's multi-station observation models.",
+    "badge": "TR · PDF",
+    "id": "uydu-yorunge-rejimleri-tak-muydular-ve-leo-optik-mt1i22e5-kcvc"
+  },
+  {
     "id": "zernike-polynomials",
     "title": "Zernike Polinomlarının Matematiksel Altyapısı ve Optik Uygulamaları",
     "url": "/files/Zernike Polynomials.pdf",
