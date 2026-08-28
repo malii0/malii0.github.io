@@ -1,5 +1,13 @@
 [
   {
+    "title": "komit",
+    "url": "https://github.com/malii0/komit",
+    "meta": "CLI tool · Python",
+    "desc": "A CLI tool that stages your changes, asks a Groq-hosted LLM to write a Conventional Commits message from the diff, and pushes. No dependencies beyond the Python standard library.",
+    "badge": "",
+    "id": "komit-mtd2ywrk-yfyw"
+  },
+  {
     "id": "backstory",
     "title": "Backstory",
     "url": "https://github.com/malii0/Backstory",
