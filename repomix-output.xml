@@ -1,0 +1,2087 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+data/
+  home.json
+  notes.json
+  photos.json
+  projects.json
+  reading.json
+files/
+  cv.pdf
+  Satellite Orbits.pdf
+  Zernike Polynomials.pdf
+img/
+  photos/
+    photo_1786499301926.jpg
+    photo_1786499548394.jpg
+    photo_1786499561458.jpg
+    photo_1786499714746.jpg
+    photo_1786499803148.jpg
+    photo_1786499889457.jpg
+    photo_1786500022336.jpg
+    photo_1786500077493.jpg
+    photo_1786500253013.jpg
+    photo_1786500368033.jpg
+  avatar.jpg
+notes/
+  index.html
+panel/
+  index.html
+  worker.js
+photography/
+  index.html
+projects/
+  index.html
+reading/
+  index.html
+.gitignore
+.nojekyll
+CNAME
+home.js
+index.html
+list.js
+main.js
+README.md
+robots.txt
+sitemap.xml
+style.css
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="data/home.json">
+{
+  "tagline": "undergraduate · mathematics",
+  "about": "I'm an undergraduate at [Middle East Technical University](https://www.metu.edu.tr/en), studying mathematics. I currently contribute to the [Galaxy Rocket Team](https://www.galaxyroket.com/), and this past summer completed a research internship at the [Türkiye National Observatory](https://trgozlemevleri.gov.tr/) under [Prof. Dr. Cahit Yeşilyaprak](https://avesis.atauni.edu.tr/cahity), working on adaptive optics and space situational awareness.",
+  "socials": [
+    { "icon": "fa-solid fa-envelope", "label": "Email", "url": "mailto:ali.onurlucan@metu.edu.tr" },
+    { "icon": "fa-brands fa-github", "label": "GitHub", "url": "https://github.com/malii0" },
+    { "icon": "fa-brands fa-linkedin", "label": "LinkedIn", "url": "http://linkedin.com/in/mali0/" },
+    { "icon": "fa-brands fa-orcid", "label": "ORCID", "url": "https://orcid.org/0009-0002-9240-9825" },
+    { "icon": "fa-brands fa-researchgate", "label": "ResearchGate", "url": "https://www.researchgate.net/profile/Muhammed-Onurlucan" },
+    { "icon": "fa-brands fa-x-twitter", "label": "X (Twitter)", "url": "https://x.com/onurlucan_mali" }
+  ]
+}
+</file>
+
+<file path="data/projects.json">
+[
+  {
+    "id": "backstory",
+    "title": "Backstory",
+    "url": "https://github.com/malii0/Backstory",
+    "meta": "web app · Next.js, Supabase",
+    "desc": "A personal app for logging the movies and shows I've watched, and keeping a list of what I want to watch next. Deployed via Vercel. Invite-only for now, reach out if you'd like access."
+  }
+]
+</file>
+
+<file path="data/reading.json">
+[
+  {
+    "id": "intro-adaptive-optics",
+    "title": "Introduction to Adaptive Optics",
+    "url": "https://doi.org/10.1117/3.358220",
+    "meta": "book · Robert K. Tyson (2000)",
+    "desc": "SPIE Press. Fundamental background on wavefront sensing, deformable mirrors, and atmospheric turbulence mitigation."
+  },
+  {
+    "id": "zernike-applications-paper",
+    "title": "Zernike Polynomials and Their Applications",
+    "url": "https://doi.org/10.1088/2040-8986/ac9e08",
+    "meta": "paper · Kuo Niu & Chao Tian (2022)",
+    "desc": "Journal of Optics, Vol. 24, No. 12. Review on mathematical properties of Zernike polynomials and their applications in optical aberration analysis."
+  },
+  {
+    "id": "deep-multitask-turbulence",
+    "title": "Deep Multi-Task and Representation Learning Method for Atmospheric Turbulence Prediction",
+    "url": null,
+    "meta": "paper · V. K. P. Sathia et al.",
+    "desc": "Georgia State University. Application of deep learning models for atmospheric turbulence prediction and correction using focal plane speckle images."
+  },
+  {
+    "id": "troia-ao-dag",
+    "title": "TROIA Adaptive Optics System for DAG Telescope",
+    "url": "https://doi.org/10.1117/12.2560528",
+    "meta": "paper · O. Keskin, L. Jolissaint, A. Bouxin, C. Yeşilyaprak (2020)",
+    "desc": "Proc. SPIE 11448, Adaptive Optics Systems VII. Architectural design and operational setup of the TROIA adaptive optics instrument for DAG."
+  },
+  {
+    "id": "design-ao-telescope-dag",
+    "title": "The Design of an Adaptive Optics Telescope: The Case of DAG",
+    "url": "https://www.researchgate.net/publication/305686619_The_design_of_an_adaptive_optics_telescope_the_case_of_DAG",
+    "meta": "paper · L. Jolissaint et al.",
+    "desc": "System-level optical engineering considerations and structural integrated adaptive optics design for the 4m DAG telescope."
+  },
+  {
+    "id": "ground-based-leo-observation",
+    "title": "Ground-Based Optical Observation System for LEO Objects",
+    "url": "https://www.sciencedirect.com/science/article/abs/pii/S0273117715000551",
+    "meta": "paper · T. Yanagisawa, H. Kurosaki, H. Oda, M. Tagawa (2015)",
+    "desc": "Advances in Space Research / JAXA. Observational methodologies, tracking algorithms, and optical architectures for LEO space debris surveillance."
+  }
+]
+</file>
+
+<file path=".nojekyll">
+
+</file>
+
+<file path="home.js">
+// home.js - fills in tagline, about text, and social links from data/home.json
+// so they can be edited via the panel without touching index.html.
+
+function escapeHtml(str) {
+    if (str === null || str === undefined) return "";
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+}
+
+function renderAboutText(text) {
+    // Plain text with a lightweight [label](url) link syntax — everything
+    // else is escaped, so no raw HTML is ever needed when editing.
+    const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g;
+    let lastIndex = 0;
+    let match;
+    let html = "";
+    while ((match = linkPattern.exec(text)) !== null) {
+        html += escapeHtml(text.slice(lastIndex, match.index));
+        const label = escapeHtml(match[1]);
+        const url = match[2];
+        const isMail = url.startsWith("mailto:");
+        const extraAttrs = isMail ? "" : ' target="_blank" rel="noopener"';
+        html += `<a href="${escapeHtml(url)}"${extraAttrs} class="inline-link">${label}</a>`;
+        lastIndex = linkPattern.lastIndex;
+    }
+    html += escapeHtml(text.slice(lastIndex));
+    return html;
+}
+
+document.addEventListener("DOMContentLoaded", async function () {
+    try {
+        const res = await fetch("/data/home.json", { cache: "no-store" });
+        if (!res.ok) throw new Error("fetch failed: " + res.status);
+        const data = await res.json();
+
+        const taglineEl = document.getElementById("js-tagline");
+        if (taglineEl && data.tagline) taglineEl.textContent = data.tagline;
+
+        const aboutEl = document.getElementById("js-about");
+        if (aboutEl && data.about) {
+            aboutEl.innerHTML = `<p>${renderAboutText(data.about)}</p>`;
+        }
+
+        const socialEl = document.getElementById("js-social");
+        if (socialEl && Array.isArray(data.socials)) {
+            socialEl.innerHTML = data.socials
+                .map((s) => {
+                    const isMail = (s.url || "").startsWith("mailto:");
+                    const extraAttrs = isMail ? "" : ' target="_blank" rel="noopener"';
+                    return `<a href="${escapeHtml(s.url)}"${extraAttrs} title="${escapeHtml(s.label)}" aria-label="${escapeHtml(s.label)}"><i class="${escapeHtml(s.icon)}"></i></a>`;
+                })
+                .join("");
+        }
+    } catch (err) {
+        console.error("Failed to load home content, keeping static fallback.", err);
+    }
+});
+</file>
+
+<file path="list.js">
+// list.js - renders entry-item lists from a JSON data file.
+// Used by /notes/, /projects/, /reading/ so new entries can be added
+// via the panel without touching HTML.
+
+function escapeHtml(str) {
+    if (str === null || str === undefined) return "";
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+}
+
+async function renderEntryList(containerId, jsonPath, opts = {}) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    try {
+        const res = await fetch(jsonPath, { cache: "no-store" });
+        if (!res.ok) throw new Error("fetch failed: " + res.status);
+        const entries = await res.json();
+
+        if (!Array.isArray(entries) || entries.length === 0) {
+            container.innerHTML = `<p class="empty-note">${escapeHtml(opts.emptyMessage || "Nothing here yet, check back soon.")}</p>`;
+            return;
+        }
+
+        container.innerHTML = entries.map(e => {
+            const title = escapeHtml(e.title);
+            const meta = escapeHtml(e.meta);
+            const desc = escapeHtml(e.desc);
+            const badge = e.badge ? ` <span class="status-badge">${escapeHtml(e.badge)}</span>` : "";
+
+            const titleHtml = e.url
+                ? `<a href="${escapeHtml(e.url)}" target="_blank" rel="noopener" class="entry-title">${title}${badge}</a>`
+                : `<span class="entry-title" style="color: var(--heading-color);">${title}${badge}</span>`;
+
+            return `
+            <div class="entry-item">
+                ${titleHtml}
+                ${meta ? `<span class="entry-meta">${meta}</span>` : ""}
+                ${desc ? `<p class="entry-desc">${desc}</p>` : ""}
+            </div>`;
+        }).join("");
+    } catch (err) {
+        console.error("Failed to load " + jsonPath, err);
+        container.innerHTML = `<p class="empty-note">Unable to load content right now.</p>`;
+    }
+}
+</file>
+
+<file path="data/photos.json">
+[
+  "photo_1786499889457.jpg",
+  "photo_1786499301926.jpg",
+  "photo_1786499548394.jpg",
+  "photo_1786499561458.jpg",
+  "photo_1786499714746.jpg",
+  "photo_1786499803148.jpg",
+  "photo_1786500022336.jpg",
+  "photo_1786500077493.jpg",
+  "photo_1786500253013.jpg",
+  "photo_1786500368033.jpg"
+]
+</file>
+
+<file path="panel/index.html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <script>
+        const storedTheme = localStorage.getItem("theme");
+        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (storedTheme === "light" || (!storedTheme && prefersLight)) {
+            document.documentElement.classList.add("light-mode");
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap">
+    <link rel="stylesheet" href="/style.css" fetchpriority="high">
+
+    <style>
+        .panel-container { max-width: 640px; margin: 0 auto; padding: 32px 18px 90px; }
+
+        .secret-row { display: flex; gap: 8px; margin-bottom: 24px; }
+        .secret-row input { flex: 1; }
+
+        .tab-switch { display: flex; gap: 6px; margin-bottom: 24px; flex-wrap: wrap; }
+        .tab-switch button {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            padding: 7px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: var(--btn-bg);
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        .tab-switch button.active { border-color: var(--accent); color: var(--accent); }
+
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        label {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            margin: 14px 0 5px;
+        }
+        input[type="text"], input[type="url"], input[type="password"], textarea, select {
+            width: 100%;
+            font-family: 'Newsreader', serif;
+            font-size: 0.95rem;
+            color: var(--text-color);
+            background: var(--bg-alt);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 9px 11px;
+        }
+        textarea { min-height: 70px; resize: vertical; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; }
+        input:focus, textarea:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+        .card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 12px;
+            background: var(--bg-alt);
+        }
+        .card-toolbar { display: flex; justify-content: flex-end; gap: 6px; margin-top: 10px; }
+        .icon-btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            background: var(--btn-bg);
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        .icon-btn:hover { color: var(--text-color); }
+        .icon-btn.danger:hover { color: var(--accent); border-color: var(--accent); }
+
+        .btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            padding: 11px;
+            border-radius: 6px;
+            border: 1px solid var(--accent);
+            background: var(--accent);
+            color: var(--bg-color);
+            cursor: pointer;
+            width: 100%;
+        }
+        .btn:disabled { opacity: 0.6; cursor: default; }
+        .btn.secondary { background: transparent; color: var(--accent); margin-bottom: 10px; }
+
+        .status-msg {
+            margin-top: 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            padding: 9px 11px;
+            border-radius: 6px;
+            display: none;
+        }
+        .status-msg.ok { display: block; background: rgba(120, 160, 90, 0.15); color: #5a8a3a; }
+        body.light-mode .status-msg.ok { color: #8fce5a; }
+        .status-msg.err { display: block; background: rgba(200, 60, 40, 0.12); color: var(--accent); }
+
+        .photo-row { display: flex; align-items: center; gap: 10px; }
+        .photo-row img { width: 56px; height: 56px; object-fit: cover; border-radius: 5px; border: 1px solid var(--border-color); flex-shrink: 0; }
+        .photo-row .fname { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text-muted); word-break: break-all; flex: 1; }
+
+        .custom-icon-field { display: none; }
+        .section-note { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px; }
+    </style>
+</head>
+<body>
+
+    <main class="panel-container">
+        <div class="page-label">panel</div>
+        <p class="page-intro">Full control: add, edit, delete, and reorder everything on the site.</p>
+
+        <div class="secret-row">
+            <input type="password" id="f-secret" placeholder="Panel password">
+        </div>
+
+        <div class="tab-switch">
+            <button type="button" data-tab="home" class="active">home</button>
+            <button type="button" data-tab="notes">notes</button>
+            <button type="button" data-tab="projects">projects</button>
+            <button type="button" data-tab="reading">read/watch</button>
+            <button type="button" data-tab="photos">photos</button>
+        </div>
+
+        <!-- HOME TAB -->
+        <section class="tab-panel active" id="tab-home">
+            <button type="button" class="btn secondary" id="home-load">Load current content</button>
+
+            <label for="home-tagline">Tagline</label>
+            <input type="text" id="home-tagline" placeholder="undergraduate · mathematics">
+
+            <label for="home-about">About (plain text, use [link text](https://...) for links)</label>
+            <textarea id="home-about" style="min-height: 140px;"></textarea>
+
+            <label>Social links</label>
+            <div id="socials-list"></div>
+            <button type="button" class="icon-btn" id="add-social">+ add social link</button>
+
+            <button type="button" class="btn" id="home-save" style="margin-top: 20px;">Save home page</button>
+            <div class="status-msg" id="home-status"></div>
+        </section>
+
+        <!-- NOTES / PROJECTS / READING TABS (generic) -->
+        <section class="tab-panel" id="tab-notes" data-type="notes"></section>
+        <section class="tab-panel" id="tab-projects" data-type="projects"></section>
+        <section class="tab-panel" id="tab-reading" data-type="reading"></section>
+
+        <!-- PHOTOS TAB -->
+        <section class="tab-panel" id="tab-photos">
+            <button type="button" class="btn secondary" id="photos-load">Load current photos</button>
+            <p class="section-note">Add new photos, reorder with the arrows, delete with x, then save.</p>
+
+            <label for="photos-input">Add photos</label>
+            <input type="file" id="photos-input" accept="image/jpeg,image/png,image/webp" multiple>
+            <div class="status-msg" id="upload-status"></div>
+
+            <div id="photos-list" style="margin-top: 16px;"></div>
+
+            <button type="button" class="btn" id="photos-save" style="margin-top: 16px;">Save order</button>
+            <div class="status-msg" id="photos-status"></div>
+        </section>
+    </main>
+
+    <script>
+        // ====== CONFIG ======
+        // Base URL of your Cloudflare Worker (same one the photo Shortcut
+        // posts to). Don't include a trailing slash or /panel.
+        const WORKER_BASE = "https://photo-uploader.m-alionurlucan.workers.dev";
+
+        // ====== HELPERS ======
+        function getSecret() { return document.getElementById("f-secret").value; }
+
+        function escapeHtml(str) {
+            if (str === null || str === undefined) return "";
+            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+        }
+
+        async function api(path, payload) {
+            const res = await fetch(WORKER_BASE + path, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(Object.assign({}, payload, { secret: getSecret() })),
+            });
+            const data = await res.json();
+            if (!res.ok || data.error) throw new Error(data.error || "Request failed");
+            return data;
+        }
+
+        function showStatus(elId, msg, ok) {
+            const el = document.getElementById(elId);
+            el.className = "status-msg " + (ok ? "ok" : "err");
+            el.textContent = msg;
+        }
+
+        function randomKey() { return Math.random().toString(36).slice(2, 10); }
+
+        // Restore saved password
+        const savedSecret = localStorage.getItem("panel_secret");
+        if (savedSecret) document.getElementById("f-secret").value = savedSecret;
+        document.getElementById("f-secret").addEventListener("change", function (e) {
+            localStorage.setItem("panel_secret", e.target.value);
+        });
+
+        // ====== TABS ======
+        const tabButtons = document.querySelectorAll(".tab-switch button");
+        tabButtons.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                tabButtons.forEach(function (b) { b.classList.remove("active"); });
+                btn.classList.add("active");
+                document.querySelectorAll(".tab-panel").forEach(function (p) { p.classList.remove("active"); });
+                document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+            });
+        });
+
+        // ====== HOME TAB ======
+        const iconPresets = {
+            "Email": "fa-solid fa-envelope",
+            "GitHub": "fa-brands fa-github",
+            "LinkedIn": "fa-brands fa-linkedin",
+            "ORCID": "fa-brands fa-orcid",
+            "ResearchGate": "fa-brands fa-researchgate",
+            "X (Twitter)": "fa-brands fa-x-twitter",
+        };
+
+        let socialsState = [];
+
+        function renderSocials() {
+            const container = document.getElementById("socials-list");
+            container.innerHTML = socialsState.map(function (s) {
+                const presetMatch = Object.keys(iconPresets).find(function (k) { return iconPresets[k] === s.icon; });
+                const options = Object.keys(iconPresets).map(function (k) {
+                    return '<option value="' + k + '" ' + (presetMatch === k ? "selected" : "") + '>' + k + '</option>';
+                }).join("");
+                const isCustom = !presetMatch;
+                return '' +
+                '<div class="card" data-key="' + s._key + '">' +
+                    '<select class="preset-select" data-field="preset">' +
+                        options +
+                        '<option value="__custom__" ' + (isCustom ? "selected" : "") + '>Custom</option>' +
+                    '</select>' +
+                    '<div class="custom-icon-field" style="display:' + (isCustom ? "block" : "none") + '">' +
+                        '<label>Font Awesome class</label>' +
+                        '<input type="text" data-field="icon" value="' + escapeHtml(s.icon) + '" placeholder="fa-brands fa-mastodon">' +
+                    '</div>' +
+                    '<label>Label</label>' +
+                    '<input type="text" data-field="label" value="' + escapeHtml(s.label) + '">' +
+                    '<label>URL</label>' +
+                    '<input type="text" data-field="url" value="' + escapeHtml(s.url) + '" placeholder="https://... or mailto:...">' +
+                    '<div class="card-toolbar">' +
+                        '<button type="button" class="icon-btn danger" data-action="remove-social">remove</button>' +
+                    '</div>' +
+                '</div>';
+            }).join("");
+
+            container.querySelectorAll(".card").forEach(function (card) {
+                const key = card.dataset.key;
+                const entry = socialsState.find(function (s) { return s._key === key; });
+
+                card.querySelector('[data-field="preset"]').addEventListener("change", function (e) {
+                    const val = e.target.value;
+                    const customField = card.querySelector(".custom-icon-field");
+                    if (val === "__custom__") {
+                        customField.style.display = "block";
+                    } else {
+                        customField.style.display = "none";
+                        entry.icon = iconPresets[val];
+                    }
+                });
+                const customInput = card.querySelector('[data-field="icon"]');
+                if (customInput) customInput.addEventListener("input", function (e) { entry.icon = e.target.value; });
+
+                card.querySelector('[data-field="label"]').addEventListener("input", function (e) { entry.label = e.target.value; });
+                card.querySelector('[data-field="url"]').addEventListener("input", function (e) { entry.url = e.target.value; });
+
+                card.querySelector('[data-action="remove-social"]').addEventListener("click", function () {
+                    socialsState = socialsState.filter(function (s) { return s._key !== key; });
+                    renderSocials();
+                });
+            });
+        }
+
+        document.getElementById("add-social").addEventListener("click", function () {
+            socialsState.push({ _key: randomKey(), icon: "fa-solid fa-link", label: "", url: "" });
+            renderSocials();
+        });
+
+        document.getElementById("home-load").addEventListener("click", async function () {
+            try {
+                const res = await api("/panel/get", { type: "home" });
+                document.getElementById("home-tagline").value = res.data.tagline || "";
+                document.getElementById("home-about").value = res.data.about || "";
+                socialsState = (res.data.socials || []).map(function (s) {
+                    return Object.assign({}, s, { _key: randomKey() });
+                });
+                renderSocials();
+                showStatus("home-status", "Loaded.", true);
+            } catch (err) {
+                showStatus("home-status", "Failed to load: " + err.message, false);
+            }
+        });
+
+        document.getElementById("home-save").addEventListener("click", async function () {
+            const data = {
+                tagline: document.getElementById("home-tagline").value,
+                about: document.getElementById("home-about").value,
+                socials: socialsState.map(function (s) {
+                    const copy = Object.assign({}, s);
+                    delete copy._key;
+                    return copy;
+                }),
+            };
+            try {
+                await api("/panel/save", { type: "home", data: data });
+                showStatus("home-status", "Saved.", true);
+            } catch (err) {
+                showStatus("home-status", "Failed to save: " + err.message, false);
+            }
+        });
+
+        // ====== NOTES / PROJECTS / READING TABS ======
+        const entryTypeConfig = {
+            notes: { label: "note", hasBadge: true, metaPlaceholder: "e.g. adaptive optics" },
+            projects: { label: "project", hasBadge: false, metaPlaceholder: "e.g. web app, Next.js/Supabase" },
+            reading: { label: "entry", hasBadge: false, metaPlaceholder: "e.g. paper, Author (2026)" },
+        };
+        const entryState = { notes: null, projects: null, reading: null };
+
+        function buildEntryTabHtml() {
+            return '' +
+                '<button type="button" class="btn secondary" data-action="load">Load current entries</button>' +
+                '<button type="button" class="icon-btn" data-action="add" style="margin-bottom: 12px;">+ add new</button>' +
+                '<div class="entry-cards"></div>' +
+                '<button type="button" class="btn" data-action="save" style="margin-top: 10px;">Save changes</button>' +
+                '<div class="status-msg" data-status></div>';
+        }
+
+        function renderEntries(type) {
+            const cfg = entryTypeConfig[type];
+            const section = document.getElementById("tab-" + type);
+            const container = section.querySelector(".entry-cards");
+            const entries = entryState[type] || [];
+
+            container.innerHTML = entries.map(function (e, i) {
+                let badgeHtml = "";
+                if (cfg.hasBadge) {
+                    badgeHtml = '' +
+                        '<label>Badge (optional)</label>' +
+                        '<input type="text" data-field="badge" value="' + escapeHtml(e.badge) + '" placeholder="e.g. TR, PDF">';
+                }
+                return '' +
+                '<div class="card" data-key="' + e._key + '">' +
+                    '<label>Title</label>' +
+                    '<input type="text" data-field="title" value="' + escapeHtml(e.title) + '">' +
+                    '<label>Link (optional)</label>' +
+                    '<input type="text" data-field="url" value="' + escapeHtml(e.url) + '" placeholder="https://...">' +
+                    '<label>Meta line</label>' +
+                    '<input type="text" data-field="meta" value="' + escapeHtml(e.meta) + '" placeholder="' + cfg.metaPlaceholder + '">' +
+                    badgeHtml +
+                    '<label>Description</label>' +
+                    '<textarea data-field="desc">' + escapeHtml(e.desc) + '</textarea>' +
+                    '<div class="card-toolbar">' +
+                        '<button type="button" class="icon-btn" data-action="up" ' + (i === 0 ? "disabled" : "") + '>up</button>' +
+                        '<button type="button" class="icon-btn" data-action="down" ' + (i === entries.length - 1 ? "disabled" : "") + '>down</button>' +
+                        '<button type="button" class="icon-btn danger" data-action="delete">delete</button>' +
+                    '</div>' +
+                '</div>';
+            }).join("") || '<p class="section-note">Nothing loaded yet, click "Load current entries".</p>';
+
+            container.querySelectorAll(".card").forEach(function (card) {
+                const key = card.dataset.key;
+                card.querySelectorAll("[data-field]").forEach(function (input) {
+                    input.addEventListener("input", function () {
+                        const entry = entryState[type].find(function (e) { return e._key === key; });
+                        entry[input.dataset.field] = input.value;
+                    });
+                });
+                const upBtn = card.querySelector('[data-action="up"]');
+                if (upBtn) upBtn.addEventListener("click", function () {
+                    const idx = entryState[type].findIndex(function (e) { return e._key === key; });
+                    if (idx > 0) {
+                        const tmp = entryState[type][idx - 1];
+                        entryState[type][idx - 1] = entryState[type][idx];
+                        entryState[type][idx] = tmp;
+                        renderEntries(type);
+                    }
+                });
+                const downBtn = card.querySelector('[data-action="down"]');
+                if (downBtn) downBtn.addEventListener("click", function () {
+                    const idx = entryState[type].findIndex(function (e) { return e._key === key; });
+                    if (idx < entryState[type].length - 1) {
+                        const tmp = entryState[type][idx + 1];
+                        entryState[type][idx + 1] = entryState[type][idx];
+                        entryState[type][idx] = tmp;
+                        renderEntries(type);
+                    }
+                });
+                card.querySelector('[data-action="delete"]').addEventListener("click", function () {
+                    if (!confirm("Delete this entry?")) return;
+                    entryState[type] = entryState[type].filter(function (e) { return e._key !== key; });
+                    renderEntries(type);
+                });
+            });
+        }
+
+        Object.keys(entryTypeConfig).forEach(function (type) {
+            const section = document.getElementById("tab-" + type);
+            section.innerHTML = buildEntryTabHtml();
+            const statusEl = section.querySelector("[data-status]");
+            statusEl.id = type + "-status";
+
+            section.querySelector('[data-action="load"]').addEventListener("click", async function () {
+                try {
+                    const res = await api("/panel/get", { type: type });
+                    entryState[type] = (res.data || []).map(function (e) {
+                        return Object.assign({}, e, { _key: randomKey() });
+                    });
+                    renderEntries(type);
+                    showStatus(type + "-status", "Loaded.", true);
+                } catch (err) {
+                    showStatus(type + "-status", "Failed to load: " + err.message, false);
+                }
+            });
+
+            section.querySelector('[data-action="add"]').addEventListener("click", function () {
+                if (!entryState[type]) entryState[type] = [];
+                entryState[type].unshift({ _key: randomKey(), title: "", url: "", meta: "", desc: "", badge: "" });
+                renderEntries(type);
+            });
+
+            section.querySelector('[data-action="save"]').addEventListener("click", async function () {
+                const entries = (entryState[type] || [])
+                    .filter(function (e) { return e.title && e.title.trim(); })
+                    .map(function (e) {
+                        const copy = Object.assign({}, e);
+                        delete copy._key;
+                        return copy;
+                    });
+                try {
+                    await api("/panel/save", { type: type, data: entries });
+                    showStatus(type + "-status", "Saved.", true);
+                } catch (err) {
+                    showStatus(type + "-status", "Failed to save: " + err.message, false);
+                }
+            });
+        });
+
+        // ====== PHOTOS TAB ======
+        let photosState = [];
+
+        function renderPhotos() {
+            const container = document.getElementById("photos-list");
+            container.innerHTML = photosState.map(function (name, i) {
+                const thumb = "https://wsrv.nl/?url=malionurlucan.me/img/photos/" + encodeURIComponent(name) + "&w=120&q=70&output=webp";
+                return '' +
+                '<div class="card photo-row" data-name="' + escapeHtml(name) + '">' +
+                    '<img src="' + thumb + '" alt="">' +
+                    '<span class="fname">' + escapeHtml(name) + '</span>' +
+                    '<button type="button" class="icon-btn" data-action="up" ' + (i === 0 ? "disabled" : "") + '>up</button>' +
+                    '<button type="button" class="icon-btn" data-action="down" ' + (i === photosState.length - 1 ? "disabled" : "") + '>down</button>' +
+                    '<button type="button" class="icon-btn danger" data-action="delete">x</button>' +
+                '</div>';
+            }).join("") || '<p class="section-note">No photos loaded, click "Load current photos".</p>';
+
+            container.querySelectorAll(".card").forEach(function (card) {
+                const name = card.dataset.name;
+                card.querySelector('[data-action="up"]').addEventListener("click", function () {
+                    const idx = photosState.indexOf(name);
+                    if (idx > 0) {
+                        const tmp = photosState[idx - 1];
+                        photosState[idx - 1] = photosState[idx];
+                        photosState[idx] = tmp;
+                        renderPhotos();
+                    }
+                });
+                card.querySelector('[data-action="down"]').addEventListener("click", function () {
+                    const idx = photosState.indexOf(name);
+                    if (idx < photosState.length - 1) {
+                        const tmp = photosState[idx + 1];
+                        photosState[idx + 1] = photosState[idx];
+                        photosState[idx] = tmp;
+                        renderPhotos();
+                    }
+                });
+                card.querySelector('[data-action="delete"]').addEventListener("click", async function () {
+                    if (!confirm("Delete this photo from the site entirely?")) return;
+                    try {
+                        await api("/panel/delete-photo", { filename: name });
+                        photosState = photosState.filter(function (n) { return n !== name; });
+                        await api("/panel/save", { type: "photos", data: photosState });
+                        renderPhotos();
+                        showStatus("photos-status", "Deleted.", true);
+                    } catch (err) {
+                        showStatus("photos-status", "Failed to delete: " + err.message, false);
+                    }
+                });
+            });
+        }
+
+        document.getElementById("photos-load").addEventListener("click", async function () {
+            try {
+                const res = await api("/panel/get", { type: "photos" });
+                photosState = res.data || [];
+                renderPhotos();
+                showStatus("photos-status", "Loaded.", true);
+            } catch (err) {
+                showStatus("photos-status", "Failed to load: " + err.message, false);
+            }
+        });
+
+        document.getElementById("photos-save").addEventListener("click", async function () {
+            try {
+                await api("/panel/save", { type: "photos", data: photosState });
+                showStatus("photos-status", "Order saved.", true);
+            } catch (err) {
+                showStatus("photos-status", "Failed to save: " + err.message, false);
+            }
+        });
+
+        function fileToBase64(file) {
+            return new Promise(function (resolve, reject) {
+                const reader = new FileReader();
+                reader.onload = function () { resolve(reader.result.split(",")[1]); };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        document.getElementById("photos-input").addEventListener("change", async function (e) {
+            const files = Array.from(e.target.files);
+            if (files.length === 0) return;
+
+            const uploadStatus = document.getElementById("upload-status");
+            uploadStatus.className = "status-msg ok";
+            uploadStatus.style.display = "block";
+
+            let uploaded = 0;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                let ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+                if (ext === "jpeg") ext = "jpg";
+                const safeExt = ["jpg", "png", "webp"].indexOf(ext) !== -1 ? ext : "jpg";
+                const filename = "photo_" + Date.now() + "_" + i + "." + safeExt;
+
+                uploadStatus.textContent = "Uploading " + (i + 1) + "/" + files.length + "...";
+                try {
+                    const base64 = await fileToBase64(file);
+                    await api("/panel/upload-photo", { filename: filename, base64: base64 });
+                    photosState.push(filename);
+                    uploaded++;
+                } catch (err) {
+                    uploadStatus.className = "status-msg err";
+                    uploadStatus.textContent = "Failed on " + file.name + ": " + err.message;
+                    renderPhotos();
+                    return;
+                }
+            }
+
+            try {
+                await api("/panel/save", { type: "photos", data: photosState });
+                uploadStatus.className = "status-msg ok";
+                uploadStatus.textContent = "Uploaded " + uploaded + " photo(s) and saved order.";
+            } catch (err) {
+                uploadStatus.className = "status-msg err";
+                uploadStatus.textContent = "Uploaded but failed to save order: " + err.message;
+            }
+            e.target.value = "";
+            renderPhotos();
+        });
+    </script>
+
+    <script src="/main.js"></script>
+</body>
+</html>
+</file>
+
+<file path="panel/worker.js">
+const REPO = "malii0/malii0.github.io";
+
+const TYPE_PATHS = {
+  home: "data/home.json",
+  notes: "data/notes.json",
+  projects: "data/projects.json",
+  reading: "data/reading.json",
+  photos: "data/photos.json",
+};
+
+const SAFE_FILENAME = /^[a-zA-Z0-9_.-]+\.(jpe?g|png|webp)$/i;
+
+function toBase64Utf8(str) {
+  const bytes = new TextEncoder().encode(str);
+  let binary = "";
+  bytes.forEach((b) => (binary += String.fromCharCode(b)));
+  return btoa(binary);
+}
+
+function fromBase64Utf8(b64) {
+  const binary = atob(b64.replace(/\n/g, ""));
+  const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+
+function slugify(title) {
+  return (
+    title
+      .toLowerCase()
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "")
+      .slice(0, 48) || "entry"
+  );
+}
+
+function jsonResponse(body, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });
+}
+
+function ghHeaders(env) {
+  return {
+    Authorization: `token ${env.GITHUB_TOKEN}`,
+    "User-Agent": "photo-uploader-worker",
+    Accept: "application/vnd.github+json",
+  };
+}
+
+function checkAuth(body, env) {
+  return !!env.PANEL_SECRET && body.secret === env.PANEL_SECRET;
+}
+
+async function getContentsFile(path, env) {
+  const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+    headers: ghHeaders(env),
+  });
+  if (!res.ok) {
+    throw new Error(`GitHub GET ${path} failed: ${res.status} ${await res.text()}`);
+  }
+  return res.json(); // { content (base64), sha, ... }
+}
+
+async function putContentsFile(path, contentStr, sha, message, env) {
+  const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+    method: "PUT",
+    headers: { ...ghHeaders(env), "Content-Type": "application/json" },
+    body: JSON.stringify({
+      message,
+      content: toBase64Utf8(contentStr),
+      sha,
+      branch: "main",
+    }),
+  });
+  if (!res.ok) {
+    throw new Error(`GitHub PUT ${path} failed: ${res.status} ${await res.text()}`);
+  }
+  return res.json();
+}
+
+// ---- /panel/get : return current data for a given type ----
+async function handleGet(request, env) {
+  let body;
+  try {
+    body = await request.json();
+  } catch (e) {
+    return jsonResponse({ error: "Invalid JSON body" }, 400);
+  }
+  if (!checkAuth(body, env)) return jsonResponse({ error: "Unauthorized" }, 401);
+
+  const path = TYPE_PATHS[body.type];
+  if (!path) return jsonResponse({ error: "Unknown type: " + body.type }, 400);
+
+  try {
+    const file = await getContentsFile(path, env);
+    const data = JSON.parse(fromBase64Utf8(file.content));
+    return jsonResponse({ ok: true, data });
+  } catch (err) {
+    return jsonResponse({ error: err.message }, 502);
+  }
+}
+
+// ---- /panel/save : overwrite a data file with a new array/object ----
+async function handleSave(request, env) {
+  let body;
+  try {
+    body = await request.json();
+  } catch (e) {
+    return jsonResponse({ error: "Invalid JSON body" }, 400);
+  }
+  if (!checkAuth(body, env)) return jsonResponse({ error: "Unauthorized" }, 401);
+
+  const path = TYPE_PATHS[body.type];
+  if (!path) return jsonResponse({ error: "Unknown type: " + body.type }, 400);
+  if (body.data === undefined) return jsonResponse({ error: "Missing data" }, 400);
+
+  try {
+    const current = await getContentsFile(path, env);
+
+    // Auto-generate ids for any new entries (notes/projects/reading) that
+    // don't have one yet, so the panel doesn't have to worry about it.
+    let payload = body.data;
+    if (["notes", "projects", "reading"].includes(body.type) && Array.isArray(payload)) {
+      payload = payload.map((entry) => ({
+        ...entry,
+        id: entry.id || `${slugify(entry.title || "entry")}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`,
+      }));
+    }
+
+    const content = JSON.stringify(payload, null, 2) + "\n";
+    await putContentsFile(path, content, current.sha, `Update ${body.type} via panel`, env);
+    return jsonResponse({ ok: true });
+  } catch (err) {
+    return jsonResponse({ error: err.message }, 502);
+  }
+}
+
+// ---- /panel/upload-photo : commit a single image file (base64) ----
+async function handleUploadPhoto(request, env) {
+  let body;
+  try {
+    body = await request.json();
+  } catch (e) {
+    return jsonResponse({ error: "Invalid JSON body" }, 400);
+  }
+  if (!checkAuth(body, env)) return jsonResponse({ error: "Unauthorized" }, 401);
+
+  const { filename, base64 } = body;
+  if (!filename || !SAFE_FILENAME.test(filename)) {
+    return jsonResponse({ error: "Invalid filename" }, 400);
+  }
+  if (!base64) return jsonResponse({ error: "Missing image data" }, 400);
+
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${REPO}/contents/img/photos/${filename}`,
+      {
+        method: "PUT",
+        headers: { ...ghHeaders(env), "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: `Upload photo ${filename} via panel`,
+          content: base64,
+          branch: "main",
+        }),
+      }
+    );
+    if (!res.ok) throw new Error(`GitHub PUT failed: ${res.status} ${await res.text()}`);
+    return jsonResponse({ ok: true, filename });
+  } catch (err) {
+    return jsonResponse({ error: err.message }, 502);
+  }
+}
+
+// ---- /panel/delete-photo : remove an image file from the repo ----
+async function handleDeletePhoto(request, env) {
+  let body;
+  try {
+    body = await request.json();
+  } catch (e) {
+    return jsonResponse({ error: "Invalid JSON body" }, 400);
+  }
+  if (!checkAuth(body, env)) return jsonResponse({ error: "Unauthorized" }, 401);
+
+  const { filename } = body;
+  if (!filename || !SAFE_FILENAME.test(filename)) {
+    return jsonResponse({ error: "Invalid filename" }, 400);
+  }
+
+  try {
+    const current = await getContentsFile(`img/photos/${filename}`, env);
+    const res = await fetch(
+      `https://api.github.com/repos/${REPO}/contents/img/photos/${filename}`,
+      {
+        method: "DELETE",
+        headers: { ...ghHeaders(env), "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: `Delete photo ${filename} via panel`,
+          sha: current.sha,
+          branch: "main",
+        }),
+      }
+    );
+    if (!res.ok) throw new Error(`GitHub DELETE failed: ${res.status} ${await res.text()}`);
+    return jsonResponse({ ok: true });
+  } catch (err) {
+    return jsonResponse({ error: err.message }, 502);
+  }
+}
+
+// Existing photo upload flow (used by the iOS Shortcut), completely unchanged.
+async function handlePhotoUpload(request, env) {
+  if (request.method !== "POST") {
+    return new Response("Method not allowed", { status: 405 });
+  }
+  if (request.headers.get("x-upload-secret") !== env.UPLOAD_SECRET) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  const buf = new Uint8Array(await request.arrayBuffer());
+  let binary = "";
+  for (let i = 0; i < buf.length; i++) binary += String.fromCharCode(buf[i]);
+  const base64 = btoa(binary);
+
+  const filename = `photo_${Date.now()}.jpg`;
+  const ghRes = await fetch(
+    `https://api.github.com/repos/${REPO}/contents/img/photos/${filename}`,
+    {
+      method: "PUT",
+      headers: {
+        "Authorization": `token ${env.GITHUB_TOKEN}`,
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "photo-uploader-worker",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: `Upload photo ${filename}`,
+        content: base64,
+        branch: "main",
+      }),
+    }
+  );
+
+  if (!ghRes.ok) {
+    return new Response(`GitHub error: ${ghRes.status} ${await ghRes.text()}`, { status: 500 });
+  }
+  return new Response(`Uploaded: ${filename}`, { status: 200 });
+}
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+
+    if (request.method === "OPTIONS" && url.pathname.startsWith("/panel/")) {
+      return new Response(null, {
+        status: 204,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },
+      });
+    }
+
+    switch (url.pathname) {
+      case "/panel/get":
+        return handleGet(request, env);
+      case "/panel/save":
+        return handleSave(request, env);
+      case "/panel/upload-photo":
+        return handleUploadPhoto(request, env);
+      case "/panel/delete-photo":
+        return handleDeletePhoto(request, env);
+      default:
+        // Anything else (the base URL your Shortcut already posts to)
+        // keeps working exactly as before.
+        return handlePhotoUpload(request, env);
+    }
+  },
+};
+</file>
+
+<file path="data/notes.json">
+[
+  {
+    "title": "Uydu Yörünge Rejimleri, Takımuydular ve LEO Optik Gözlem Sistemleri",
+    "url": "/files/Satellite Orbits.pdf",
+    "meta": "orbital mechanics",
+    "desc": "A technical overview of orbital regimes (LEO, MEO, GEO, SSO, Molniya, Lagrange points), mega-constellation architectures (Walker geometries, optical ISLs), and ground-based optical tracking pipelines for LEO objects based on JAXA's multi-station observation models.",
+    "badge": "TR · PDF",
+    "id": "uydu-yorunge-rejimleri-tak-muydular-ve-leo-optik-mt1i22e5-kcvc"
+  },
+  {
+    "id": "zernike-polynomials",
+    "title": "Zernike Polinomlarının Matematiksel Altyapısı ve Optik Uygulamaları",
+    "url": "/files/Zernike Polynomials.pdf",
+    "badge": "TR · PDF",
+    "meta": "adaptive optics",
+    "desc": "A self-contained derivation of Zernike polynomials, covering orthogonality on the unit disk, Noll/OSA/Fringe indexing conventions, Seidel aberrations, and their role in wavefront reconstruction for adaptive optics."
+  }
+]
+</file>
+
+<file path=".gitignore">
+.DS_Store
+Thumbs.db
+*.log
+</file>
+
+<file path="CNAME">
+malionurlucan.me
+</file>
+
+<file path="robots.txt">
+User-agent: *
+Allow: /
+Disallow: /panel/
+
+Sitemap: https://malionurlucan.me/sitemap.xml
+</file>
+
+<file path="README.md">
+# Personal Portfolio
+
+My personal academic portfolio site, hosted on GitHub Pages. Built with HTML, CSS, and vanilla JavaScript.
+
+**Live site:** [malionurlucan.me](https://malionurlucan.me)
+</file>
+
+<file path="sitemap.xml">
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://malionurlucan.me/</loc>
+        <lastmod>2026-08-03</lastmod>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/projects/</loc>
+        <lastmod>2026-08-03</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/notes/</loc>
+        <lastmod>2026-08-03</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/reading/</loc>
+        <lastmod>2026-08-03</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/photography/</loc>
+        <lastmod>2026-08-03</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://malionurlucan.me/files/cv.pdf</loc>
+        <priority>0.8</priority>
+    </url>
+</urlset>
+</file>
+
+<file path="main.js">
+// main.js - OS Preference & Storage Aware Dark/Light Mode
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    // 1. Durum Tespiti (localStorage > OS Tercihi > Dark Default)
+    const storedTheme = localStorage.getItem("theme");
+    const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+    const isLight = storedTheme ? storedTheme === "light" : prefersLight;
+
+    // 2. Class senkronizasyonu
+    if (isLight) {
+        document.body.classList.add("light-mode");
+        document.documentElement.classList.add("light-mode");
+    }
+
+    // 3. Theme Toggle Butonunu Oluştur
+    const toggleBtn = document.createElement("button");
+    toggleBtn.id = "theme-toggle";
+    toggleBtn.className = "theme-btn";
+    toggleBtn.innerHTML = isLight ? "☾" : "☀";
+    toggleBtn.setAttribute("aria-label", "Toggle Dark/Light Mode");
+    toggleBtn.setAttribute("aria-pressed", isLight ? "true" : "false");
+    document.body.appendChild(toggleBtn);
+
+    // 4. Tıklama Olayı
+    toggleBtn.addEventListener("click", function() {
+        const isCurrentlyLight = document.body.classList.toggle("light-mode");
+        document.documentElement.classList.toggle("light-mode", isCurrentlyLight);
+
+        toggleBtn.setAttribute("aria-pressed", isCurrentlyLight ? "true" : "false");
+
+        if (isCurrentlyLight) {
+            toggleBtn.innerHTML = "☾";
+            localStorage.setItem("theme", "light");
+        } else {
+            toggleBtn.innerHTML = "☀";
+            localStorage.setItem("theme", "dark");
+        }
+    });
+});
+</file>
+
+<file path="notes/index.html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes - Muhammed Ali Onurlucan</title>
+    <meta name="description" content="Technical study notes, mathematical derivations, and reference documents by Muhammed Ali Onurlucan.">
+
+    <link rel="canonical" href="https://malionurlucan.me/notes/">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <script>
+        const storedTheme = localStorage.getItem("theme");
+        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (storedTheme === "light" || (!storedTheme && prefersLight)) {
+            document.documentElement.classList.add("light-mode");
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap">
+
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+
+    <link rel="stylesheet" href="/style.css" fetchpriority="high">
+</head>
+<body>
+
+    <nav class="site-nav">
+        <a href="/" class="brand">m.a.o</a>
+        <div class="nav-items">
+            <a href="/">home</a>
+            <a href="/projects/">projects</a>
+            <a href="/notes/" class="active">notes</a>
+            <a href="/reading/">read / watch</a>
+            <a href="/photography/">photography</a>
+        </div>
+    </nav>
+
+    <main class="container container-single">
+
+        <div class="page-label">notes</div>
+        <p class="page-intro">A collection of technical study notes, mathematical derivations, and reference documents.</p>
+
+        <div id="entry-list" class="entry-list"></div>
+
+    </main>
+
+    <script src="/list.js"></script>
+    <script>
+        renderEntryList("entry-list", "/data/notes.json", { emptyMessage: "No notes published yet." });
+    </script>
+    <script src="/main.js"></script>
+    <script data-goatcounter="https://malionurlucan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+</file>
+
+<file path="photography/index.html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography - Muhammed Ali Onurlucan</title>
+    <meta name="description" content="Personal photo gallery by Muhammed Ali Onurlucan.">
+
+    <link rel="canonical" href="https://malionurlucan.me/photography/">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <script>
+        const storedTheme = localStorage.getItem("theme");
+        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (storedTheme === "light" || (!storedTheme && prefersLight)) {
+            document.documentElement.classList.add("light-mode");
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap">
+
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+
+    <link rel="stylesheet" href="/style.css" fetchpriority="high">
+</head>
+<body>
+
+    <nav class="site-nav">
+        <a href="/" class="brand">m.a.o</a>
+        <div class="nav-items">
+            <a href="/">home</a>
+            <a href="/projects/">projects</a>
+            <a href="/notes/">notes</a>
+            <a href="/reading/">read / watch</a>
+            <a href="/photography/" class="active">photography</a>
+        </div>
+    </nav>
+
+    <main class="container container-single">
+
+        <div class="page-label">photography</div>
+        <p class="page-intro">Some photos I've taken, nothing more.</p>
+
+        <!-- Dynamic Photo Grid Container -->
+        <div id="photo-gallery" class="photo-grid"></div>
+
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function() {
+            const gallery = document.getElementById("photo-gallery");
+
+            try {
+                // Ordered by data/photos.json (managed via the panel) instead of
+                // a live GitHub directory listing, so photo order is controllable.
+                const res = await fetch("/data/photos.json", { cache: "no-store" });
+                if (!res.ok) throw new Error("fetch failed: " + res.status);
+                const filenames = await res.json();
+
+                if (!Array.isArray(filenames) || filenames.length === 0) {
+                    gallery.innerHTML = '<p class="empty-note">No photos published yet, check back soon.</p>';
+                    return;
+                }
+
+                gallery.innerHTML = "";
+                filenames.forEach((name, index) => {
+                    const card = document.createElement("div");
+                    card.className = "photo-card";
+                    const fullResUrl = `/img/photos/${name}`;
+                    // Serve a resized, compressed WebP preview via weserv.nl so the grid
+                    // loads faster; natural aspect ratio is preserved (no cropping),
+                    // and the full-resolution original still opens on click.
+                    const thumbUrl = `https://wsrv.nl/?url=malionurlucan.me/img/photos/${encodeURIComponent(name)}&w=640&q=80&output=webp`;
+
+                    const link = document.createElement("a");
+                    link.href = fullResUrl;
+                    link.target = "_blank";
+                    link.rel = "noopener";
+
+                    const imageElement = document.createElement("img");
+                    imageElement.src = thumbUrl;
+                    imageElement.alt = `Photo ${index + 1}`;
+                    imageElement.loading = "lazy";
+                    imageElement.decoding = "async";
+
+                    link.appendChild(imageElement);
+                    card.appendChild(link);
+                    gallery.appendChild(card);
+                });
+            } catch (err) {
+                console.error("Gallery failed to load:", err);
+                gallery.innerHTML = '<p class="empty-note">Unable to load gallery at the moment.</p>';
+            }
+        });
+    </script>
+
+    <script src="/main.js"></script>
+    <script data-goatcounter="https://malionurlucan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+</file>
+
+<file path="reading/index.html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read / Watch - Muhammed Ali Onurlucan</title>
+    <meta name="description" content="Papers, articles, videos, and other things worth noting, by Muhammed Ali Onurlucan.">
+
+    <link rel="canonical" href="https://malionurlucan.me/reading/">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <script>
+        const storedTheme = localStorage.getItem("theme");
+        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (storedTheme === "light" || (!storedTheme && prefersLight)) {
+            document.documentElement.classList.add("light-mode");
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap">
+
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+
+    <link rel="stylesheet" href="/style.css" fetchpriority="high">
+</head>
+<body>
+
+    <nav class="site-nav">
+        <a href="/" class="brand">m.a.o</a>
+        <div class="nav-items">
+            <a href="/">home</a>
+            <a href="/projects/">projects</a>
+            <a href="/notes/">notes</a>
+            <a href="/reading/" class="active">read / watch</a>
+            <a href="/photography/">photography</a>
+        </div>
+    </nav>
+
+    <main class="container container-single">
+
+        <div class="page-label">read / watch</div>
+        <p class="page-intro">Papers, articles, videos: anything worth a short note when I come across it. Newest first.</p>
+
+        <div id="entry-list" class="entry-list"></div>
+
+    </main>
+
+    <script src="/list.js"></script>
+    <script>
+        renderEntryList("entry-list", "/data/reading.json", { emptyMessage: "Nothing logged yet." });
+    </script>
+    <script src="/main.js"></script>
+    <script data-goatcounter="https://malionurlucan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+</file>
+
+<file path="projects/index.html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Muhammed Ali Onurlucan</title>
+    <meta name="description" content="Independent software projects, applications, and tools by Muhammed Ali Onurlucan.">
+
+    <link rel="canonical" href="https://malionurlucan.me/projects/">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <script>
+        const storedTheme = localStorage.getItem("theme");
+        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (storedTheme === "light" || (!storedTheme && prefersLight)) {
+            document.documentElement.classList.add("light-mode");
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap">
+
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+
+    <link rel="stylesheet" href="/style.css" fetchpriority="high">
+</head>
+<body>
+
+    <nav class="site-nav">
+        <a href="/" class="brand">m.a.o</a>
+        <div class="nav-items">
+            <a href="/">home</a>
+            <a href="/projects/" class="active">projects</a>
+            <a href="/notes/">notes</a>
+            <a href="/reading/">read / watch</a>
+            <a href="/photography/">photography</a>
+        </div>
+    </nav>
+
+    <main class="container container-single">
+
+        <div class="page-label">projects</div>
+        <p class="page-intro">A selection of software and independent development work.</p>
+
+        <div id="entry-list" class="entry-list"></div>
+
+    </main>
+
+    <script src="/list.js"></script>
+    <script>
+        renderEntryList("entry-list", "/data/projects.json", { emptyMessage: "No projects published yet." });
+    </script>
+    <script src="/main.js"></script>
+    <script data-goatcounter="https://malionurlucan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+</file>
+
+<file path="style.css">
+/* style.css */
+
+:root {
+    --bg-color: #f3efe6;
+    --bg-alt: #ece5d5;
+    --text-color: #221f1a;
+    --text-secondary: #6b6354;
+    --text-muted: #8a8172;
+    --heading-color: #1f1c17;
+    --accent: #a13d2b;
+    --border-color: #ddd3c0;
+    --btn-bg: #ece5d5;
+    --btn-hover: #e2d8c3;
+}
+
+body.light-mode, html.light-mode {
+    --bg-color: #16130f;
+    --bg-alt: #1e1a14;
+    --text-color: #ece5d5;
+    --text-secondary: #a89f8c;
+    --text-muted: #776f5f;
+    --heading-color: #f3efe6;
+    --accent: #d97757;
+    --border-color: #3a342a;
+    --btn-bg: #241f18;
+    --btn-hover: #2d271e;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .theme-btn:hover { transform: scale(1.08); }
+    .social-row a:hover { transform: translateY(-2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+    * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Newsreader', serif;
+    font-size: 16px;
+    line-height: 1.75;
+    font-weight: 400;
+    transition: background-color 0.3s, color 0.3s;
+    -webkit-font-smoothing: antialiased;
+}
+
+.mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* --- TOP NAV --- */
+.site-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 32px;
+    border-bottom: 0.5px solid var(--border-color);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.site-nav .brand {
+    color: var(--heading-color);
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: -0.2px;
+}
+.site-nav .brand:hover { text-decoration: none; color: var(--accent); }
+
+.site-nav .nav-items {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.site-nav .nav-items a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 1px solid transparent;
+}
+.site-nav .nav-items a:hover { color: var(--text-color); text-decoration: none; }
+.site-nav .nav-items a.active {
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+}
+
+/* --- MAIN CONTAINER --- */
+.container {
+    width: 100%;
+    max-width: 660px;
+    padding: 56px 24px 70px;
+    margin: 0 auto;
+}
+
+/* --- HOME: IDENTITY BLOCK --- */
+.identity-block {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.profile-pic {
+    width: 88px;
+    height: 88px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode .profile-pic { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08); }
+
+h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.15rem;
+    color: var(--heading-color);
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    margin-bottom: 4px;
+    text-wrap: balance;
+}
+
+.tagline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-top: 40px;
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+.about-text p { margin-top: 12px; color: var(--text-color); text-wrap: pretty; }
+.about-text p:first-child { margin-top: 0; }
+.about-text { max-width: 560px; }
+
+.inline-link { color: var(--accent); text-decoration: underline; text-decoration-color: var(--border-color); text-underline-offset: 2px; }
+.inline-link:hover { text-decoration-color: var(--accent); }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* --- CV LINK --- */
+.cv-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.78rem;
+    color: var(--accent);
+    text-decoration: none;
+    margin-top: 22px;
+    margin-bottom: 6px;
+    padding: 7px 14px;
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+}
+.cv-link:hover { background: var(--accent); color: var(--bg-color); text-decoration: none; }
+
+/* --- SOCIAL / QUICK LINKS ROW --- */
+.social-row {
+    display: flex;
+    gap: 20px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+.social-row a {
+    font-size: 1.3rem;
+    color: var(--text-muted);
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: -8px;
+}
+.social-row a:hover { color: var(--accent); text-decoration: none; }
+
+/* --- LIST PAGES (Notes / Projects / Read-Watch) --- */
+.container-single { max-width: 720px; }
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 28px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+}
+.back-link:hover { color: var(--accent); text-decoration: none; }
+
+.page-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+.page-label::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+}
+
+.page-intro {
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    max-width: 560px;
+    font-size: 0.95rem;
+}
+
+.entry-list { max-width: 620px; }
+
+.entry-item {
+    padding: 18px 0;
+    border-bottom: 0.5px solid var(--border-color);
+}
+.entry-item:first-child { padding-top: 0; }
+
+.entry-title {
+    font-family: 'Newsreader', serif;
+    font-size: 1.05rem;
+    color: var(--heading-color);
+    display: block;
+    margin-bottom: 6px;
+    text-wrap: balance;
+}
+.entry-title:hover { text-decoration: underline; }
+
+.entry-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 6px;
+}
+
+.entry-desc {
+    color: var(--text-color);
+    font-size: 0.92rem;
+    opacity: 0.85;
+    text-wrap: pretty;
+}
+
+.status-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-left: 4px;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    vertical-align: middle;
+}
+
+.empty-note {
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+}
+
+/* --- PHOTOGRAPHY: MASONRY --- */
+.photo-grid {
+    column-count: 3;
+    column-gap: 10px;
+    margin-top: 8px;
+}
+.photo-card {
+    break-inside: avoid;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 0.5px solid var(--border-color);
+    background: var(--bg-alt);
+}
+.photo-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+body.light-mode .photo-card img { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08); }
+.photo-card a { display: block; }
+.photo-card:hover { border-color: var(--accent); }
+
+/* --- THEME BUTTON --- */
+.theme-btn {
+    position: fixed;
+    top: 20px;
+    right: 30px;
+    background-color: var(--btn-bg);
+    color: var(--text-color);
+    border: 0.5px solid var(--border-color);
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.theme-btn:hover { background-color: var(--btn-hover); }
+
+@media (max-width: 640px) {
+    .site-nav { flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px 20px; }
+    .site-nav .nav-items { gap: 14px; }
+    .container { padding: 32px 20px 48px; }
+    .identity-block { gap: 14px; }
+    .profile-pic { width: 68px; height: 68px; }
+    .photo-grid { column-count: 2; }
+    .theme-btn { top: 14px; right: 14px; }
+}
+</file>
+
+<file path="index.html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Muhammed Ali Onurlucan</title>
+    <meta name="description" content="Muhammed Ali Onurlucan - Mathematics Student at Middle East Technical University (METU). Personal Academic Knowledge Base & Notes on Flight Dynamics, Adaptive Optics, and Orbital Mechanics.">
+    <meta name="keywords" content="Muhammed Ali Onurlucan, ODTÜ Matematik, METU Mathematics, Galaxy Rocket Team, Flight Dynamics, Adaptive Optics, Zernike Polynomials, SSA, Orbital Mechanics, Technical Notes">
+    <meta name="author" content="Muhammed Ali Onurlucan">
+
+    <link rel="canonical" href="https://malionurlucan.me/">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <meta property="og:title" content="M. Ali Onurlucan - Personal Site & Notes">
+    <meta property="og:description" content="Undergraduate Mathematics Student @ METU. Academic knowledge base & study notes on Flight Dynamics, Adaptive Optics & Orbital Mechanics.">
+    <meta property="og:image" content="https://malionurlucan.me/img/avatar.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://malionurlucan.me/">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@onurlucan_mali">
+    <meta name="twitter:title" content="M. Ali Onurlucan - Personal Site & Notes">
+    <meta name="twitter:description" content="Undergraduate Mathematics Student @ METU. Academic knowledge base & study notes on Flight Dynamics, Adaptive Optics & Orbital Mechanics.">
+    <meta name="twitter:image" content="https://malionurlucan.me/img/avatar.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Muhammed Ali Onurlucan",
+      "url": "https://malionurlucan.me",
+      "image": "https://malionurlucan.me/img/avatar.jpg",
+      "jobTitle": "Undergraduate Student",
+      "affiliation": {
+        "@type": "CollegeOrUniversity",
+        "name": "Middle East Technical University"
+      },
+      "sameAs": [
+        "https://github.com/malii0",
+        "http://linkedin.com/in/mali0/",
+        "https://orcid.org/0009-0002-9240-9825",
+        "https://www.researchgate.net/profile/Muhammed-Onurlucan",
+        "https://x.com/onurlucan_mali"
+      ]
+    }
+    </script>
+
+    <script>
+        const storedTheme = localStorage.getItem("theme");
+        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (storedTheme === "light" || (!storedTheme && prefersLight)) {
+            document.documentElement.classList.add("light-mode");
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap">
+
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+
+    <link rel="stylesheet" href="/style.css" fetchpriority="high">
+</head>
+<body>
+
+    <nav class="site-nav">
+        <a href="/" class="brand">m.a.o</a>
+        <div class="nav-items">
+            <a href="/" class="active">home</a>
+            <a href="/projects/">projects</a>
+            <a href="/notes/">notes</a>
+            <a href="/reading/">read / watch</a>
+            <a href="/photography/">photography</a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <div class="identity-block">
+            <img src="/img/avatar.jpg" alt="Muhammed Ali Onurlucan profile photo" class="profile-pic" fetchpriority="high" decoding="async">
+            <div>
+                <h1>Muhammed Ali Onurlucan</h1>
+                <div class="tagline" id="js-tagline">undergraduate · mathematics</div>
+            </div>
+        </div>
+
+        <div class="about-text" id="js-about">
+            <p>
+                I'm an undergraduate at <a href="https://www.metu.edu.tr/en" target="_blank" rel="noopener" class="inline-link">Middle East Technical University</a>, studying mathematics. I currently contribute to the <a href="https://www.galaxyroket.com/" target="_blank" rel="noopener" class="inline-link">Galaxy Rocket Team</a>, and this past summer completed a research internship at the <a href="https://trgozlemevleri.gov.tr/" target="_blank" rel="noopener" class="inline-link">Türkiye National Observatory</a> under <a href="https://avesis.atauni.edu.tr/cahity" target="_blank" rel="noopener" class="inline-link">Prof. Dr. Cahit Yeşilyaprak</a>, working on adaptive optics and space situational awareness.
+            </p>
+        </div>
+
+        <a href="/files/cv.pdf?v=20260731" target="_blank" rel="noopener" class="cv-link mono">
+            <i class="fa-regular fa-file-lines"></i> curriculum vitae →
+        </a>
+
+        <h2>Contact & Social</h2>
+
+        <div class="social-row" id="js-social">
+            <a href="mailto:ali.onurlucan@metu.edu.tr" title="Email" aria-label="Email">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+            <a href="https://github.com/malii0" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="http://linkedin.com/in/mali0/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="https://orcid.org/0009-0002-9240-9825" target="_blank" rel="noopener" title="ORCID" aria-label="ORCID">
+                <i class="fa-brands fa-orcid"></i>
+            </a>
+            <a href="https://www.researchgate.net/profile/Muhammed-Onurlucan" target="_blank" rel="noopener" title="ResearchGate" aria-label="ResearchGate">
+                <i class="fa-brands fa-researchgate"></i>
+            </a>
+            <a href="https://x.com/onurlucan_mali" target="_blank" rel="noopener" title="X (Twitter)" aria-label="X (Twitter)">
+                <i class="fa-brands fa-x-twitter"></i>
+            </a>
+        </div>
+
+    </main>
+
+    <script src="/home.js"></script>
+    <script src="/main.js"></script>
+    <script data-goatcounter="https://malionurlucan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+</file>
+
+</files>

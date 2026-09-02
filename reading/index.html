@@ -1,60 +1,88 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Read / Watch - Muhammed Ali Onurlucan</title>
-    <meta name="description" content="Papers, articles, videos, and other things worth noting, by Muhammed Ali Onurlucan.">
+    <meta
+      name="description"
+      content="Papers, articles, videos, and other things worth noting, by Muhammed Ali Onurlucan."
+    />
 
-    <link rel="canonical" href="https://malionurlucan.me/reading/">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="canonical" href="https://malionurlucan.me/reading/" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
     <script>
-        const storedTheme = localStorage.getItem("theme");
-        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
-        if (storedTheme === "light" || (!storedTheme && prefersLight)) {
-            document.documentElement.classList.add("light-mode");
-        }
+      const storedTheme = localStorage.getItem("theme");
+      const prefersLight = window.matchMedia(
+        "(prefers-color-scheme: light)",
+      ).matches;
+      if (storedTheme === "light" || (!storedTheme && prefersLight)) {
+        document.documentElement.classList.add("light-mode");
+      }
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap"
+    />
 
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      as="style"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    /></noscript>
 
-    <link rel="stylesheet" href="/style.css" fetchpriority="high">
-</head>
-<body>
-
+    <link rel="stylesheet" href="/style.css" fetchpriority="high" />
+  </head>
+  <body>
     <nav class="site-nav">
-        <a href="/" class="brand">m.a.o</a>
-        <div class="nav-items">
-            <a href="/">home</a>
-            <a href="/projects/">projects</a>
-            <a href="/notes/">notes</a>
-            <a href="/reading/" class="active">read / watch</a>
-            <a href="/photography/">photography</a>
-        </div>
+      <a href="/" class="brand">m.a.o</a>
+      <div class="nav-items">
+        <a href="/">home</a>
+        <a href="/projects/">projects</a>
+        <a href="/notes/">notes</a>
+        <a href="/reading/" class="active">read / watch</a>
+        <a href="/photography/">photography</a>
+      </div>
     </nav>
 
     <main class="container container-single">
+      <div class="page-label">read / watch</div>
+      <p class="page-intro">
+        Papers, articles, videos: anything worth a short note when I come across
+        it. Newest first.
+      </p>
 
-        <div class="page-label">read / watch</div>
-        <p class="page-intro">Papers, articles, videos: anything worth a short note when I come across it. Newest first.</p>
-
-        <div id="entry-list" class="entry-list"></div>
-
+      <div id="entry-list" class="entry-list"></div>
     </main>
 
+    <!-- /utils.js, list.js'den ÖNCE çağrılır -->
+    <script src="/utils.js"></script>
     <script src="/list.js"></script>
     <script>
-        renderEntryList("entry-list", "/data/reading.json", { emptyMessage: "Nothing logged yet." });
+      renderEntryList("entry-list", "/data/reading.json", {
+        emptyMessage: "Nothing logged yet.",
+      });
     </script>
     <script src="/main.js"></script>
-    <script data-goatcounter="https://malionurlucan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-</body>
+    <script
+      data-goatcounter="https://malionurlucan.goatcounter.com/count"
+      async
+      src="//gc.zgo.at/count.js"
+    ></script>
+  </body>
 </html>

@@ -1,105 +1,143 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Photography - Muhammed Ali Onurlucan</title>
-    <meta name="description" content="Personal photo gallery by Muhammed Ali Onurlucan.">
+    <meta
+      name="description"
+      content="Personal photo gallery by Muhammed Ali Onurlucan."
+    />
 
-    <link rel="canonical" href="https://malionurlucan.me/photography/">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="canonical" href="https://malionurlucan.me/photography/" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
     <script>
-        const storedTheme = localStorage.getItem("theme");
-        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
-        if (storedTheme === "light" || (!storedTheme && prefersLight)) {
-            document.documentElement.classList.add("light-mode");
-        }
+      const storedTheme = localStorage.getItem("theme");
+      const prefersLight = window.matchMedia(
+        "(prefers-color-scheme: light)",
+      ).matches;
+      if (storedTheme === "light" || (!storedTheme && prefersLight)) {
+        document.documentElement.classList.add("light-mode");
+      }
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap"
+    />
 
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      as="style"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    /></noscript>
 
-    <link rel="stylesheet" href="/style.css" fetchpriority="high">
-</head>
-<body>
-
+    <link rel="stylesheet" href="/style.css" fetchpriority="high" />
+  </head>
+  <body>
     <nav class="site-nav">
-        <a href="/" class="brand">m.a.o</a>
-        <div class="nav-items">
-            <a href="/">home</a>
-            <a href="/projects/">projects</a>
-            <a href="/notes/">notes</a>
-            <a href="/reading/">read / watch</a>
-            <a href="/photography/" class="active">photography</a>
-        </div>
+      <a href="/" class="brand">m.a.o</a>
+      <div class="nav-items">
+        <a href="/">home</a>
+        <a href="/projects/">projects</a>
+        <a href="/notes/">notes</a>
+        <a href="/reading/">read / watch</a>
+        <a href="/photography/" class="active">photography</a>
+      </div>
     </nav>
 
     <main class="container container-single">
+      <div class="page-label">photography</div>
+      <p class="page-intro">Some photos I've taken, nothing more.</p>
 
-        <div class="page-label">photography</div>
-        <p class="page-intro">Some photos I've taken, nothing more.</p>
-
-        <!-- Dynamic Photo Grid Container -->
-        <div id="photo-gallery" class="photo-grid"></div>
-
+      <!-- Dynamic Photo Grid Container -->
+      <div id="photo-gallery" class="photo-grid"></div>
     </main>
 
+    <!-- /utils.js inline script'ten ÖNCE çağrılır -->
+    <script src="/utils.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", async function() {
-            const gallery = document.getElementById("photo-gallery");
+      document.addEventListener("DOMContentLoaded", async function () {
+        const gallery = document.getElementById("photo-gallery");
 
-            try {
-                // Ordered by data/photos.json (managed via the panel) instead of
-                // a live GitHub directory listing, so photo order is controllable.
-                const res = await fetch("/data/photos.json", { cache: "no-store" });
-                if (!res.ok) throw new Error("fetch failed: " + res.status);
-                const filenames = await res.json();
+        try {
+          const res = await fetch("/data/photos.json");
+          if (!res.ok) throw new Error("fetch failed: " + res.status);
+          const rawData = await res.json();
 
-                if (!Array.isArray(filenames) || filenames.length === 0) {
-                    gallery.innerHTML = '<p class="empty-note">No photos published yet, check back soon.</p>';
-                    return;
-                }
+          if (!Array.isArray(rawData) || rawData.length === 0) {
+            gallery.innerHTML =
+              '<p class="empty-note">No photos published yet, check back soon.</p>';
+            return;
+          }
 
-                gallery.innerHTML = "";
-                filenames.forEach((name, index) => {
-                    const card = document.createElement("div");
-                    card.className = "photo-card";
-                    const fullResUrl = `/img/photos/${name}`;
-                    // Serve a resized, compressed WebP preview via weserv.nl so the grid
-                    // loads faster; natural aspect ratio is preserved (no cropping),
-                    // and the full-resolution original still opens on click.
-                    const thumbUrl = `https://wsrv.nl/?url=malionurlucan.me/img/photos/${encodeURIComponent(name)}&w=640&q=80&output=webp`;
-
-                    const link = document.createElement("a");
-                    link.href = fullResUrl;
-                    link.target = "_blank";
-                    link.rel = "noopener";
-
-                    const imageElement = document.createElement("img");
-                    imageElement.src = thumbUrl;
-                    imageElement.alt = `Photo ${index + 1}`;
-                    imageElement.loading = "lazy";
-                    imageElement.decoding = "async";
-
-                    link.appendChild(imageElement);
-                    card.appendChild(link);
-                    gallery.appendChild(card);
-                });
-            } catch (err) {
-                console.error("Gallery failed to load:", err);
-                gallery.innerHTML = '<p class="empty-note">Unable to load gallery at the moment.</p>';
+          const items = rawData.map((item) => {
+            if (typeof item === "string") {
+              return { filename: item, alt: "" };
             }
-        });
+            return item;
+          });
+
+          gallery.innerHTML = "";
+          items.forEach((item, index) => {
+            const filename = item.filename;
+            const altText =
+              item.alt && item.alt.trim()
+                ? item.alt.trim()
+                : `Photograph ${index + 1}`;
+            const card = document.createElement("div");
+            card.className = "photo-card";
+            const fullResUrl = `/img/photos/${filename}`;
+            const thumbUrl = `https://wsrv.nl/?url=malionurlucan.me/img/photos/${encodeURIComponent(filename)}&w=640&q=80&output=webp`;
+
+            const link = document.createElement("a");
+            link.href = fullResUrl;
+            link.target = "_blank";
+            link.rel = "noopener";
+
+            const imageElement = document.createElement("img");
+            imageElement.src = thumbUrl;
+            imageElement.alt = altText;
+            imageElement.loading = "lazy";
+            imageElement.decoding = "async";
+
+            imageElement.onerror = function () {
+              if (this.src !== fullResUrl) {
+                this.src = fullResUrl;
+              }
+            };
+
+            link.appendChild(imageElement);
+            card.appendChild(link);
+            gallery.appendChild(card);
+          });
+        } catch (err) {
+          console.error("Gallery failed to load:", err);
+          gallery.innerHTML =
+            '<p class="empty-note">Unable to load gallery at the moment.</p>';
+        }
+      });
     </script>
 
     <script src="/main.js"></script>
-    <script data-goatcounter="https://malionurlucan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-</body>
+    <script
+      data-goatcounter="https://malionurlucan.goatcounter.com/count"
+      async
+      src="//gc.zgo.at/count.js"
+    ></script>
+  </body>
 </html>
