@@ -39,6 +39,8 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: no-preference) {
     .theme-btn:hover { transform: scale(1.08); }
     .social-row a:hover { transform: translateY(-2px); }
+    .lightbox-btn:hover { transform: scale(1.05); }
+    .lightbox-nav:hover { transform: translateY(-50%) scale(1.05); }
 }
 @media (prefers-reduced-motion: reduce) {
     * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
@@ -53,6 +55,10 @@ body {
     font-weight: 400;
     transition: background-color 0.3s, color 0.3s;
     -webkit-font-smoothing: antialiased;
+}
+
+body.scroll-locked {
+    overflow: hidden;
 }
 
 .mono {
@@ -288,29 +294,197 @@ a:hover { text-decoration: underline; }
     font-size: 0.85rem;
 }
 
-/* --- PHOTOGRAPHY: MASONRY --- */
+/* --- PHOTOGRAPHY PAGE WIDE LAYOUT --- */
+body.photography-page .site-nav {
+    max-width: 1100px;
+}
+
+body.photography-page .container-single {
+    max-width: 1100px;
+}
+
+/* --- PHOTOGRAPHY: MASONRY & CARDS --- */
 .photo-grid {
-    column-count: 3;
-    column-gap: 10px;
+    column-count: 4;
+    column-gap: 18px;
     margin-top: 8px;
 }
+
 .photo-card {
     break-inside: avoid;
-    margin-bottom: 10px;
-    border-radius: 4px;
+    margin-bottom: 18px;
+    border-radius: 6px;
     overflow: hidden;
     border: 0.5px solid var(--border-color);
     background: var(--bg-alt);
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s;
 }
+
+.photo-card:hover {
+    border-color: var(--accent);
+}
+
+.photo-card a {
+    display: block;
+    cursor: zoom-in;
+    background: var(--bg-alt);
+}
+
 .photo-card img {
     width: 100%;
     height: auto;
     display: block;
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
-body.light-mode .photo-card img { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08); }
-.photo-card a { display: block; }
-.photo-card:hover { border-color: var(--accent); }
+body.light-mode .photo-card img {
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.photo-caption {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    padding: 7px 10px;
+    border-top: 0.5px solid var(--border-color);
+    background: var(--bg-alt);
+    word-break: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.4;
+}
+
+/* --- LIGHTBOX OVERLAY --- */
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 15, 12, 0.94);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease-out, visibility 0s linear 0.2s;
+}
+
+.lightbox-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 0.2s ease-out, visibility 0s linear 0s;
+}
+
+.lightbox-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 2010;
+}
+
+.lightbox-counter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: #ece5d5;
+}
+
+.lightbox-btn {
+    background: rgba(30, 26, 20, 0.7);
+    color: #ece5d5;
+    border: 1px solid rgba(221, 211, 192, 0.25);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.lightbox-btn:hover {
+    background: rgba(45, 39, 30, 0.9);
+    border-color: #d97757;
+    color: #d97757;
+}
+
+.lightbox-stage {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 70px;
+    cursor: default;
+}
+
+.lightbox-img-wrapper {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-img {
+    max-width: 100%;
+    max-height: calc(100vh - 140px);
+    max-height: calc(100dvh - 140px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    transition: filter 0.2s ease-out;
+}
+
+.lightbox-img.loading-placeholder {
+    filter: blur(8px);
+}
+
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2010;
+}
+
+.lightbox-prev { left: 16px; }
+.lightbox-next { right: 16px; }
+
+.lightbox-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    min-height: 46px;
+    padding: 10px 24px 16px;
+    text-align: center;
+    z-index: 2010;
+}
+
+.lightbox-caption {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.74rem;
+    color: #a89f8c;
+    word-break: break-word;
+}
 
 /* --- THEME BUTTON --- */
 .theme-btn {
@@ -333,12 +507,22 @@ body.light-mode .photo-card img { box-shadow: inset 0 0 0 1px rgba(255, 255, 255
 }
 .theme-btn:hover { background-color: var(--btn-hover); }
 
+@media (max-width: 900px) {
+    .photo-grid { column-count: 3; }
+    .lightbox-stage { padding: 60px 48px; }
+}
+
 @media (max-width: 640px) {
     .site-nav { flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px 20px; }
     .site-nav .nav-items { gap: 14px; }
     .container { padding: 32px 20px 48px; }
     .identity-block { gap: 14px; }
     .profile-pic { width: 68px; height: 68px; }
-    .photo-grid { column-count: 2; }
+    .photo-grid { column-count: 2; column-gap: 12px; }
+    .photo-card { margin-bottom: 12px; }
     .theme-btn { top: 14px; right: 14px; }
+    .lightbox-stage { padding: 50px 10px; }
+    .lightbox-prev { left: 8px; }
+    .lightbox-next { right: 8px; }
+    .lightbox-btn { width: 36px; height: 36px; font-size: 0.95rem; }
 }

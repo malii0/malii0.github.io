@@ -1,32 +1,27 @@
 // panel/worker.js - Cloudflare Worker arka uç API
 //
 // GÜVENLİK VE YAPILANDIRMA NOTLARI:
-// 1. GITHUB_TOKEN UYARISI:
-//    GITHUB_TOKEN olarak kesinlikle 'repo' yetkisine sahip classic PAT KULLANMAYIN.
-//    Yalnızca bu repoya (malii0/malii0.github.io) sınırlı, sadece "Contents: Read and write"
+// 1. GITHUB_TOKEN:
+//    Yalnızca bu repoya (malii0/malii0.github.io) sınırlı, "Contents: Read and write"
 //    yetkisi verilmiş bir Fine-grained GitHub Personal Access Token (PAT) kullanın.
 //
 // 2. BRUTE-FORCE & RATE LIMIT:
-//    IP bazlı kilit mekanizması için wrangler.toml üzerinde RATE_LIMIT_KV binding'i tanımlanmalıdır:
-//    [[kv_namespaces]]
-//    binding = "RATE_LIMIT_KV"
-//    id = "<KV_NAMESPACE_ID>"
-//    KV eventual consistency nedeniyle tam koruma için Cloudflare Dashboard WAF / Rate Limiting
-//    kurallarının da devreye alınması önerilir.
+//    IP bazlı kilit mekanizması için wrangler.toml üzerinde RATE_LIMIT_KV binding'i gereklidir.
 //
 // 3. VERİ ŞEMASI:
-//    Worker, data/photos.json içindeki { filename, alt } nesne yapısından bağımsız çalışır;
-//    gelen veriyi doğrudan JSON formatında işleyip repoya yazar.
+//    data/photos.json içinde hem string hem de { filename, alt, location } formatını destekler.
+//    iOS Shortcut yüklemesinde dosya kaydedildikten sonra data/photos.json'ın en başına unshift edilir.
 
 const REPO = "malii0/malii0.github.io";
 
 const ALLOWED_ORIGINS = [
   "https://malionurlucan.me",
-  "https://malii0.github.io",
+"https://malii0.github.io",
 ];
 
 const TYPE_PATHS = {
   home: "data/home.json",
+  pages: "data/pages.json",
   notes: "data/notes.json",
   projects: "data/projects.json",
   reading: "data/reading.json",
@@ -34,6 +29,7 @@ const TYPE_PATHS = {
 };
 
 const SAFE_FILENAME = /^[a-zA-Z0-9_.-]+\.(jpe?g|png|webp)$/i;
+const KNOWN_PAGE_KEYS = ["notes", "projects", "reading", "photography"];
 
 function getCorsHeaders(request) {
   const origin = request.headers.get("Origin");
@@ -73,12 +69,12 @@ function fromBase64Utf8(b64) {
 function slugify(title) {
   return (
     title
-      .toLowerCase()
-      .normalize("NFKD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "")
-      .slice(0, 48) || "entry"
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "")
+    .slice(0, 48) || "entry"
   );
 }
 
@@ -158,13 +154,13 @@ async function checkAuth(request, body, env) {
         await env.RATE_LIMIT_KV.put(
           kvKey,
           JSON.stringify({ attempts, lockedUntil: Date.now() + lockDuration }),
-          { expirationTtl: 15 * 60 },
+                                    { expirationTtl: 15 * 60 },
         );
       } else {
         await env.RATE_LIMIT_KV.put(
           kvKey,
           JSON.stringify({ attempts, lockedUntil: null }),
-          { expirationTtl: 10 * 60 },
+                                    { expirationTtl: 10 * 60 },
         );
       }
     }
@@ -202,12 +198,12 @@ async function putContentsFile(path, contentStr, sha, message, env) {
     {
       method: "PUT",
       headers: { ...ghHeaders(env), "Content-Type": "application/json" },
-      body: JSON.stringify({
-        message,
-        content: toBase64Utf8(contentStr),
-        sha,
-        branch: "main",
-      }),
+                          body: JSON.stringify({
+                            message,
+                            content: toBase64Utf8(contentStr),
+                                               sha,
+                                               branch: "main",
+                          }),
     },
   );
   if (!res.ok) {
@@ -271,12 +267,71 @@ async function handleSave(request, env) {
     return jsonResponse(
       request,
       { error: "Eksik veri ('data' alanı zorunlu)." },
-      400,
+                        400,
     );
 
-  // Server-side URL Güvenlik Doğrulaması (Defense in Depth)
+  let payload = body.data;
+
+  // Validation: pages
+  if (body.type === "pages") {
+    if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
+      return jsonResponse(request, { error: "'pages' nesne (object) formatında olmalıdır." }, 400);
+    }
+    const cleanPages = {};
+    for (const key of Object.keys(payload)) {
+      if (!KNOWN_PAGE_KEYS.includes(key)) {
+        return jsonResponse(request, { error: `Bilinmeyen sayfa anahtarı: ${key}` }, 400);
+      }
+      if (typeof payload[key] !== "string") {
+        return jsonResponse(request, { error: `${key} açıklaması metin olmalıdır.` }, 400);
+      }
+      const trimmed = payload[key].trim();
+      if (trimmed.length > 300) {
+        return jsonResponse(request, { error: `${key} açıklaması en fazla 300 karakter olabilir.` }, 400);
+      }
+      cleanPages[key] = trimmed;
+    }
+    for (const key of KNOWN_PAGE_KEYS) {
+      if (cleanPages[key] === undefined) {
+        cleanPages[key] = "";
+      }
+    }
+    payload = cleanPages;
+  }
+
+  // Validation: photos (supports backward compatibility with plain strings & objects)
+  if (body.type === "photos") {
+    if (!Array.isArray(payload)) {
+      return jsonResponse(request, { error: "'photos' verisi bir liste olmalıdır." }, 400);
+    }
+    const cleanPhotos = [];
+    for (let i = 0; i < payload.length; i++) {
+      const item = payload[i];
+      let filename = "";
+      let alt = "";
+      let location = "";
+
+      if (typeof item === "string") {
+        filename = item.trim();
+      } else if (item && typeof item === "object") {
+        filename = typeof item.filename === "string" ? item.filename.trim() : "";
+        alt = typeof item.alt === "string" ? item.alt.trim().slice(0, 200) : "";
+        location = typeof item.location === "string" ? item.location.trim().slice(0, 80) : "";
+      } else {
+        return jsonResponse(request, { error: `photos[${i}] geçersiz öğe biçimi.` }, 400);
+      }
+
+      if (!filename || !SAFE_FILENAME.test(filename)) {
+        return jsonResponse(request, { error: `photos[${i}] geçersiz dosya adı: '${filename}'` }, 400);
+      }
+      cleanPhotos.push({ filename, alt, location });
+    }
+    payload = cleanPhotos;
+  }
+
+  // Validation: home socials URLs
   if (body.type === "home") {
-    const socials = body.data?.socials;
+    const socials = payload?.socials;
     if (Array.isArray(socials)) {
       for (let i = 0; i < socials.length; i++) {
         const item = socials[i];
@@ -292,9 +347,9 @@ async function handleSave(request, env) {
       }
     }
   } else if (["notes", "projects", "reading"].includes(body.type)) {
-    if (Array.isArray(body.data)) {
-      for (let i = 0; i < body.data.length; i++) {
-        const item = body.data[i];
+    if (Array.isArray(payload)) {
+      for (let i = 0; i < payload.length; i++) {
+        const item = payload[i];
         if (item.url && !isSafeUrlServer(item.url)) {
           return jsonResponse(
             request,
@@ -305,25 +360,17 @@ async function handleSave(request, env) {
           );
         }
       }
+      payload = payload.map((entry) => ({
+        ...entry,
+        id:
+        entry.id ||
+        `${slugify(entry.title || "entry")}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`,
+      }));
     }
   }
 
   try {
     const current = await getContentsFile(path, env);
-
-    let payload = body.data;
-    if (
-      ["notes", "projects", "reading"].includes(body.type) &&
-      Array.isArray(payload)
-    ) {
-      payload = payload.map((entry) => ({
-        ...entry,
-        id:
-          entry.id ||
-          `${slugify(entry.title || "entry")}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`,
-      }));
-    }
-
     const content = JSON.stringify(payload, null, 2) + "\n";
     await putContentsFile(
       path,
@@ -339,7 +386,7 @@ async function handleSave(request, env) {
         request,
         {
           error:
-            "İçerik başka bir yerden güncellenmiş görünüyor (SHA çakışması). Lütfen sayfayı yeniden yükleyip tekrar deneyin.",
+          "İçerik başka bir yerden güncellenmiş görünüyor (SHA çakışması). Lütfen sayfayı yeniden yükleyip tekrar deneyin.",
         },
         409,
       );
@@ -372,11 +419,11 @@ async function handleUploadPhoto(request, env) {
       {
         method: "PUT",
         headers: { ...ghHeaders(env), "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: `Upload photo ${filename} via panel`,
-          content: base64,
-          branch: "main",
-        }),
+                            body: JSON.stringify({
+                              message: `Upload photo ${filename} via panel`,
+                              content: base64,
+                              branch: "main",
+                            }),
       },
     );
     if (!res.ok)
@@ -425,11 +472,11 @@ async function handleDeletePhoto(request, env) {
       {
         method: "DELETE",
         headers: { ...ghHeaders(env), "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: `Delete photo ${filename} via panel`,
-          sha: current.sha,
-          branch: "main",
-        }),
+                            body: JSON.stringify({
+                              message: `Delete photo ${filename} via panel`,
+                              sha: current.sha,
+                              branch: "main",
+                            }),
       },
     );
 
@@ -439,7 +486,7 @@ async function handleDeletePhoto(request, env) {
           request,
           {
             error:
-              "Dosya silinirken çakışma (409) oluştu. Dosya başka bir işlem tarafından değiştirilmiş olabilir.",
+            "Dosya silinirken çakışma (409) oluştu. Dosya başka bir işlem tarafından değiştirilmiş olabilir.",
           },
           409,
         );
@@ -455,11 +502,15 @@ async function handleDeletePhoto(request, env) {
   }
 }
 
+// iOS Shortcut Photo Uploader endpoint
 async function handlePhotoUpload(request, env) {
   if (request.method !== "POST") {
     return new Response("Method not allowed", { status: 405 });
   }
-  if (request.headers.get("x-upload-secret") !== env.UPLOAD_SECRET) {
+
+  const providedSecret = request.headers.get("x-upload-secret") || "";
+  const expectedSecret = env.UPLOAD_SECRET || "";
+  if (!expectedSecret || !timingSafeEqual(providedSecret, expectedSecret)) {
     return new Response("Unauthorized", { status: 401 });
   }
 
@@ -469,6 +520,8 @@ async function handlePhotoUpload(request, env) {
   const base64 = btoa(binary);
 
   const filename = `photo_${Date.now()}.jpg`;
+
+  // 1. Upload raw photo to GitHub repository
   const ghRes = await fetch(
     `https://api.github.com/repos/${REPO}/contents/img/photos/${filename}`,
     {
@@ -492,6 +545,34 @@ async function handlePhotoUpload(request, env) {
       status: 500,
     });
   }
+
+  // 2. Unshift registered entry to data/photos.json
+  try {
+    const photosFile = await getContentsFile("data/photos.json", env);
+    const existingList = JSON.parse(fromBase64Utf8(photosFile.content));
+    const normalized = Array.isArray(existingList) ? existingList : [];
+
+    normalized.unshift({
+      filename: filename,
+      alt: "",
+      location: "",
+    });
+
+    const updatedContent = JSON.stringify(normalized, null, 2) + "\n";
+    await putContentsFile(
+      "data/photos.json",
+      updatedContent,
+      photosFile.sha,
+      `Register ${filename} via shortcut upload`,
+      env,
+    );
+  } catch (regErr) {
+    return new Response(
+      `Photo uploaded as ${filename}, but failed to register in data/photos.json: ${regErr.message}`,
+      { status: 207 },
+    );
+  }
+
   return new Response(`Uploaded: ${filename}`, { status: 200 });
 }
 

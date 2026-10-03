@@ -183,7 +183,7 @@
 
       .photo-row {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 10px;
       }
       .photo-row img {
@@ -193,6 +193,7 @@
         border-radius: 5px;
         border: 1px solid var(--border-color);
         flex-shrink: 0;
+        margin-top: 4px;
       }
       .photo-row .fname {
         font-family: "JetBrains Mono", monospace;
@@ -241,6 +242,7 @@
 
       <div class="tab-switch">
         <button type="button" data-tab="home" class="active">home</button>
+        <button type="button" data-tab="pages">pages</button>
         <button type="button" data-tab="notes">notes</button>
         <button type="button" data-tab="projects">projects</button>
         <button type="button" data-tab="reading">read/watch</button>
@@ -282,6 +284,47 @@
         <div class="status-msg" id="home-status"></div>
       </section>
 
+      <!-- PAGES TAB -->
+      <section class="tab-panel" id="tab-pages">
+        <button type="button" class="btn secondary" id="pages-load">
+          Load page taglines
+        </button>
+
+        <label for="page-notes-intro">Notes Tagline</label>
+        <textarea
+          id="page-notes-intro"
+          placeholder="Notes page description"
+        ></textarea>
+
+        <label for="page-projects-intro">Projects Tagline</label>
+        <textarea
+          id="page-projects-intro"
+          placeholder="Projects page description"
+        ></textarea>
+
+        <label for="page-reading-intro">Read / Watch Tagline</label>
+        <textarea
+          id="page-reading-intro"
+          placeholder="Reading page description"
+        ></textarea>
+
+        <label for="page-photography-intro">Photography Tagline</label>
+        <textarea
+          id="page-photography-intro"
+          placeholder="Photography page description"
+        ></textarea>
+
+        <button
+          type="button"
+          class="btn"
+          id="pages-save"
+          style="margin-top: 20px"
+        >
+          Save page taglines
+        </button>
+        <div class="status-msg" id="pages-status"></div>
+      </section>
+
       <!-- NOTES / PROJECTS / READING TABS (generic) -->
       <section class="tab-panel" id="tab-notes" data-type="notes"></section>
       <section
@@ -297,8 +340,8 @@
           Load current photos
         </button>
         <p class="section-note">
-          Add new photos, describe alt text, reorder with the arrows, delete
-          with x, then save.
+          Add new photos, provide alt text & optional location, reorder with
+          arrows, delete with x, then save.
         </p>
 
         <label for="photos-input">Add photos</label>
@@ -318,7 +361,7 @@
           id="photos-save"
           style="margin-top: 16px"
         >
-          Save order
+          Save order, alt text & locations
         </button>
         <div class="status-msg" id="photos-status"></div>
       </section>
@@ -568,6 +611,48 @@
           }
         });
 
+      // ====== PAGES TAB ======
+      document
+        .getElementById("pages-load")
+        .addEventListener("click", async function () {
+          try {
+            const res = await api("/panel/get", { type: "pages" });
+            const data = res.data || {};
+            document.getElementById("page-notes-intro").value =
+              data.notes || "";
+            document.getElementById("page-projects-intro").value =
+              data.projects || "";
+            document.getElementById("page-reading-intro").value =
+              data.reading || "";
+            document.getElementById("page-photography-intro").value =
+              data.photography || "";
+            showStatus("pages-status", "Page taglines loaded.", true);
+          } catch (err) {
+            showStatus("pages-status", "Failed to load: " + err.message, false);
+          }
+        });
+
+      document
+        .getElementById("pages-save")
+        .addEventListener("click", async function () {
+          const payload = {
+            notes: document.getElementById("page-notes-intro").value.trim(),
+            projects: document
+              .getElementById("page-projects-intro")
+              .value.trim(),
+            reading: document.getElementById("page-reading-intro").value.trim(),
+            photography: document
+              .getElementById("page-photography-intro")
+              .value.trim(),
+          };
+          try {
+            await api("/panel/save", { type: "pages", data: payload });
+            showStatus("pages-status", "Page taglines saved.", true);
+          } catch (err) {
+            showStatus("pages-status", "Failed to save: " + err.message, false);
+          }
+        });
+
       // ====== NOTES / PROJECTS / READING TABS ======
       const entryTypeConfig = {
         notes: {
@@ -814,6 +899,9 @@
                 '<input type="text" data-field="alt" value="' +
                 escapeHtml(p.alt || "") +
                 '" placeholder="Alt description (accessibility)">' +
+                '<input type="text" data-field="location" value="' +
+                escapeHtml(p.location || "") +
+                '" placeholder="Location (e.g. Erzurum/Türkiye)">' +
                 "</div>" +
                 '<button type="button" class="icon-btn" data-action="up" ' +
                 (i === 0 ? "disabled" : "") +
@@ -837,6 +925,16 @@
                 return p._key === key;
               });
               if (target) target.alt = e.target.value;
+            });
+          }
+
+          const locInput = card.querySelector('[data-field="location"]');
+          if (locInput) {
+            locInput.addEventListener("input", function (e) {
+              const target = photosState.find(function (p) {
+                return p._key === key;
+              });
+              if (target) target.location = e.target.value;
             });
           }
 
@@ -881,7 +979,11 @@
                 return p._key !== key;
               });
               const payload = newPhotosState.map(function (p) {
-                return { filename: p.filename, alt: p.alt || "" };
+                return {
+                  filename: p.filename,
+                  alt: p.alt || "",
+                  location: p.location || "",
+                };
               });
 
               try {
@@ -919,13 +1021,12 @@
             const res = await api("/panel/get", { type: "photos" });
             const rawList = res.data || [];
             photosState = rawList.map(function (item) {
-              if (typeof item === "string") {
-                return { _key: randomKey(), filename: item, alt: "" };
-              }
+              const norm = normalizePhotoEntry(item);
               return {
                 _key: randomKey(),
-                filename: item.filename,
-                alt: item.alt || "",
+                filename: norm.filename,
+                alt: norm.alt,
+                location: norm.location,
               };
             });
             renderPhotos();
@@ -944,10 +1045,18 @@
         .addEventListener("click", async function () {
           try {
             const payload = photosState.map(function (p) {
-              return { filename: p.filename, alt: p.alt || "" };
+              return {
+                filename: p.filename,
+                alt: p.alt || "",
+                location: p.location || "",
+              };
             });
             await api("/panel/save", { type: "photos", data: payload });
-            showStatus("photos-status", "Order & alt text saved.", true);
+            showStatus(
+              "photos-status",
+              "Order, alt text & locations saved.",
+              true,
+            );
           } catch (err) {
             showStatus(
               "photos-status",
@@ -1000,9 +1109,14 @@
                 _key: randomKey(),
                 filename: filename,
                 alt: "",
+                location: "",
               });
               const payload = photosState.map(function (p) {
-                return { filename: p.filename, alt: p.alt || "" };
+                return {
+                  filename: p.filename,
+                  alt: p.alt || "",
+                  location: p.location || "",
+                };
               });
               await api("/panel/save", { type: "photos", data: payload });
 
