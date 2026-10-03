@@ -1,24 +1,112 @@
 [
-  "photo_1791024922516.jpg",
-  "photo_1791024130605.jpg",
-  "photo_1790632887504.jpg",
-  "photo_1790419251552.jpg",
-  "photo_1790253386669.jpg",
-  "photo_1790252905008.jpg",
-  "photo_1789852701567.jpg",
-  "photo_1789852664563.jpg",
-  "photo_1789852566172.jpg",
-  "photo_1789852340246.jpg",
-  "photo_1789852298711.jpg",
-  "photo_1787928878165.jpg",
-  "photo_1786499889457.jpg",
-  "photo_1786499301926.jpg",
-  "photo_1786499548394.jpg",
-  "photo_1786499561458.jpg",
-  "photo_1786499714746.jpg",
-  "photo_1786499803148.jpg",
-  "photo_1786500022336.jpg",
-  "photo_1786500077493.jpg",
-  "photo_1786500253013.jpg",
-  "photo_1786500368033.jpg"
+  {
+    "filename": "photo_1791024922516.jpg",
+    "alt": "",
+    "location": "Schuldturm, Nuremberg"
+  },
+  {
+    "filename": "photo_1791024130605.jpg",
+    "alt": "",
+    "location": "St. Lorenz Church, Nuremberg"
+  },
+  {
+    "filename": "photo_1790632887504.jpg",
+    "alt": "",
+    "location": "Town Gate, Sommerhausen"
+  },
+  {
+    "filename": "photo_1790419251552.jpg",
+    "alt": "",
+    "location": "Graffiti, Würzburg"
+  },
+  {
+    "filename": "photo_1790253386669.jpg",
+    "alt": "",
+    "location": "Grafeneckart, Würzburg"
+  },
+  {
+    "filename": "photo_1790252905008.jpg",
+    "alt": "",
+    "location": "Frankonia Fountain, Würzburg"
+  },
+  {
+    "filename": "photo_1789852701567.jpg",
+    "alt": "",
+    "location": "Neubaukirche, Würzburg"
+  },
+  {
+    "filename": "photo_1789852664563.jpg",
+    "alt": "",
+    "location": "Alte Mainbrücke, Würzburg"
+  },
+  {
+    "filename": "photo_1789852566172.jpg",
+    "alt": "",
+    "location": "Marienberg Fortress, Würzburg"
+  },
+  {
+    "filename": "photo_1789852340246.jpg",
+    "alt": "",
+    "location": "Residenz, Würzburg"
+  },
+  {
+    "filename": "photo_1789852298711.jpg",
+    "alt": "",
+    "location": "Residenz, Würzburg"
+  },
+  {
+    "filename": "photo_1787928878165.jpg",
+    "alt": "",
+    "location": "Erzurum"
+  },
+  {
+    "filename": "photo_1786499889457.jpg",
+    "alt": "",
+    "location": "Erzurum"
+  },
+  {
+    "filename": "photo_1786499301926.jpg",
+    "alt": "",
+    "location": "Night Sky, Erzurum"
+  },
+  {
+    "filename": "photo_1786499548394.jpg",
+    "alt": "",
+    "location": "Erzurum"
+  },
+  {
+    "filename": "photo_1786499561458.jpg",
+    "alt": "",
+    "location": "Erzurum"
+  },
+  {
+    "filename": "photo_1786499714746.jpg",
+    "alt": "",
+    "location": "Tortum Waterfall, Erzurum"
+  },
+  {
+    "filename": "photo_1786499803148.jpg",
+    "alt": "",
+    "location": "Esenboğa Airport, Ankara"
+  },
+  {
+    "filename": "photo_1786500022336.jpg",
+    "alt": "",
+    "location": "Erzurum"
+  },
+  {
+    "filename": "photo_1786500077493.jpg",
+    "alt": "",
+    "location": "Erzurum"
+  },
+  {
+    "filename": "photo_1786500253013.jpg",
+    "alt": "",
+    "location": "METU Campus, Ankara"
+  },
+  {
+    "filename": "photo_1786500368033.jpg",
+    "alt": "",
+    "location": "Taksim, Istanbul"
+  }
 ]
