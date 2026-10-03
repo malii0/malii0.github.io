@@ -305,14 +305,23 @@ body.photography-page .container-single {
 
 /* --- PHOTOGRAPHY: MASONRY & CARDS --- */
 .photo-grid {
-    column-count: 4;
-    column-gap: 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
     margin-top: 8px;
+    width: 100%;
+}
+
+.photo-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
 }
 
 .photo-card {
-    break-inside: avoid;
-    margin-bottom: 18px;
+    width: 100%;
     border-radius: 6px;
     overflow: hidden;
     border: 0.5px solid var(--border-color);
@@ -508,7 +517,6 @@ body.light-mode .photo-card img {
 .theme-btn:hover { background-color: var(--btn-hover); }
 
 @media (max-width: 900px) {
-    .photo-grid { column-count: 3; }
     .lightbox-stage { padding: 60px 48px; }
 }
 
@@ -518,8 +526,8 @@ body.light-mode .photo-card img {
     .container { padding: 32px 20px 48px; }
     .identity-block { gap: 14px; }
     .profile-pic { width: 68px; height: 68px; }
-    .photo-grid { column-count: 2; column-gap: 12px; }
-    .photo-card { margin-bottom: 12px; }
+    .photo-grid { gap: 12px; }
+    .photo-column { gap: 12px; }
     .theme-btn { top: 14px; right: 14px; }
     .lightbox-stage { padding: 50px 10px; }
     .lightbox-prev { left: 8px; }

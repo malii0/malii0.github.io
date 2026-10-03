@@ -3,74 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>Muhammed Ali Onurlucan</title>
+    <title>Photography - Muhammed Ali Onurlucan</title>
     <meta
       name="description"
-      content="Muhammed Ali Onurlucan - Mathematics Student at Middle East Technical University (METU). Personal Academic Knowledge Base & Notes on Flight Dynamics, Adaptive Optics, and Orbital Mechanics."
+      content="Personal photo gallery by Muhammed Ali Onurlucan."
     />
-    <meta
-      name="keywords"
-      content="Muhammed Ali Onurlucan, ODTÜ Matematik, METU Mathematics, Galaxy Rocket Team, Flight Dynamics, Adaptive Optics, Zernike Polynomials, SSA, Orbital Mechanics, Technical Notes"
-    />
-    <meta name="author" content="Muhammed Ali Onurlucan" />
 
-    <link rel="canonical" href="https://malionurlucan.me/" />
+    <link rel="canonical" href="https://malionurlucan.me/photography/" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-
-    <meta
-      property="og:title"
-      content="M. Ali Onurlucan - Personal Site & Notes"
-    />
-    <meta
-      property="og:description"
-      content="Undergraduate Mathematics Student @ METU. Academic knowledge base & study notes on Flight Dynamics, Adaptive Optics & Orbital Mechanics."
-    />
-    <meta
-      property="og:image"
-      content="https://malionurlucan.me/img/avatar.jpg"
-    />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content="https://malionurlucan.me/" />
-    <meta property="og:type" content="website" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@onurlucan_mali" />
-    <meta
-      name="twitter:title"
-      content="M. Ali Onurlucan - Personal Site & Notes"
-    />
-    <meta
-      name="twitter:description"
-      content="Undergraduate Mathematics Student @ METU. Academic knowledge base & study notes on Flight Dynamics, Adaptive Optics & Orbital Mechanics."
-    />
-    <meta
-      name="twitter:image"
-      content="https://malionurlucan.me/img/avatar.jpg"
-    />
-
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Muhammed Ali Onurlucan",
-        "url": "https://malionurlucan.me",
-        "image": "https://malionurlucan.me/img/avatar.jpg",
-        "jobTitle": "Undergraduate Student",
-        "affiliation": {
-          "@type": "CollegeOrUniversity",
-          "name": "Middle East Technical University"
-        },
-        "sameAs": [
-          "https://github.com/malii0",
-          "http://linkedin.com/in/mali0/",
-          "https://orcid.org/0009-0002-9240-9825",
-          "https://www.researchgate.net/profile/Muhammed-Onurlucan",
-          "https://x.com/onurlucan_mali"
-        ]
-      }
-    </script>
 
     <script>
       const storedTheme = localStorage.getItem("theme");
@@ -108,138 +48,379 @@
 
     <link rel="stylesheet" href="/style.css" fetchpriority="high" />
   </head>
-  <body>
+  <body class="photography-page">
     <nav class="site-nav">
       <a href="/" class="brand">m.a.o</a>
       <div class="nav-items">
-        <a href="/" class="active">home</a>
+        <a href="/">home</a>
         <a href="/projects/">projects</a>
         <a href="/notes/">notes</a>
         <a href="/reading/">read / watch</a>
-        <a href="/photography/">photography</a>
+        <a href="/photography/" class="active">photography</a>
       </div>
     </nav>
 
-    <main class="container">
-      <div class="identity-block">
-        <img
-          src="/img/avatar.jpg"
-          alt="Muhammed Ali Onurlucan profile photo"
-          class="profile-pic"
-          fetchpriority="high"
-          decoding="async"
-        />
-        <div>
-          <h1>Muhammed Ali Onurlucan</h1>
-          <div class="tagline" id="js-tagline">undergraduate · mathematics</div>
+    <main class="container container-single">
+      <div class="page-label">photography</div>
+      <p class="page-intro">Some photos I've taken, nothing more.</p>
+
+      <!-- Dynamic Photo Grid Container -->
+      <div id="photo-gallery" class="photo-grid"></div>
+    </main>
+
+    <!-- Accessible Lightbox Overlay -->
+    <div
+      id="lightbox"
+      class="lightbox-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Image preview"
+      tabindex="-1"
+    >
+      <div class="lightbox-header">
+        <span
+          class="lightbox-counter"
+          id="lightbox-counter"
+          aria-live="polite"
+        ></span>
+        <button
+          type="button"
+          class="lightbox-btn"
+          id="lightbox-close"
+          aria-label="Close dialog (Escape)"
+        >
+          &times;
+        </button>
+      </div>
+
+      <button
+        type="button"
+        class="lightbox-btn lightbox-nav lightbox-prev"
+        id="lightbox-prev"
+        aria-label="Previous photo"
+      >
+        &#8249;
+      </button>
+
+      <div class="lightbox-stage" id="lightbox-stage">
+        <div class="lightbox-img-wrapper">
+          <img id="lightbox-img" class="lightbox-img" src="" alt="" />
         </div>
       </div>
 
-      <div class="about-text" id="js-about">
-        <p>
-          I'm an undergraduate at
-          <a
-            href="https://www.metu.edu.tr/en"
-            target="_blank"
-            rel="noopener"
-            class="inline-link"
-            >Middle East Technical University</a
-          >, studying mathematics. I currently contribute to the
-          <a
-            href="https://www.galaxyroket.com/"
-            target="_blank"
-            rel="noopener"
-            class="inline-link"
-            >Galaxy Rocket Team</a
-          >, and this past summer completed a research internship at the
-          <a
-            href="https://trgozlemevleri.gov.tr/"
-            target="_blank"
-            rel="noopener"
-            class="inline-link"
-            >Türkiye National Observatory</a
-          >
-          under
-          <a
-            href="https://avesis.atauni.edu.tr/cahity"
-            target="_blank"
-            rel="noopener"
-            class="inline-link"
-            >Prof. Dr. Cahit Yeşilyaprak</a
-          >, working on adaptive optics and space situational awareness.
-        </p>
-      </div>
-
-      <a
-        href="/files/cv.pdf?v=20260731"
-        target="_blank"
-        rel="noopener"
-        class="cv-link mono"
+      <button
+        type="button"
+        class="lightbox-btn lightbox-nav lightbox-next"
+        id="lightbox-next"
+        aria-label="Next photo"
       >
-        <i class="fa-regular fa-file-lines"></i> curriculum vitae →
-      </a>
+        &#8250;
+      </button>
 
-      <h2>Contact & Social</h2>
-
-      <div class="social-row" id="js-social">
-        <a
-          href="mailto:ali.onurlucan@metu.edu.tr"
-          title="Email"
-          aria-label="Email"
-        >
-          <i class="fa-solid fa-envelope"></i>
-        </a>
-        <a
-          href="https://github.com/malii0"
-          target="_blank"
-          rel="noopener"
-          title="GitHub"
-          aria-label="GitHub"
-        >
-          <i class="fa-brands fa-github"></i>
-        </a>
-        <a
-          href="http://linkedin.com/in/mali0/"
-          target="_blank"
-          rel="noopener"
-          title="LinkedIn"
-          aria-label="LinkedIn"
-        >
-          <i class="fa-brands fa-linkedin"></i>
-        </a>
-        <a
-          href="https://orcid.org/0009-0002-9240-9825"
-          target="_blank"
-          rel="noopener"
-          title="ORCID"
-          aria-label="ORCID"
-        >
-          <i class="fa-brands fa-orcid"></i>
-        </a>
-        <a
-          href="https://www.researchgate.net/profile/Muhammed-Onurlucan"
-          target="_blank"
-          rel="noopener"
-          title="ResearchGate"
-          aria-label="ResearchGate"
-        >
-          <i class="fa-brands fa-researchgate"></i>
-        </a>
-        <a
-          href="https://x.com/onurlucan_mali"
-          target="_blank"
-          rel="noopener"
-          title="X (Twitter)"
-          aria-label="X (Twitter)"
-        >
-          <i class="fa-brands fa-x-twitter"></i>
-        </a>
+      <div class="lightbox-footer">
+        <div class="lightbox-caption" id="lightbox-caption"></div>
       </div>
-    </main>
+    </div>
 
-    <!-- /utils.js, home.js'den ÖNCE çağrılır -->
+    <!-- /utils.js inline script'ten ÖNCE çağrılır -->
     <script src="/utils.js"></script>
-    <script src="/home.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        loadPageIntro("photography");
+
+        const gallery = document.getElementById("photo-gallery");
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+        const lightboxCounter = document.getElementById("lightbox-counter");
+        const lightboxCaption = document.getElementById("lightbox-caption");
+        const lightboxCloseBtn = document.getElementById("lightbox-close");
+        const lightboxPrevBtn = document.getElementById("lightbox-prev");
+        const lightboxNextBtn = document.getElementById("lightbox-next");
+        const lightboxStage = document.getElementById("lightbox-stage");
+
+        let photoItems = [];
+        let cardElements = [];
+        let currentColumnCount = 0;
+        let currentIndex = -1;
+        let lastFocusedElement = null;
+        let isLightboxOpen = false;
+
+        function updateLightboxView() {
+          if (currentIndex < 0 || currentIndex >= photoItems.length) return;
+          const item = photoItems[currentIndex];
+          const filename = item.filename;
+          const fullResUrl = `/img/photos/${encodeURIComponent(filename)}`;
+          const thumbUrl = `https://wsrv.nl/?url=malionurlucan.me/img/photos/${encodeURIComponent(filename)}&w=640&q=80&output=webp`;
+
+          lightboxCounter.textContent = `${currentIndex + 1} / ${photoItems.length}`;
+          lightboxCaption.textContent = item.location ? item.location : "";
+          lightboxImg.alt = item.alt
+            ? item.alt
+            : `Photograph ${currentIndex + 1}`;
+
+          // Show cached thumbnail immediately as placeholder, swap once full-res loads
+          lightboxImg.classList.add("loading-placeholder");
+          lightboxImg.src = thumbUrl;
+
+          const fullImgLoader = new Image();
+          fullImgLoader.src = fullResUrl;
+          fullImgLoader.onload = function () {
+            if (
+              currentIndex >= 0 &&
+              photoItems[currentIndex].filename === filename
+            ) {
+              lightboxImg.src = fullResUrl;
+              lightboxImg.classList.remove("loading-placeholder");
+            }
+          };
+          fullImgLoader.onerror = function () {
+            lightboxImg.classList.remove("loading-placeholder");
+          };
+        }
+
+        function openLightbox(index, triggerEl) {
+          currentIndex = index;
+          lastFocusedElement = triggerEl || document.activeElement;
+          isLightboxOpen = true;
+
+          updateLightboxView();
+          lightbox.classList.add("active");
+          document.body.classList.add("scroll-locked");
+
+          // History push state for mobile back button closing
+          history.pushState({ lightboxOpen: true }, "");
+
+          lightboxCloseBtn.focus();
+        }
+
+        function closeLightbox(fromPopstate = false) {
+          if (!isLightboxOpen) return;
+          isLightboxOpen = false;
+
+          lightbox.classList.remove("active");
+          document.body.classList.remove("scroll-locked");
+          lightboxImg.src = "";
+          currentIndex = -1;
+
+          if (!fromPopstate && history.state && history.state.lightboxOpen) {
+            history.back();
+          }
+
+          if (
+            lastFocusedElement &&
+            typeof lastFocusedElement.focus === "function"
+          ) {
+            lastFocusedElement.focus();
+          }
+        }
+
+        function showNext() {
+          if (photoItems.length <= 1) return;
+          currentIndex = (currentIndex + 1) % photoItems.length;
+          updateLightboxView();
+        }
+
+        function showPrev() {
+          if (photoItems.length <= 1) return;
+          currentIndex =
+            (currentIndex - 1 + photoItems.length) % photoItems.length;
+          updateLightboxView();
+        }
+
+        // Lightbox Navigation Listeners
+        lightboxCloseBtn.addEventListener("click", () => closeLightbox(false));
+        lightboxNextBtn.addEventListener("click", showNext);
+        lightboxPrevBtn.addEventListener("click", showPrev);
+
+        // Backdrop click closing
+        lightboxStage.addEventListener("click", function (e) {
+          if (
+            e.target === lightboxStage ||
+            e.target.classList.contains("lightbox-img-wrapper")
+          ) {
+            closeLightbox(false);
+          }
+        });
+
+        // Keyboard Controls & Focus Trap
+        document.addEventListener("keydown", function (e) {
+          if (!isLightboxOpen) return;
+
+          if (e.key === "Escape") {
+            e.preventDefault();
+            closeLightbox(false);
+          } else if (e.key === "ArrowRight") {
+            e.preventDefault();
+            showNext();
+          } else if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            showPrev();
+          } else if (e.key === "Tab") {
+            const focusables = [
+              lightboxCloseBtn,
+              lightboxPrevBtn,
+              lightboxNextBtn,
+            ].filter((btn) => btn.offsetParent !== null);
+            if (focusables.length === 0) return;
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+
+            if (e.shiftKey && document.activeElement === first) {
+              e.preventDefault();
+              last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+              e.preventDefault();
+              first.focus();
+            }
+          }
+        });
+
+        // Touch Swipe Handling
+        let touchStartX = 0;
+        let touchStartY = 0;
+        lightboxStage.addEventListener(
+          "touchstart",
+          function (e) {
+            if (e.changedTouches.length === 1) {
+              touchStartX = e.changedTouches[0].clientX;
+              touchStartY = e.changedTouches[0].clientY;
+            }
+          },
+          { passive: true },
+        );
+
+        lightboxStage.addEventListener(
+          "touchend",
+          function (e) {
+            if (e.changedTouches.length === 1) {
+              const diffX = e.changedTouches[0].clientX - touchStartX;
+              const diffY = e.changedTouches[0].clientY - touchStartY;
+              if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
+                if (diffX < 0) {
+                  showNext();
+                } else {
+                  showPrev();
+                }
+              }
+            }
+          },
+          { passive: true },
+        );
+
+        // Popstate handler for mobile back button
+        window.addEventListener("popstate", function (e) {
+          if (isLightboxOpen) {
+            closeLightbox(true);
+          }
+        });
+
+        function getTargetColumnCount() {
+          const width = window.innerWidth;
+          if (width > 900) return 4;
+          if (width > 640) return 3;
+          return 2;
+        }
+
+        // Kartlar tekrar oluşturulmaz, mevcut DOM düğümleri sütunlara taşınır
+        function distributeCards(force = false) {
+          const targetCount = getTargetColumnCount();
+          if (!force && targetCount === currentColumnCount) return;
+          currentColumnCount = targetCount;
+          gallery.innerHTML = "";
+
+          const columns = [];
+          for (let c = 0; c < targetCount; c++) {
+            const col = document.createElement("div");
+            col.className = "photo-column";
+            gallery.appendChild(col);
+            columns.push(col);
+          }
+          cardElements.forEach((card, index) => {
+            columns[index % targetCount].appendChild(card);
+          });
+        }
+
+        let resizeTimer = null;
+        window.addEventListener("resize", function () {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(function () {
+            distributeCards(false);
+          }, 100);
+        });
+
+        // Load Gallery
+        try {
+          const res = await fetch("/data/photos.json");
+          if (!res.ok) throw new Error("fetch failed: " + res.status);
+          const rawData = await res.json();
+
+          if (!Array.isArray(rawData) || rawData.length === 0) {
+            gallery.innerHTML =
+              '<p class="empty-note">No photos published yet, check back soon.</p>';
+            return;
+          }
+
+          photoItems = rawData
+            .map(normalizePhotoEntry)
+            .filter((p) => p.filename);
+
+          cardElements = photoItems.map((item, index) => {
+            const filename = item.filename;
+            const altText = item.alt ? item.alt : `Photograph ${index + 1}`;
+            const fullResUrl = `/img/photos/${encodeURIComponent(filename)}`;
+            const thumbUrl = `https://wsrv.nl/?url=malionurlucan.me/img/photos/${encodeURIComponent(filename)}&w=640&q=80&output=webp`;
+
+            const card = document.createElement("div");
+            card.className = "photo-card";
+
+            const link = document.createElement("a");
+            link.href = fullResUrl;
+            link.setAttribute(
+              "aria-label",
+              item.location ? `${altText} - ${item.location}` : altText,
+            );
+
+            const imageElement = document.createElement("img");
+            imageElement.src = thumbUrl;
+            imageElement.alt = altText;
+            imageElement.loading = "lazy";
+            imageElement.decoding = "async";
+
+            imageElement.onerror = function () {
+              if (this.src !== fullResUrl) {
+                this.src = fullResUrl;
+              }
+            };
+
+            link.appendChild(imageElement);
+            card.appendChild(link);
+
+            if (item.location) {
+              const caption = document.createElement("div");
+              caption.className = "photo-caption";
+              caption.textContent = item.location;
+              card.appendChild(caption);
+            }
+
+            link.addEventListener("click", function (e) {
+              if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0)
+                return;
+              e.preventDefault();
+              openLightbox(index, link);
+            });
+
+            return card;
+          });
+
+          distributeCards(true);
+        } catch (err) {
+          console.error("Gallery failed to load:", err);
+          gallery.innerHTML =
+            '<p class="empty-note">Unable to load gallery at the moment.</p>';
+        }
+      });
+    </script>
+
     <script src="/main.js"></script>
     <script
       data-goatcounter="https://malionurlucan.goatcounter.com/count"
