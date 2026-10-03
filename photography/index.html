@@ -139,6 +139,8 @@
         const lightboxStage = document.getElementById("lightbox-stage");
 
         let photoItems = [];
+        let cardElements = [];
+        let currentColumnCount = 0;
         let currentIndex = -1;
         let lastFocusedElement = null;
         let isLightboxOpen = false;
@@ -312,6 +314,40 @@
           }
         });
 
+        function getTargetColumnCount() {
+          const width = window.innerWidth;
+          if (width > 900) return 4;
+          if (width > 640) return 3;
+          return 2;
+        }
+
+        // Kartlar tekrar oluşturulmaz, mevcut DOM düğümleri sütunlara taşınır
+        function distributeCards(force = false) {
+          const targetCount = getTargetColumnCount();
+          if (!force && targetCount === currentColumnCount) return;
+          currentColumnCount = targetCount;
+          gallery.innerHTML = "";
+
+          const columns = [];
+          for (let c = 0; c < targetCount; c++) {
+            const col = document.createElement("div");
+            col.className = "photo-column";
+            gallery.appendChild(col);
+            columns.push(col);
+          }
+          cardElements.forEach((card, index) => {
+            columns[index % targetCount].appendChild(card);
+          });
+        }
+
+        let resizeTimer = null;
+        window.addEventListener("resize", function () {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(function () {
+            distributeCards(false);
+          }, 100);
+        });
+
         // Load Gallery
         try {
           const res = await fetch("/data/photos.json");
@@ -328,8 +364,7 @@
             .map(normalizePhotoEntry)
             .filter((p) => p.filename);
 
-          gallery.innerHTML = "";
-          photoItems.forEach((item, index) => {
+          cardElements = photoItems.map((item, index) => {
             const filename = item.filename;
             const altText = item.alt ? item.alt : `Photograph ${index + 1}`;
             const fullResUrl = `/img/photos/${encodeURIComponent(filename)}`;
@@ -374,8 +409,10 @@
               openLightbox(index, link);
             });
 
-            gallery.appendChild(card);
+            return card;
           });
+
+          distributeCards(true);
         } catch (err) {
           console.error("Gallery failed to load:", err);
           gallery.innerHTML =
