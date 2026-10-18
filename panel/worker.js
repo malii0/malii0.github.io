@@ -1,22 +1,31 @@
 // panel/worker.js - Cloudflare Worker arka uç API
 //
+// ÖNEMLİ DAĞITIM (DEPLOYMENT) VE KISAYOL (iOS SHORTCUT) NOTU:
+// - Bu dosya (panel/worker.js) GitHub Pages tarafından otomatik olarak çalıştırılmaz veya dağıtılmaz;
+//   yapılan değişikliklerin etkili olması için Cloudflare Workers'a ayrıca deploy edilmesi gerekir.
+// - iOS Shortcut fotoğraf yükleme uç noktası yalnızca açık olarak `/upload` yolunu kabul eder
+//   (örn. https://photo-uploader.m-alionurlucan.workers.dev/upload). Kısayol (Shortcut) içindeki URL'nin
+//   `/upload` olarak güncellenmesi gerekmektedir; bilinmeyen diğer tüm yollar 404 döndürür.
+//
 // GÜVENLİK VE YAPILANDIRMA NOTLARI:
 // 1. GITHUB_TOKEN:
 //    Yalnızca bu repoya (malii0/malii0.github.io) sınırlı, "Contents: Read and write"
 //    yetkisi verilmiş bir Fine-grained GitHub Personal Access Token (PAT) kullanın.
 //
 // 2. BRUTE-FORCE & RATE LIMIT:
-//    IP bazlı kilit mekanizması için wrangler.toml üzerinde RATE_LIMIT_KV binding'i gereklidir.
+//    IP bazlı kilit mekanizması için wrangler.toml üzerinde RATE_LIMIT_KV binding'i zorunludur.
+//    RATE_LIMIT_KV bağlı değilse kimlik doğrulama fail-closed olarak reddedilir.
 //
 // 3. VERİ ŞEMASI:
 //    data/photos.json içinde hem string hem de { filename, alt, location } formatını destekler.
 //    iOS Shortcut yüklemesinde dosya kaydedildikten sonra data/photos.json'ın en başına unshift edilir.
 
 const REPO = "malii0/malii0.github.io";
+const MAX_UPLOAD_BYTES = 10 * 1024 * 1024; // 10 MB
 
 const ALLOWED_ORIGINS = [
   "https://malionurlucan.me",
-"https://malii0.github.io",
+  "https://malii0.github.io",
 ];
 
 const TYPE_PATHS = {
@@ -30,6 +39,60 @@ const TYPE_PATHS = {
 
 const SAFE_FILENAME = /^[a-zA-Z0-9_.-]+\.(jpe?g|png|webp)$/i;
 const KNOWN_PAGE_KEYS = ["notes", "projects", "reading", "photography"];
+
+function detectImageType(bytes) {
+  if (!(bytes instanceof Uint8Array)) return null;
+  // JPEG: FF D8 FF
+  if (
+    bytes.length >= 3 &&
+    bytes[0] === 0xff &&
+    bytes[1] === 0xd8 &&
+    bytes[2] === 0xff
+  ) {
+    return "jpg";
+  }
+  // PNG: 89 50 4E 47 0D 0A 1A 0A
+  if (
+    bytes.length >= 8 &&
+    bytes[0] === 0x89 &&
+    bytes[1] === 0x50 &&
+    bytes[2] === 0x4e &&
+    bytes[3] === 0x47 &&
+    bytes[4] === 0x0d &&
+    bytes[5] === 0x0a &&
+    bytes[6] === 0x1a &&
+    bytes[7] === 0x0a
+  ) {
+    return "png";
+  }
+  // WebP: "RIFF" .... "WEBP"
+  if (
+    bytes.length >= 12 &&
+    bytes[0] === 0x52 &&
+    bytes[1] === 0x49 &&
+    bytes[2] === 0x46 &&
+    bytes[3] === 0x46 &&
+    bytes[8] === 0x57 &&
+    bytes[9] === 0x45 &&
+    bytes[10] === 0x42 &&
+    bytes[11] === 0x50
+  ) {
+    return "webp";
+  }
+  return null;
+}
+
+function uint8ToBase64(bytes) {
+  let binary = "";
+  const chunkSize = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    binary += String.fromCharCode.apply(
+      null,
+      bytes.subarray(i, i + chunkSize),
+    );
+  }
+  return btoa(binary);
+}
 
 function getCorsHeaders(request) {
   const origin = request.headers.get("Origin");
@@ -69,12 +132,12 @@ function fromBase64Utf8(b64) {
 function slugify(title) {
   return (
     title
-    .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "")
-    .slice(0, 48) || "entry"
+      .toLowerCase()
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "")
+      .slice(0, 48) || "entry"
   );
 }
 
@@ -109,69 +172,87 @@ function isSafeUrlServer(url) {
   );
 }
 
-async function checkAuth(request, body, env) {
-  if (!env.PANEL_SECRET)
-    return { ok: false, error: "PANEL_SECRET sunucuda yapılandırılmamış." };
+async function checkAuthWithSecret(request, providedSecret, expectedSecret, env) {
+  if (!expectedSecret) {
+    console.error("Auth secret is not configured on the server.");
+    return {
+      ok: false,
+      error: "Sunucu kimlik doğrulama yapılandırması eksik.",
+      status: 500,
+    };
+  }
+
+  if (!env.RATE_LIMIT_KV) {
+    console.error("RATE_LIMIT_KV binding is missing; failing closed.");
+    return {
+      ok: false,
+      error: "Sunucu güvenlik yapılandırması eksik (rate limit).",
+      status: 500,
+    };
+  }
 
   const clientIp = request.headers.get("CF-Connecting-IP") || "unknown";
   const kvKey = `ratelimit:${clientIp}`;
 
-  if (env.RATE_LIMIT_KV) {
-    const rawState = await env.RATE_LIMIT_KV.get(kvKey);
-    if (rawState) {
-      try {
-        const state = JSON.parse(rawState);
-        const now = Date.now();
-        if (state.lockedUntil && now < state.lockedUntil) {
-          const remainingMins = Math.ceil((state.lockedUntil - now) / 60000);
-          return {
-            ok: false,
-            error: `Çok fazla hatalı deneme yapıldı. Erişim geçici olarak engellendi. Lütfen ${remainingMins} dakika sonra tekrar deneyin.`,
-            status: 429,
-          };
-        }
-      } catch (e) {}
-    }
+  const rawState = await env.RATE_LIMIT_KV.get(kvKey);
+  if (rawState) {
+    try {
+      const state = JSON.parse(rawState);
+      const now = Date.now();
+      if (state.lockedUntil && now < state.lockedUntil) {
+        const remainingMins = Math.ceil((state.lockedUntil - now) / 60000);
+        return {
+          ok: false,
+          error: `Çok fazla hatalı deneme yapıldı. Erişim geçici olarak engellendi. Lütfen ${remainingMins} dakika sonra tekrar deneyin.`,
+          status: 429,
+        };
+      }
+    } catch (e) {}
   }
 
-  const providedSecret = typeof body.secret === "string" ? body.secret : "";
-  const isValid = timingSafeEqual(providedSecret, env.PANEL_SECRET);
+  const secretStr = typeof providedSecret === "string" ? providedSecret : "";
+  const isValid = timingSafeEqual(secretStr, expectedSecret);
 
   if (!isValid) {
-    if (env.RATE_LIMIT_KV) {
-      let attempts = 0;
-      const rawState = await env.RATE_LIMIT_KV.get(kvKey);
-      if (rawState) {
-        try {
-          const state = JSON.parse(rawState);
-          attempts = state.attempts || 0;
-        } catch (e) {}
-      }
-      attempts += 1;
+    let attempts = 0;
+    const currentRawState = await env.RATE_LIMIT_KV.get(kvKey);
+    if (currentRawState) {
+      try {
+        const state = JSON.parse(currentRawState);
+        attempts = state.attempts || 0;
+      } catch (e) {}
+    }
+    attempts += 1;
 
-      if (attempts >= 5) {
-        const lockDuration = 15 * 60 * 1000;
-        await env.RATE_LIMIT_KV.put(
-          kvKey,
-          JSON.stringify({ attempts, lockedUntil: Date.now() + lockDuration }),
-                                    { expirationTtl: 15 * 60 },
-        );
-      } else {
-        await env.RATE_LIMIT_KV.put(
-          kvKey,
-          JSON.stringify({ attempts, lockedUntil: null }),
-                                    { expirationTtl: 10 * 60 },
-        );
-      }
+    if (attempts >= 5) {
+      const lockDuration = 15 * 60 * 1000;
+      await env.RATE_LIMIT_KV.put(
+        kvKey,
+        JSON.stringify({ attempts, lockedUntil: Date.now() + lockDuration }),
+        { expirationTtl: 15 * 60 },
+      );
+    } else {
+      await env.RATE_LIMIT_KV.put(
+        kvKey,
+        JSON.stringify({ attempts, lockedUntil: null }),
+        { expirationTtl: 10 * 60 },
+      );
     }
     return { ok: false, error: "Yetkisiz erişim.", status: 401 };
   }
 
-  if (env.RATE_LIMIT_KV) {
-    await env.RATE_LIMIT_KV.delete(kvKey);
-  }
+  await env.RATE_LIMIT_KV.delete(kvKey);
 
   return { ok: true };
+}
+
+async function checkAuth(request, body, env) {
+  return checkAuthWithSecret(
+    request,
+    body ? body.secret : "",
+    env.PANEL_SECRET,
+    env,
+  );
 }
 
 async function getContentsFile(path, env) {
@@ -198,12 +279,12 @@ async function putContentsFile(path, contentStr, sha, message, env) {
     {
       method: "PUT",
       headers: { ...ghHeaders(env), "Content-Type": "application/json" },
-                          body: JSON.stringify({
-                            message,
-                            content: toBase64Utf8(contentStr),
-                                               sha,
-                                               branch: "main",
-                          }),
+      body: JSON.stringify({
+        message,
+        content: toBase64Utf8(contentStr),
+        sha,
+        branch: "main",
+      }),
     },
   );
   if (!res.ok) {
@@ -241,7 +322,12 @@ async function handleGet(request, env) {
     const data = JSON.parse(fromBase64Utf8(file.content));
     return jsonResponse(request, { ok: true, data });
   } catch (err) {
-    return jsonResponse(request, { error: err.message }, 502);
+    console.error("handleGet error:", err);
+    return jsonResponse(
+      request,
+      { error: "İçerik alınırken sunucu hatası oluştu." },
+      502,
+    );
   }
 }
 
@@ -381,17 +467,22 @@ async function handleSave(request, env) {
     );
     return jsonResponse(request, { ok: true });
   } catch (err) {
+    console.error("handleSave error:", err);
     if (err.status === 409) {
       return jsonResponse(
         request,
         {
           error:
-          "İçerik başka bir yerden güncellenmiş görünüyor (SHA çakışması). Lütfen sayfayı yeniden yükleyip tekrar deneyin.",
+            "İçerik başka bir yerden güncellenmiş görünüyor (SHA çakışması). Lütfen sayfayı yeniden yükleyip tekrar deneyin.",
         },
         409,
       );
     }
-    return jsonResponse(request, { error: err.message }, 502);
+    return jsonResponse(
+      request,
+      { error: "İçerik kaydedilirken sunucu hatası oluştu." },
+      502,
+    );
   }
 }
 
@@ -410,8 +501,49 @@ async function handleUploadPhoto(request, env) {
   if (!filename || !SAFE_FILENAME.test(filename)) {
     return jsonResponse(request, { error: "Geçersiz dosya adı formatı." }, 400);
   }
-  if (!base64)
+  if (!base64 || typeof base64 !== "string") {
     return jsonResponse(request, { error: "Görsel verisi eksik." }, 400);
+  }
+
+  const cleanBase64 = base64.replace(/\s+/g, "");
+  if (cleanBase64.length > Math.ceil((MAX_UPLOAD_BYTES * 4) / 3) + 4) {
+    return jsonResponse(
+      request,
+      { error: "Dosya boyutu 10 MB sınırını aşıyor." },
+      413,
+    );
+  }
+
+  let bytes;
+  try {
+    const binary = atob(cleanBase64);
+    bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+  } catch (e) {
+    return jsonResponse(request, { error: "Geçersiz Base64 verisi." }, 400);
+  }
+
+  if (bytes.byteLength === 0) {
+    return jsonResponse(request, { error: "Görsel verisi boş." }, 400);
+  }
+  if (bytes.byteLength > MAX_UPLOAD_BYTES) {
+    return jsonResponse(
+      request,
+      { error: "Dosya boyutu 10 MB sınırını aşıyor." },
+      413,
+    );
+  }
+
+  const detectedType = detectImageType(bytes);
+  if (!detectedType) {
+    return jsonResponse(
+      request,
+      {
+        error:
+          "Geçersiz dosya içeriği. Yalnızca JPEG, PNG ve WebP görsellerine izin verilir.",
+      },
+      400,
+    );
+  }
 
   try {
     const res = await fetch(
@@ -419,18 +551,23 @@ async function handleUploadPhoto(request, env) {
       {
         method: "PUT",
         headers: { ...ghHeaders(env), "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                              message: `Upload photo ${filename} via panel`,
-                              content: base64,
-                              branch: "main",
-                            }),
+        body: JSON.stringify({
+          message: `Upload photo ${filename} via panel`,
+          content: cleanBase64,
+          branch: "main",
+        }),
       },
     );
     if (!res.ok)
       throw new Error(`GitHub PUT failed: ${res.status} ${await res.text()}`);
     return jsonResponse(request, { ok: true, filename });
   } catch (err) {
-    return jsonResponse(request, { error: err.message }, 502);
+    console.error("handleUploadPhoto error:", err);
+    return jsonResponse(
+      request,
+      { error: "Fotoğraf yüklenirken sunucu hatası oluştu." },
+      502,
+    );
   }
 }
 
@@ -472,11 +609,11 @@ async function handleDeletePhoto(request, env) {
       {
         method: "DELETE",
         headers: { ...ghHeaders(env), "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                              message: `Delete photo ${filename} via panel`,
-                              sha: current.sha,
-                              branch: "main",
-                            }),
+        body: JSON.stringify({
+          message: `Delete photo ${filename} via panel`,
+          sha: current.sha,
+          branch: "main",
+        }),
       },
     );
 
@@ -486,7 +623,7 @@ async function handleDeletePhoto(request, env) {
           request,
           {
             error:
-            "Dosya silinirken çakışma (409) oluştu. Dosya başka bir işlem tarafından değiştirilmiş olabilir.",
+              "Dosya silinirken çakışma (409) oluştu. Dosya başka bir işlem tarafından değiştirilmiş olabilir.",
           },
           409,
         );
@@ -498,28 +635,56 @@ async function handleDeletePhoto(request, env) {
 
     return jsonResponse(request, { ok: true });
   } catch (err) {
-    return jsonResponse(request, { error: err.message }, 502);
+    console.error("handleDeletePhoto error:", err);
+    return jsonResponse(
+      request,
+      { error: "Fotoğraf silinirken sunucu hatası oluştu." },
+      502,
+    );
   }
 }
 
-// iOS Shortcut Photo Uploader endpoint
+// iOS Shortcut Photo Uploader endpoint (/upload)
 async function handlePhotoUpload(request, env) {
   if (request.method !== "POST") {
     return new Response("Method not allowed", { status: 405 });
   }
 
   const providedSecret = request.headers.get("x-upload-secret") || "";
-  const expectedSecret = env.UPLOAD_SECRET || "";
-  if (!expectedSecret || !timingSafeEqual(providedSecret, expectedSecret)) {
-    return new Response("Unauthorized", { status: 401 });
+  const auth = await checkAuthWithSecret(
+    request,
+    providedSecret,
+    env.UPLOAD_SECRET,
+    env,
+  );
+  if (!auth.ok) {
+    return new Response(auth.error, { status: auth.status || 401 });
+  }
+
+  const contentLength = Number(request.headers.get("content-length") || "0");
+  if (contentLength > MAX_UPLOAD_BYTES) {
+    return new Response("Payload too large (max 10 MB)", { status: 413 });
   }
 
   const buf = new Uint8Array(await request.arrayBuffer());
-  let binary = "";
-  for (let i = 0; i < buf.length; i++) binary += String.fromCharCode(buf[i]);
-  const base64 = btoa(binary);
+  if (buf.byteLength === 0) {
+    return new Response("Empty payload", { status: 400 });
+  }
+  if (buf.byteLength > MAX_UPLOAD_BYTES) {
+    return new Response("Payload too large (max 10 MB)", { status: 413 });
+  }
 
-  const filename = `photo_${Date.now()}.jpg`;
+  const detectedExt = detectImageType(buf);
+  if (!detectedExt) {
+    return new Response(
+      "Invalid file format (only JPEG, PNG, and WebP are allowed)",
+      { status: 400 },
+    );
+  }
+
+  const base64 = uint8ToBase64(buf);
+  const randomSuffix = Math.random().toString(36).slice(2, 6);
+  const filename = `photo_${Date.now()}_${randomSuffix}.${detectedExt}`;
 
   // 1. Upload raw photo to GitHub repository
   const ghRes = await fetch(
@@ -541,8 +706,13 @@ async function handlePhotoUpload(request, env) {
   );
 
   if (!ghRes.ok) {
-    return new Response(`GitHub error: ${ghRes.status} ${await ghRes.text()}`, {
-      status: 500,
+    console.error(
+      "handlePhotoUpload GitHub PUT failed:",
+      ghRes.status,
+      await ghRes.text(),
+    );
+    return new Response("Server error while uploading photo", {
+      status: 502,
     });
   }
 
@@ -567,8 +737,9 @@ async function handlePhotoUpload(request, env) {
       env,
     );
   } catch (regErr) {
+    console.error("handlePhotoUpload register failed:", regErr);
     return new Response(
-      `Photo uploaded as ${filename}, but failed to register in data/photos.json: ${regErr.message}`,
+      `Photo uploaded as ${filename}, but failed to register in data/photos.json`,
       { status: 207 },
     );
   }
@@ -597,8 +768,10 @@ export default {
         return handleUploadPhoto(request, env);
       case "/panel/delete-photo":
         return handleDeletePhoto(request, env);
-      default:
+      case "/upload":
         return handlePhotoUpload(request, env);
+      default:
+        return new Response("Not found", { status: 404 });
     }
   },
 };
