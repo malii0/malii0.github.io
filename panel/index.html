@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panel</title>
     <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
@@ -170,10 +171,10 @@
       .status-msg.ok {
         display: block;
         background: rgba(120, 160, 90, 0.15);
-        color: #5a8a3a;
+        color: #8fce5a;
       }
       body.light-mode .status-msg.ok {
-        color: #8fce5a;
+        color: #5a8a3a;
       }
       .status-msg.err {
         display: block;
@@ -260,16 +261,17 @@
           type="text"
           id="home-tagline"
           placeholder="undergraduate · mathematics"
+          disabled
         />
 
         <label for="home-about"
           >About (plain text, use [link text](https://...) for links)</label
         >
-        <textarea id="home-about" style="min-height: 140px"></textarea>
+        <textarea id="home-about" style="min-height: 140px" disabled></textarea>
 
         <label>Social links</label>
         <div id="socials-list"></div>
-        <button type="button" class="icon-btn" id="add-social">
+        <button type="button" class="icon-btn" id="add-social" disabled>
           + add social link
         </button>
 
@@ -278,6 +280,7 @@
           class="btn"
           id="home-save"
           style="margin-top: 20px"
+          disabled
         >
           Save home page
         </button>
@@ -294,24 +297,28 @@
         <textarea
           id="page-notes-intro"
           placeholder="Notes page description"
+          disabled
         ></textarea>
 
         <label for="page-projects-intro">Projects Tagline</label>
         <textarea
           id="page-projects-intro"
           placeholder="Projects page description"
+          disabled
         ></textarea>
 
         <label for="page-reading-intro">Read / Watch Tagline</label>
         <textarea
           id="page-reading-intro"
           placeholder="Reading page description"
+          disabled
         ></textarea>
 
         <label for="page-photography-intro">Photography Tagline</label>
         <textarea
           id="page-photography-intro"
           placeholder="Photography page description"
+          disabled
         ></textarea>
 
         <button
@@ -319,6 +326,7 @@
           class="btn"
           id="pages-save"
           style="margin-top: 20px"
+          disabled
         >
           Save page taglines
         </button>
@@ -350,6 +358,7 @@
           id="photos-input"
           accept="image/jpeg,image/png,image/webp"
           multiple
+          disabled
         />
         <div class="status-msg" id="upload-status"></div>
 
@@ -360,6 +369,7 @@
           class="btn"
           id="photos-save"
           style="margin-top: 16px"
+          disabled
         >
           Save order, alt text & locations
         </button>
@@ -548,9 +558,12 @@
         });
       }
 
+      let homeLoaded = false;
+
       document
         .getElementById("add-social")
         .addEventListener("click", function () {
+          if (!homeLoaded) return;
           socialsState.push({
             _key: randomKey(),
             icon: "fa-solid fa-link",
@@ -571,6 +584,11 @@
             socialsState = (res.data.socials || []).map(function (s) {
               return Object.assign({}, s, { _key: randomKey() });
             });
+            homeLoaded = true;
+            document.getElementById("home-tagline").disabled = false;
+            document.getElementById("home-about").disabled = false;
+            document.getElementById("add-social").disabled = false;
+            document.getElementById("home-save").disabled = false;
             renderSocials();
             showStatus("home-status", "Loaded.", true);
           } catch (err) {
@@ -581,6 +599,10 @@
       document
         .getElementById("home-save")
         .addEventListener("click", async function () {
+          if (!homeLoaded) {
+            showStatus("home-status", "Please load current content first.", false);
+            return;
+          }
           for (const s of socialsState) {
             if (s.url && !isSafeUrl(s.url)) {
               showStatus(
@@ -612,6 +634,8 @@
         });
 
       // ====== PAGES TAB ======
+      let pagesLoaded = false;
+
       document
         .getElementById("pages-load")
         .addEventListener("click", async function () {
@@ -626,6 +650,12 @@
               data.reading || "";
             document.getElementById("page-photography-intro").value =
               data.photography || "";
+            pagesLoaded = true;
+            document.getElementById("page-notes-intro").disabled = false;
+            document.getElementById("page-projects-intro").disabled = false;
+            document.getElementById("page-reading-intro").disabled = false;
+            document.getElementById("page-photography-intro").disabled = false;
+            document.getElementById("pages-save").disabled = false;
             showStatus("pages-status", "Page taglines loaded.", true);
           } catch (err) {
             showStatus("pages-status", "Failed to load: " + err.message, false);
@@ -635,6 +665,10 @@
       document
         .getElementById("pages-save")
         .addEventListener("click", async function () {
+          if (!pagesLoaded) {
+            showStatus("pages-status", "Please load page taglines first.", false);
+            return;
+          }
           const payload = {
             notes: document.getElementById("page-notes-intro").value.trim(),
             projects: document
@@ -677,9 +711,9 @@
         return (
           "" +
           '<button type="button" class="btn secondary" data-action="load">Load current entries</button>' +
-          '<button type="button" class="icon-btn" data-action="add" style="margin-bottom: 12px;">+ add new</button>' +
+          '<button type="button" class="icon-btn" data-action="add" style="margin-bottom: 12px;" disabled>+ add new</button>' +
           '<div class="entry-cards"></div>' +
-          '<button type="button" class="btn" data-action="save" style="margin-top: 10px;">Save changes</button>' +
+          '<button type="button" class="btn" data-action="save" style="margin-top: 10px;" disabled>Save changes</button>' +
           '<div class="status-msg" data-status></div>'
         );
       }
@@ -803,6 +837,8 @@
               entryState[type] = (res.data || []).map(function (e) {
                 return Object.assign({}, e, { _key: randomKey() });
               });
+              section.querySelector('[data-action="add"]').disabled = false;
+              section.querySelector('[data-action="save"]').disabled = false;
               renderEntries(type);
               showStatus(type + "-status", "Loaded.", true);
             } catch (err) {
@@ -817,7 +853,7 @@
         section
           .querySelector('[data-action="add"]')
           .addEventListener("click", function () {
-            if (!entryState[type]) entryState[type] = [];
+            if (entryState[type] === null) return;
             entryState[type].unshift({
               _key: randomKey(),
               title: "",
@@ -832,7 +868,15 @@
         section
           .querySelector('[data-action="save"]')
           .addEventListener("click", async function () {
-            const currentEntries = entryState[type] || [];
+            if (entryState[type] === null) {
+              showStatus(
+                type + "-status",
+                "Please load current entries first.",
+                false,
+              );
+              return;
+            }
+            const currentEntries = entryState[type];
             for (const e of currentEntries) {
               if (e.url && !isSafeUrl(e.url)) {
                 showStatus(
@@ -870,6 +914,7 @@
 
       // ====== PHOTOS TAB ======
       let photosState = [];
+      let photosLoaded = false;
 
       function renderPhotos() {
         const container = document.getElementById("photos-list");
@@ -1029,6 +1074,9 @@
                 location: norm.location,
               };
             });
+            photosLoaded = true;
+            document.getElementById("photos-input").disabled = false;
+            document.getElementById("photos-save").disabled = false;
             renderPhotos();
             showStatus("photos-status", "Loaded.", true);
           } catch (err) {
@@ -1043,6 +1091,14 @@
       document
         .getElementById("photos-save")
         .addEventListener("click", async function () {
+          if (!photosLoaded) {
+            showStatus(
+              "photos-status",
+              "Please load current photos first.",
+              false,
+            );
+            return;
+          }
           try {
             const payload = photosState.map(function (p) {
               return {
@@ -1080,6 +1136,16 @@
       document
         .getElementById("photos-input")
         .addEventListener("change", async function (e) {
+          if (!photosLoaded) {
+            showStatus(
+              "photos-status",
+              "Please load current photos first.",
+              false,
+            );
+            e.target.value = "";
+            return;
+          }
+
           const files = Array.from(e.target.files);
           if (files.length === 0) return;
 
@@ -1088,29 +1154,41 @@
           uploadStatus.style.display = "block";
 
           let uploaded = 0;
-          for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            let ext = (file.name.split(".").pop() || "jpg").toLowerCase();
-            if (ext === "jpeg") ext = "jpg";
-            const safeExt =
-              ["jpg", "png", "webp"].indexOf(ext) !== -1 ? ext : "jpg";
-            const filename = "photo_" + Date.now() + "_" + i + "." + safeExt;
+          let uploadError = null;
 
-            uploadStatus.textContent =
-              "Uploading " + (i + 1) + "/" + files.length + "...";
-            try {
-              const base64 = await fileToBase64(file);
-              await api("/panel/upload-photo", {
-                filename: filename,
-                base64: base64,
-              });
+          try {
+            for (let i = 0; i < files.length; i++) {
+              const file = files[i];
+              let ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+              if (ext === "jpeg") ext = "jpg";
+              const safeExt =
+                ["jpg", "png", "webp"].indexOf(ext) !== -1 ? ext : "jpg";
+              const filename = "photo_" + Date.now() + "_" + i + "." + safeExt;
 
-              photosState.push({
-                _key: randomKey(),
-                filename: filename,
-                alt: "",
-                location: "",
-              });
+              uploadStatus.textContent =
+                "Uploading " + (i + 1) + "/" + files.length + "...";
+              try {
+                const base64 = await fileToBase64(file);
+                await api("/panel/upload-photo", {
+                  filename: filename,
+                  base64: base64,
+                });
+
+                photosState.unshift({
+                  _key: randomKey(),
+                  filename: filename,
+                  alt: "",
+                  location: "",
+                });
+                uploaded++;
+                renderPhotos();
+              } catch (err) {
+                uploadError = { fileName: file.name, message: err.message };
+                break;
+              }
+            }
+          } finally {
+            if (uploaded > 0) {
               const payload = photosState.map(function (p) {
                 return {
                   filename: p.filename,
@@ -1118,30 +1196,37 @@
                   location: p.location || "",
                 };
               });
-              await api("/panel/save", { type: "photos", data: payload });
-
-              uploaded++;
-              renderPhotos();
-            } catch (err) {
-              uploadStatus.className = "status-msg err";
-              uploadStatus.textContent =
-                "Failed on " +
-                file.name +
-                ": " +
-                err.message +
-                " (" +
-                uploaded +
-                " uploaded & saved)";
-              renderPhotos();
-              return;
+              try {
+                await api("/panel/save", { type: "photos", data: payload });
+              } catch (saveErr) {
+                if (!uploadError) {
+                  uploadError = {
+                    fileName: "data/photos.json",
+                    message: saveErr.message,
+                  };
+                }
+              }
             }
+            e.target.value = "";
+            renderPhotos();
+          }
+
+          if (uploadError) {
+            uploadStatus.className = "status-msg err";
+            uploadStatus.textContent =
+              "Failed on " +
+              uploadError.fileName +
+              ": " +
+              uploadError.message +
+              " (" +
+              uploaded +
+              " uploaded & saved)";
+            return;
           }
 
           uploadStatus.className = "status-msg ok";
           uploadStatus.textContent =
             "Successfully uploaded " + uploaded + " photo(s) and saved.";
-          e.target.value = "";
-          renderPhotos();
         });
     </script>
 
