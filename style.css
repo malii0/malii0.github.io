@@ -1,29 +1,29 @@
 /* style.css */
 
 :root {
-    --bg-color: #f3efe6;
-    --bg-alt: #ece5d5;
-    --text-color: #221f1a;
-    --text-secondary: #6b6354;
-    --text-muted: #8a8172;
-    --heading-color: #1f1c17;
-    --accent: #a13d2b;
-    --border-color: #ddd3c0;
-    --btn-bg: #ece5d5;
-    --btn-hover: #e2d8c3;
-}
-
-body.light-mode, html.light-mode {
     --bg-color: #16130f;
     --bg-alt: #1e1a14;
     --text-color: #ece5d5;
     --text-secondary: #a89f8c;
-    --text-muted: #776f5f;
+    --text-muted: #908776;
     --heading-color: #f3efe6;
     --accent: #d97757;
     --border-color: #3a342a;
     --btn-bg: #241f18;
     --btn-hover: #2d271e;
+}
+
+body.light-mode, html.light-mode {
+    --bg-color: #f3efe6;
+    --bg-alt: #ece5d5;
+    --text-color: #221f1a;
+    --text-secondary: #6b6354;
+    --text-muted: #696153;
+    --heading-color: #1f1c17;
+    --accent: #a13d2b;
+    --border-color: #ddd3c0;
+    --btn-bg: #ece5d5;
+    --btn-hover: #e2d8c3;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -127,10 +127,10 @@ body.scroll-locked {
     border-radius: 8px;
     border: 1px solid var(--border-color);
     flex-shrink: 0;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
-body.light-mode .profile-pic { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08); }
+body.light-mode .profile-pic { box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08); }
 
 h1 {
     font-family: 'JetBrains Mono', monospace;
@@ -346,10 +346,10 @@ body.photography-page .container-single {
     width: 100%;
     height: auto;
     display: block;
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 body.light-mode .photo-card img {
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
 .photo-caption {
