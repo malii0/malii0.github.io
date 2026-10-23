@@ -135,7 +135,8 @@
           const item = photoItems[currentIndex];
           const filename = item.filename;
           const fullResUrl = `/img/photos/${encodeURIComponent(filename)}`;
-          const thumbUrl = `https://wsrv.nl/?url=malionurlucan.me/img/photos/${encodeURIComponent(filename)}&w=640&q=80&output=webp`;
+          const lightboxUrl = `https://wsrv.nl/?url=https://malionurlucan.me/img/photos/${encodeURIComponent(filename)}&w=2048&q=85`;
+          const thumbUrl = `https://wsrv.nl/?url=https://malionurlucan.me/img/photos/${encodeURIComponent(filename)}&w=640&q=80&output=webp`;
 
           lightboxCounter.textContent = `${currentIndex + 1} / ${photoItems.length}`;
           lightboxCaption.textContent = item.location ? item.location : "";
@@ -143,24 +144,31 @@
             ? item.alt
             : `Photograph ${currentIndex + 1}`;
 
-          // Show cached thumbnail immediately as placeholder, swap once full-res loads
+          // Show cached thumbnail immediately as placeholder, swap once the 2048px version loads
           lightboxImg.classList.add("loading-placeholder");
           lightboxImg.src = thumbUrl;
 
           const fullImgLoader = new Image();
-          fullImgLoader.src = fullResUrl;
+          let triedOriginal = false;
           fullImgLoader.onload = function () {
             if (
               currentIndex >= 0 &&
               photoItems[currentIndex].filename === filename
             ) {
-              lightboxImg.src = fullResUrl;
+              lightboxImg.src = fullImgLoader.src;
               lightboxImg.classList.remove("loading-placeholder");
             }
           };
           fullImgLoader.onerror = function () {
+            if (!triedOriginal) {
+              // wsrv.nl failed, fall back to the original file
+              triedOriginal = true;
+              fullImgLoader.src = fullResUrl;
+              return;
+            }
             lightboxImg.classList.remove("loading-placeholder");
           };
+          fullImgLoader.src = lightboxUrl;
         }
 
         function openLightbox(index, triggerEl) {
@@ -353,7 +361,7 @@
             const filename = item.filename;
             const altText = item.alt ? item.alt : `Photograph ${index + 1}`;
             const fullResUrl = `/img/photos/${encodeURIComponent(filename)}`;
-            const thumbUrl = `https://wsrv.nl/?url=malionurlucan.me/img/photos/${encodeURIComponent(filename)}&w=640&q=80&output=webp`;
+            const thumbUrl = `https://wsrv.nl/?url=https://malionurlucan.me/img/photos/${encodeURIComponent(filename)}&w=640&q=80&output=webp`;
 
             const card = document.createElement("div");
             card.className = "photo-card";
@@ -368,7 +376,13 @@
             const imageElement = document.createElement("img");
             imageElement.src = thumbUrl;
             imageElement.alt = altText;
-            imageElement.loading = "lazy";
+            if (item.width && item.height) {
+              imageElement.width = item.width;
+              imageElement.height = item.height;
+              link.style.aspectRatio = `${item.width} / ${item.height}`;
+            }
+            imageElement.loading = index < 4 ? "eager" : "lazy";
+            if (index === 0) imageElement.fetchPriority = "high";
             imageElement.decoding = "async";
 
             imageElement.onerror = function () {

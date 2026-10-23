@@ -20,12 +20,18 @@ function isSafeUrl(url) {
   );
 }
 
+function normalizePhotoDimension(value) {
+  return Number.isInteger(value) && value > 0 ? value : null;
+}
+
 function normalizePhotoEntry(entry) {
   if (typeof entry === "string") {
     return {
       filename: entry.trim(),
       alt: "",
       location: "",
+      width: null,
+      height: null,
     };
   }
   if (entry && typeof entry === "object") {
@@ -33,9 +39,11 @@ function normalizePhotoEntry(entry) {
       filename: typeof entry.filename === "string" ? entry.filename.trim() : "",
       alt: typeof entry.alt === "string" ? entry.alt.trim() : "",
       location: typeof entry.location === "string" ? entry.location.trim() : "",
+      width: normalizePhotoDimension(entry.width),
+      height: normalizePhotoDimension(entry.height),
     };
   }
-  return { filename: "", alt: "", location: "" };
+  return { filename: "", alt: "", location: "", width: null, height: null };
 }
 
 async function loadPageIntro(pageKey) {
