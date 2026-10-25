@@ -26,6 +26,7 @@ const MAX_PHOTO_DIMENSION = 20000;
 
 const ALLOWED_ORIGINS = [
   "https://malionurlucan.me",
+  "https://malionurlucan.com",
   "https://malii0.github.io",
 ];
 
