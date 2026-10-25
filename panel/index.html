@@ -246,7 +246,6 @@
         <button type="button" data-tab="pages">pages</button>
         <button type="button" data-tab="notes">notes</button>
         <button type="button" data-tab="projects">projects</button>
-        <button type="button" data-tab="reading">read/watch</button>
         <button type="button" data-tab="photos">photos</button>
       </div>
 
@@ -307,13 +306,6 @@
           disabled
         ></textarea>
 
-        <label for="page-reading-intro">Read / Watch Tagline</label>
-        <textarea
-          id="page-reading-intro"
-          placeholder="Reading page description"
-          disabled
-        ></textarea>
-
         <label for="page-photography-intro">Photography Tagline</label>
         <textarea
           id="page-photography-intro"
@@ -333,14 +325,13 @@
         <div class="status-msg" id="pages-status"></div>
       </section>
 
-      <!-- NOTES / PROJECTS / READING TABS (generic) -->
+      <!-- NOTES / PROJECTS TABS (generic) -->
       <section class="tab-panel" id="tab-notes" data-type="notes"></section>
       <section
         class="tab-panel"
         id="tab-projects"
         data-type="projects"
       ></section>
-      <section class="tab-panel" id="tab-reading" data-type="reading"></section>
 
       <!-- PHOTOS TAB -->
       <section class="tab-panel" id="tab-photos">
@@ -636,14 +627,11 @@
               data.notes || "";
             document.getElementById("page-projects-intro").value =
               data.projects || "";
-            document.getElementById("page-reading-intro").value =
-              data.reading || "";
             document.getElementById("page-photography-intro").value =
               data.photography || "";
             pagesLoaded = true;
             document.getElementById("page-notes-intro").disabled = false;
             document.getElementById("page-projects-intro").disabled = false;
-            document.getElementById("page-reading-intro").disabled = false;
             document.getElementById("page-photography-intro").disabled = false;
             document.getElementById("pages-save").disabled = false;
             showStatus("pages-status", "Page taglines loaded.", true);
@@ -664,7 +652,6 @@
             projects: document
               .getElementById("page-projects-intro")
               .value.trim(),
-            reading: document.getElementById("page-reading-intro").value.trim(),
             photography: document
               .getElementById("page-photography-intro")
               .value.trim(),
@@ -677,7 +664,7 @@
           }
         });
 
-      // ====== NOTES / PROJECTS / READING TABS ======
+      // ====== NOTES / PROJECTS TABS ======
       const entryTypeConfig = {
         notes: {
           label: "note",
@@ -689,13 +676,8 @@
           hasBadge: false,
           metaPlaceholder: "e.g. web app, Next.js/Supabase",
         },
-        reading: {
-          label: "entry",
-          hasBadge: false,
-          metaPlaceholder: "e.g. paper, Author (2026)",
-        },
       };
-      const entryState = { notes: null, projects: null, reading: null };
+      const entryState = { notes: null, projects: null };
 
       function buildEntryTabHtml() {
         return (

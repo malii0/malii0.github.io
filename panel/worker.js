@@ -34,12 +34,11 @@ const TYPE_PATHS = {
   pages: "data/pages.json",
   notes: "data/notes.json",
   projects: "data/projects.json",
-  reading: "data/reading.json",
   photos: "data/photos.json",
 };
 
 const SAFE_FILENAME = /^[a-zA-Z0-9_.-]+\.(jpe?g|png|webp)$/i;
-const KNOWN_PAGE_KEYS = ["notes", "projects", "reading", "photography"];
+const KNOWN_PAGE_KEYS = ["notes", "projects", "photography"];
 
 function detectImageType(bytes) {
   if (!(bytes instanceof Uint8Array)) return null;
@@ -620,7 +619,7 @@ async function handleSave(request, env) {
         }
       }
     }
-  } else if (["notes", "projects", "reading"].includes(body.type)) {
+  } else if (["notes", "projects"].includes(body.type)) {
     if (Array.isArray(payload)) {
       for (let i = 0; i < payload.length; i++) {
         const item = payload[i];
