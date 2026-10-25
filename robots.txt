@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /panel/
 
-Sitemap: https://malionurlucan.me/sitemap.xml
+Sitemap: https://malionurlucan.com/sitemap.xml

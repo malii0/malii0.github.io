@@ -10,7 +10,7 @@
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-    <link rel="canonical" href="https://malionurlucan.me/photography/" />
+    <link rel="canonical" href="https://malionurlucan.com/photography/" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
     <script>
@@ -134,8 +134,8 @@
           const item = photoItems[currentIndex];
           const filename = item.filename;
           const fullResUrl = `/img/photos/${encodeURIComponent(filename)}`;
-          const lightboxUrl = `https://wsrv.nl/?url=https://malionurlucan.me/img/photos/${encodeURIComponent(filename)}&w=2048&q=85`;
-          const thumbUrl = `https://wsrv.nl/?url=https://malionurlucan.me/img/photos/${encodeURIComponent(filename)}&w=640&q=80&output=webp`;
+          const lightboxUrl = `https://wsrv.nl/?url=https://malionurlucan.com/img/photos/${encodeURIComponent(filename)}&w=2048&q=85`;
+          const thumbUrl = `https://wsrv.nl/?url=https://malionurlucan.com/img/photos/${encodeURIComponent(filename)}&w=640&q=80&output=webp`;
 
           lightboxCounter.textContent = `${currentIndex + 1} / ${photoItems.length}`;
           lightboxCaption.textContent = item.location ? item.location : "";
@@ -360,7 +360,7 @@
             const filename = item.filename;
             const altText = item.alt ? item.alt : `Photograph ${index + 1}`;
             const fullResUrl = `/img/photos/${encodeURIComponent(filename)}`;
-            const thumbUrl = `https://wsrv.nl/?url=https://malionurlucan.me/img/photos/${encodeURIComponent(filename)}&w=640&q=80&output=webp`;
+            const thumbUrl = `https://wsrv.nl/?url=https://malionurlucan.com/img/photos/${encodeURIComponent(filename)}&w=640&q=80&output=webp`;
 
             const card = document.createElement("div");
             card.className = "photo-card";
